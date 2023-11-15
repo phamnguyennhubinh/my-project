@@ -1,0 +1,330 @@
+{
+    "products": [
+        {
+           "id": 1,
+           "name": "Ring",
+           "pic": "https://i.imgur.com/1bze9LE.png",
+           "price": "110"
+        },
+        {
+            "id": 2,
+            "name": "Watch",
+            "pic": "https://i.imgur.com/RcZuJX8.png",
+            "price": "$300"
+        },
+        {
+            "id": 3,
+            "name": "Teddy Bear",
+            "pic": "https://i.imgur.com/2ZLdDww.png",
+            "price": "$110"
+        },
+        {
+            "id": 4,
+            "name": "Flower Bouquet",
+            "pic": "https://i.imgur.com/8C8UIlP.png",
+            "price": "$45"
+        },
+        {
+            "id": 5,
+            "name": "Teddy Bear",
+            "pic": "https://i.imgur.com/SarTYwV.png",
+            "price": "$95"
+        },
+        {
+            "id": 6,
+            "name": "Flower Bouquet",
+            "pic": "https://i.imgur.com/EXkkAtR.png",
+            "price": "$70"
+        },
+        {
+            "id": 7,
+            "name": "Watch",
+            "pic": "https://i.imgur.com/WR83sKh.png",
+            "price": "$400"
+        },
+        {
+            "id": 8,
+            "name": "Ring",
+            "pic": "https://i.imgur.com/uHpchAM.png",
+            "price": "$450"
+        },
+        {
+            "id": 9,
+            "name": "Watch",
+            "pic": "https://i.imgur.com/WR83sKh.png",
+            "price": "$400"
+        },
+        {
+            "id": 10,
+            "name": "Ring",
+            "pic": "https://i.imgur.com/uHpchAM.png",
+            "price": "$450"
+        },
+        {
+            "id": 11,
+            "name": "Ring",
+            "pic": "https://i.imgur.com/1bze9LE.png",
+            "price": "$110"
+         },
+         {
+             "id": 12,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/RcZuJX8.png",
+             "price": "$300"
+         },
+         {
+             "id": 13,
+             "name": "Teddy Bear",
+             "pic": "https://i.imgur.com/2ZLdDww.png",
+             "price": "$110"
+         },
+         {
+             "id": 14,
+             "name": "Flower Bouquet",
+             "pic": "https://i.imgur.com/8C8UIlP.png",
+             "price": "$45"
+         },
+         {
+             "id": 15,
+             "name": "Teddy Bear",
+             "pic": "https://i.imgur.com/SarTYwV.png",
+             "price": "$95"
+         },
+         {
+             "id": 16,
+             "name": "Flower Bouquet",
+             "pic": "https://i.imgur.com/EXkkAtR.png",
+             "price": "$70"
+         },
+         {
+             "id": 17,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/WR83sKh.png",
+             "price": "$400"
+         },
+         {
+             "id": 18,
+             "name": "Ring",
+             "pic": "https://i.imgur.com/uHpchAM.png",
+             "price": "$450"
+         },
+         {
+             "id": 19,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/WR83sKh.png",
+             "price": "$400"
+         },
+         {
+             "id": 20,
+             "name": "Ring",
+             "pic": "https://i.imgur.com/uHpchAM.png",
+             "price": "$450"
+         },
+         {
+            "id": 21,
+            "name": "Ring",
+            "pic": "https://i.imgur.com/1bze9LE.png",
+            "price": "$110"
+         },
+         {
+             "id": 22,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/RcZuJX8.png",
+             "price": "$300"
+         },
+         {
+             "id": 23,
+             "name": "Teddy Bear",
+             "pic": "https://i.imgur.com/2ZLdDww.png",
+             "price": "$110"
+         },
+         {
+             "id": 24,
+             "name": "Flower Bouquet",
+             "pic": "https://i.imgur.com/8C8UIlP.png",
+             "price": "$45"
+         },
+         {
+             "id": 25,
+             "name": "Teddy Bear",
+             "pic": "https://i.imgur.com/SarTYwV.png",
+             "price": "$95"
+         },
+         {
+             "id": 26,
+             "name": "Flower Bouquet",
+             "pic": "https://i.imgur.com/EXkkAtR.png",
+             "price": "$70"
+         },
+         {
+             "id": 27,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/WR83sKh.png",
+             "price": "$400"
+         },
+         {
+             "id": 28,
+             "name": "Ring",
+             "pic": "https://i.imgur.com/uHpchAM.png",
+             "price": "$450"
+         },
+         {
+             "id": 29,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/WR83sKh.png",
+             "price": "$400"
+         },
+         {
+             "id": 30,
+             "name": "Ring",
+             "pic": "https://i.imgur.com/uHpchAM.png",
+             "price": "$450"
+         },
+         {
+            "id": 31,
+            "name": "Ring",
+            "pic": "https://i.imgur.com/1bze9LE.png",
+            "price": "$110"
+         },
+         {
+             "id": 32,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/RcZuJX8.png",
+             "price": "$300"
+         },
+         {
+             "id": 33,
+             "name": "Teddy Bear",
+             "pic": "https://i.imgur.com/2ZLdDww.png",
+             "price": "$110"
+         },
+         {
+             "id": 34,
+             "name": "Flower Bouquet",
+             "pic": "https://i.imgur.com/8C8UIlP.png",
+             "price": "$45"
+         },
+         {
+             "id": 35,
+             "name": "Teddy Bear",
+             "pic": "https://i.imgur.com/SarTYwV.png",
+             "price": "$95"
+         },
+         {
+             "id": 36,
+             "name": "Flower Bouquet",
+             "pic": "https://i.imgur.com/EXkkAtR.png",
+             "price": "$70"
+         },
+         {
+             "id": 37,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/WR83sKh.png",
+             "price": "$400"
+         },
+         {
+             "id": 38,
+             "name": "Ring",
+             "pic": "https://i.imgur.com/uHpchAM.png",
+             "price": "$450"
+         },
+         {
+             "id": 39,
+             "name": "Watch",
+             "pic": "https://i.imgur.com/WR83sKh.png",
+             "price": "$400"
+         },
+         {
+             "id": 40,
+             "name": "Ring",
+             "pic": "https://i.imgur.com/uHpchAM.png",
+             "price": "$450"
+         }
+    ],
+    "sections": [
+        {
+            "id": 1,
+            "image": "https://i.imgur.com/xWHoqnV.png",
+            "title1": "Welcome To Our",
+            "title2": "Gift Shop",
+            "buttonName": "CONTACT US",
+            "content": "Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis."
+        },
+        {
+            "id": 2,
+            "image": "https://i.imgur.com/xWHoqnV.png",
+            "title1": "Welcome To Our",
+            "title2": "Gift Shop",
+            "buttonName": "CONTACT US",
+            "content": "Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis."
+        },
+        {
+            "id": 3,
+            "image": "https://i.imgur.com/xWHoqnV.png",
+            "title1": "Welcome To Our",
+            "title2": "Gift Shop",
+            "buttonName": "CONTACT US",
+            "content": "Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis."
+        }
+    ],
+    "childrens": [
+        {
+            "id": 1,
+            "image": "https://i.imgur.com/qe8PRu0.png",
+            "button1": "Buy Now",
+            "button2": "See More",
+            "title1": "BEST SAVINGS ON",
+            "title2": "NEW ARRIVALS",
+            "content": "Qui ex dolore at repellat, quia neque doloribus omnis adipisci, ipsum eos odio fugit ut eveniet blanditiis praesentium totam non nostrum dignissimos nihil eius facere et eaque. Qui, animi obcaecati."
+        },
+        {
+            "id": 2,
+            "image": "https://i.imgur.com/r5U6YRe.png",
+            "button1": "Buy Now",
+            "button2": "See More",
+            "title1": "GIFTS FOR YOUR",
+            "title2": "LOVED ONES",
+            "content": "Omnis ex nam laudantium odit illum harum, excepturi accusamus at corrupti, velit blanditiis unde perspiciatis, vitae minus culpa? Beatae at aut consequuntur porro adipisci aliquam eaque iste ducimus expedita accusantium?"
+        }
+    ],
+    "feedbacks": [
+        {
+            "id": 1,
+            "name": "Morijorch",
+            "note": "Default model text",
+            "content": "editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various"
+        },
+        {
+            "id": 2,
+            "name": "Brad Johns",
+            "note":"Default model text",
+            "content": "Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy, editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various"
+        },
+        {
+            "id": 3,
+            "name": "Rochak",
+            "note":"Default model text",
+            "content": "Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy."
+        }
+    ],
+    "about":
+        {
+            "title": "ABOUT US",
+            "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,"
+        }
+    ,
+    "help": 
+        {
+            "title": "NEED HELP",
+            "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,"
+        }
+    ,
+    "contact": 
+        {
+            "title": "CONTACT US",
+            "info_1": "Gb road 123 London UK",
+            "info_2": "+01 12345678901",
+            "info_3": "demo@gmail.com"
+        }
+    
+}
