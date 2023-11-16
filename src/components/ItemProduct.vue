@@ -1,10 +1,10 @@
 <template>
-	<div class="backgr3">
+	<div class="backgr3" @click="detailProduct">
 		<div class="new">New</div>
 		<center><img :src="pic" class="picture-products"></center>
 		<div class="space font-products">
 			<div class="display-inline">{{ name }}</div>
-			<div class="display-inline">Price <span class="price-color"> {{ price }}</span></div>
+			<div class="display-inline">Price <span class="price-color">${{ price }}</span></div>
 		</div>
 	</div>
 </template>
@@ -17,6 +17,11 @@ export default {
       
     }
   },
+  methods: {
+	detailProduct () {
+		this.$router.push('/shop/detail');
+		}
+  }
 }
 </script>
 

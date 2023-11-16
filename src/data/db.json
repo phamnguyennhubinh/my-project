@@ -10,235 +10,235 @@
             "id": 2,
             "name": "Watch",
             "pic": "https://i.imgur.com/RcZuJX8.png",
-            "price": "$300"
+            "price": "300"
         },
         {
             "id": 3,
             "name": "Teddy Bear",
             "pic": "https://i.imgur.com/2ZLdDww.png",
-            "price": "$110"
+            "price": "110"
         },
         {
             "id": 4,
             "name": "Flower Bouquet",
             "pic": "https://i.imgur.com/8C8UIlP.png",
-            "price": "$45"
+            "price": "45"
         },
         {
             "id": 5,
             "name": "Teddy Bear",
             "pic": "https://i.imgur.com/SarTYwV.png",
-            "price": "$95"
+            "price": "95"
         },
         {
             "id": 6,
             "name": "Flower Bouquet",
             "pic": "https://i.imgur.com/EXkkAtR.png",
-            "price": "$70"
+            "price": "70"
         },
         {
             "id": 7,
             "name": "Watch",
             "pic": "https://i.imgur.com/WR83sKh.png",
-            "price": "$400"
+            "price": "400"
         },
         {
             "id": 8,
             "name": "Ring",
             "pic": "https://i.imgur.com/uHpchAM.png",
-            "price": "$450"
+            "price": "450"
         },
         {
             "id": 9,
             "name": "Watch",
             "pic": "https://i.imgur.com/WR83sKh.png",
-            "price": "$400"
+            "price": "400"
         },
         {
             "id": 10,
             "name": "Ring",
             "pic": "https://i.imgur.com/uHpchAM.png",
-            "price": "$450"
+            "price": "450"
         },
         {
             "id": 11,
             "name": "Ring",
             "pic": "https://i.imgur.com/1bze9LE.png",
-            "price": "$110"
+            "price": "110"
          },
          {
              "id": 12,
              "name": "Watch",
              "pic": "https://i.imgur.com/RcZuJX8.png",
-             "price": "$300"
+             "price": "300"
          },
          {
              "id": 13,
              "name": "Teddy Bear",
              "pic": "https://i.imgur.com/2ZLdDww.png",
-             "price": "$110"
+             "price": "110"
          },
          {
              "id": 14,
              "name": "Flower Bouquet",
              "pic": "https://i.imgur.com/8C8UIlP.png",
-             "price": "$45"
+             "price": "45"
          },
          {
              "id": 15,
              "name": "Teddy Bear",
              "pic": "https://i.imgur.com/SarTYwV.png",
-             "price": "$95"
+             "price": "95"
          },
          {
              "id": 16,
              "name": "Flower Bouquet",
              "pic": "https://i.imgur.com/EXkkAtR.png",
-             "price": "$70"
+             "price": "70"
          },
          {
              "id": 17,
              "name": "Watch",
              "pic": "https://i.imgur.com/WR83sKh.png",
-             "price": "$400"
+             "price": "400"
          },
          {
              "id": 18,
              "name": "Ring",
              "pic": "https://i.imgur.com/uHpchAM.png",
-             "price": "$450"
+             "price": "450"
          },
          {
              "id": 19,
              "name": "Watch",
              "pic": "https://i.imgur.com/WR83sKh.png",
-             "price": "$400"
+             "price": "400"
          },
          {
              "id": 20,
              "name": "Ring",
              "pic": "https://i.imgur.com/uHpchAM.png",
-             "price": "$450"
+             "price": "450"
          },
          {
             "id": 21,
             "name": "Ring",
             "pic": "https://i.imgur.com/1bze9LE.png",
-            "price": "$110"
+            "price": "110"
          },
          {
              "id": 22,
              "name": "Watch",
              "pic": "https://i.imgur.com/RcZuJX8.png",
-             "price": "$300"
+             "price": "300"
          },
          {
              "id": 23,
              "name": "Teddy Bear",
              "pic": "https://i.imgur.com/2ZLdDww.png",
-             "price": "$110"
+             "price": "110"
          },
          {
              "id": 24,
              "name": "Flower Bouquet",
              "pic": "https://i.imgur.com/8C8UIlP.png",
-             "price": "$45"
+             "price": "45"
          },
          {
              "id": 25,
              "name": "Teddy Bear",
              "pic": "https://i.imgur.com/SarTYwV.png",
-             "price": "$95"
+             "price": "95"
          },
          {
              "id": 26,
              "name": "Flower Bouquet",
              "pic": "https://i.imgur.com/EXkkAtR.png",
-             "price": "$70"
+             "price": "70"
          },
          {
              "id": 27,
              "name": "Watch",
              "pic": "https://i.imgur.com/WR83sKh.png",
-             "price": "$400"
+             "price": "400"
          },
          {
              "id": 28,
              "name": "Ring",
              "pic": "https://i.imgur.com/uHpchAM.png",
-             "price": "$450"
+             "price": "450"
          },
          {
              "id": 29,
              "name": "Watch",
              "pic": "https://i.imgur.com/WR83sKh.png",
-             "price": "$400"
+             "price": "400"
          },
          {
              "id": 30,
              "name": "Ring",
              "pic": "https://i.imgur.com/uHpchAM.png",
-             "price": "$450"
+             "price": "450"
          },
          {
             "id": 31,
             "name": "Ring",
             "pic": "https://i.imgur.com/1bze9LE.png",
-            "price": "$110"
+            "price": "110"
          },
          {
              "id": 32,
              "name": "Watch",
              "pic": "https://i.imgur.com/RcZuJX8.png",
-             "price": "$300"
+             "price": "300"
          },
          {
              "id": 33,
              "name": "Teddy Bear",
              "pic": "https://i.imgur.com/2ZLdDww.png",
-             "price": "$110"
+             "price": "110"
          },
          {
              "id": 34,
              "name": "Flower Bouquet",
              "pic": "https://i.imgur.com/8C8UIlP.png",
-             "price": "$45"
+             "price": "45"
          },
          {
              "id": 35,
              "name": "Teddy Bear",
              "pic": "https://i.imgur.com/SarTYwV.png",
-             "price": "$95"
+             "price": "95"
          },
          {
              "id": 36,
              "name": "Flower Bouquet",
              "pic": "https://i.imgur.com/EXkkAtR.png",
-             "price": "$70"
+             "price": "70"
          },
          {
              "id": 37,
              "name": "Watch",
              "pic": "https://i.imgur.com/WR83sKh.png",
-             "price": "$400"
+             "price": "400"
          },
          {
              "id": 38,
              "name": "Ring",
              "pic": "https://i.imgur.com/uHpchAM.png",
-             "price": "$450"
+             "price": "450"
          },
          {
              "id": 39,
              "name": "Watch",
              "pic": "https://i.imgur.com/WR83sKh.png",
-             "price": "$400"
+             "price": "400"
          },
          {
              "id": 40,
              "name": "Ring",
              "pic": "https://i.imgur.com/uHpchAM.png",
-             "price": "$450"
+             "price": "450"
          }
     ],
     "sections": [

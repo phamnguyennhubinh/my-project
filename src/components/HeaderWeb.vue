@@ -3,38 +3,41 @@
     <h1 class="heading">Giftos</h1>
     <div class="bars">
       <h1 class="heading1">Giftos</h1>
-      <label for="nav-mobile-input" class="icon"><i class="fa-solid fa-bars fa-2x"></i></label>
+      <label for="nav-mobile-input" class="icon" @click="toggleMenu">
+        <i :class="['fa-solid', 'fa-2x', { 'fa-bars': !isMenuOpen, 'fa-x': isMenuOpen }, { 'rotate': isMenuOpen, 'rotate2': !isMenuOpen}]"></i></label>
       <input type="checkbox" hidden class="nav_input" id="nav-mobile-input">
-      <div class="hidd">
+      <Collapse :when="isMenuOpen">
+        <div class="hidd">
           <div id="menu2" :class="currentRoute === 'LayoutPage' ? 'backgr1' : 'backgr2'">
             <div class="row">
               <div class="col-sm-12">
-                <div :class="{ 'active': currentRoute === 'LayoutPage' }">
-                  <router-link :to="{name: 'LayoutPage'}">HOME</router-link>
+                <div>
+                  <router-link :to="{name: 'LayoutPage'}"><span :class="{ 'active': currentRoute === 'LayoutPage' }" class="font-menu">HOME</span></router-link>
                 </div>
               </div>
               <div class="col-sm-12">
-                <div :class="{ 'active2': currentRoute === 'ShopPage' }">
-                  <router-link :to="{name: 'ShopPage'}">SHOP</router-link>
+                <div >
+                  <router-link :to="{name: 'ShopPage'}"><span :class="{ 'active2': currentRoute === 'ShopPage' }" class="font-menu">SHOP</span></router-link>
                 </div>
               </div>
               <div class="col-sm-12">
-                <a href="#">WHY US</a>
+                <a href="#"><span class="font-menu">WHY US</span></a>
               </div>
               <div class="col-sm-12">
-                <a href="#">TESTIMONIAL</a>
+                <a href="#"><span class="font-menu"> TESTIMONIAL</span></a>
               </div>
               <div class="col-sm-12">
-                <a href="#">CONTACT US</a>
+                <a  href="#"><span class="font-menu">CONTACT US </span></a>
               </div>
               <div class="col-sm-12">
-                <a><i class="fa fa-user"></i><span>&nbsp;Login</span>&nbsp;&nbsp;</a>
+                <a><i class="fa fa-user"></i><span class="font-menu-login">&nbsp;Login</span>&nbsp;&nbsp;</a>
                 <a><i class="fa fa-shopping-bag"></i>&nbsp;&nbsp;</a>
                 <a><i class="fa fa-search"></i></a>
               </div>
             </div>
         </div>
-      </div>
+        </div>
+      </Collapse>
     </div>
     <div id="menu" :class="currentRoute === 'LayoutPage' ? 'backgr1' : 'backgr2'">
       <ul>
@@ -65,13 +68,19 @@
 </template>
 
 <script>
+import { Collapse } from "vue-collapsed";
 export default ({
     name: 'HeaderWeb',
+    components: {
+      Collapse
+    },
     data() {
 
   return {
     imageURL: './assets/slider.png',
     currentRoute: null,
+    isMenuOpen: false,
+    alwaysTrue: true
   };
   },
   watch: {
@@ -79,15 +88,49 @@ export default ({
     this.currentRoute = to.name; // Lưu tên đường dẫn hiện tại
   },
   },
-  methods() {
-
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen; // Đảo ngược trạng thái mở/đóng menu
+    },
   },
 })
 </script>
 
 <style lang="scss" scoped>
+.row .col-sm-12 .font-menu{
+  font-size: 15px;
+  padding: 5px 25px;
+}
+.row .col-sm-12 .font-menu-login{
+  font-size: 15px;
+}
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@keyframes rotateAnimation2 {
+  100% {
+    transform: rotate(180deg);
+  }
+  0% {
+    transform: rotate(0deg);
+  }
+}
+#header .icon .rotate {
+  animation: rotateAnimation 0.2s ease forwards;
+}
+
+#header .icon .rotate2 {
+  animation: rotateAnimation2 0.2s ease forwards;
+}
+
+
 .hidd {
-  display: none;
+  display: block;
 }
 .loading
 {

@@ -80,6 +80,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/styles.scss';
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 .superSmall {
   display: none;
 }

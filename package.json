@@ -34,6 +34,7 @@
     "vue": "^3.2.36",
     "vue-add-event-listener": "^1.1.0",
     "vue-awesome-swiper": "^5.0.1",
+    "vue-collapsed": "^1.2.9",
     "vue-events": "^3.1.0",
     "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^4.2.5",

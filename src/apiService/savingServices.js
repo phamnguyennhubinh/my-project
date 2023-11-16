@@ -37,6 +37,7 @@ export const product = async () => {
   }
 }
 
+
 export const about = async () => {
   try {
     const res = await request.get("about");
@@ -58,6 +59,15 @@ export const help = async () => {
 export const contact = async () => {
   try {
     const res = await request.get("contact");
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const listProducts = async (perPage,page) => {
+  try {
+    const res = await request.get(`products?_limit=${perPage}&_page=${page}`)
     return res;
   } catch (error) {
     console.log(error);

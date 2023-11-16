@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div
-          v-for="product in visibleProducts"
+          v-for="product in newList"
           :key="product.id"
           class="col-md-4 col-lg-3 col-sm-6 padding-row"
         >
@@ -17,31 +17,52 @@
       </div>
     </div>
     <center>
-      <button @click="loadMore" class="btn-view-products">View More Products</button>
+      <button @click="loadMore" class="btn-view-products" :class="{ 'disabled-btn': disableButton }">
+        View More Products
+      </button>
     </center>
   </div>
 </template>
 
 <script setup>
 import ItemProduct from "./ItemProduct.vue";
-// import { Pagination } from "ant-design-vue";
 import { useCounterStore } from "@/stores/index";
-import { ref , onMounted } from "vue";
+import { ref, onMounted } from "vue";
 const counterStore = useCounterStore();
-const visibleProducts = ref([]);
-const currentIndex = ref(8);
-const itemsPerPage = 4;
-onMounted(async () => {
-  await counterStore.fetchData();
-  visibleProducts.value = counterStore.products.slice(0, 8);
+const listProducts = ref([]);
+const disableButton = ref(false);
+const page = ref(1);
+const newList = ref([]);
+const updateList = async () => {
+  page.value++;
+  await counterStore.fetchListProduct(page.value);
+  listProducts.value = counterStore.listProducts;
+  console.log(listProducts.value);
+  if (listProducts.value.length > 0 )
+  {
+    newList.value = newList.value.concat(listProducts.value);
+    disableButton.value = false; 
+  }
+  else {
+    disableButton.value = true;
+  }
+};
+onMounted(
+  async () => {
+  await counterStore.fetchListProduct(page.value);
+  newList.value = counterStore.listProducts;
+  console.log(newList.value);
 });
 const loadMore = () => {
-  currentIndex.value += itemsPerPage;
-  visibleProducts.value = counterStore.products.slice(0, currentIndex.value);
-}
+  updateList();
+};
 </script>
 
 <style scoped>
+.disabled-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .content {
   z-index: 1;
 }

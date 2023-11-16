@@ -12,9 +12,16 @@ export const useCounterStore = defineStore("counter", {
     about: [],
     help: [],
     contact: [],
-    page: 0
+    listProducts: [],
+    perPage: 8,
+    countProduct: 0
   }),
   actions: {
+    async fetchListProduct(page) {
+      this.isLoading++;
+      this.listProducts = await savingServices.listProducts(this.perPage,page);
+      this.isLoading--;
+    },
     async fetchApi() {
       this.isLoading++;
       this.children = await savingServices.saving();
@@ -35,11 +42,6 @@ export const useCounterStore = defineStore("counter", {
       this.products = await savingServices.product();
       this.isLoading--;
     },
-    // async fetchProduct(id){
-    //   request.get(`products/${id}`)
-    //   .then(res => this.products = res)
-    //   .catch(error => console.error('Error fetching feedback:', error.message));
-    // },
     async fetchApiFooterAbout(){
       this.isLoading++;
       this.about = await savingServices.about();
