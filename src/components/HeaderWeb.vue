@@ -31,7 +31,7 @@
               </div>
               <div class="col-sm-12">
                 <a><i class="fa fa-user"></i><span class="font-menu-login">&nbsp;Login</span>&nbsp;&nbsp;</a>
-                <a><i class="fa fa-shopping-bag"></i>&nbsp;&nbsp;</a>
+                <a><i class="fa-solid fa-cart-shopping" style="color: orangered"></i>&nbsp;&nbsp;</a>
                 <a><i class="fa fa-search"></i></a>
               </div>
             </div>
@@ -58,7 +58,9 @@
       </li>
       <li>
         <a><i class="fa fa-user"></i><span>Login</span></a>
-        <a><i class="fa fa-shopping-bag"></i></a>
+        <a style="position: relative; cursor: pointer;"><i class="fa-solid fa-cart-shopping" style="color: orangered"></i>
+          <p id="count" style="display: inline;">{{ counterStore.countCart }}</p>
+        </a>
         <a><i class="fa fa-search"></i></a>
       </li>
       </ul>
@@ -69,18 +71,21 @@
 
 <script>
 import { Collapse } from "vue-collapsed";
+import { useCounterStore } from "@/stores";
+
 export default ({
     name: 'HeaderWeb',
     components: {
       Collapse
     },
     data() {
-
+      const counterStore = useCounterStore();
   return {
     imageURL: './assets/slider.png',
     currentRoute: null,
     isMenuOpen: false,
-    alwaysTrue: true
+    alwaysTrue: true,
+    counterStore
   };
   },
   watch: {
@@ -97,6 +102,24 @@ export default ({
 </script>
 
 <style lang="scss" scoped>
+#count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  padding: 0px 1px;
+  background-color: #fff;
+  color: orangered;
+  font-size: 10px;
+  position: absolute;
+  left: 60%;
+  bottom: 17%;
+  font-weight: bold;
+}
+.cart {
+  color: orangered;
+  cursor: pointer;
+}
 .row .col-sm-12 .font-menu{
   font-size: 15px;
   padding: 5px 25px;

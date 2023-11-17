@@ -1,5 +1,5 @@
 <template>
-	<div class="backgr3" @click="detailProduct">
+	<div class="backgr3" @click="handleProductClick">
 		<div class="new">New</div>
 		<center><img :src="pic" class="picture-products"></center>
 		<div class="space font-products">
@@ -11,19 +11,34 @@
 
 <script>
 export default {
-  props: ['pic','name', 'price'],
+  props: ['id','pic','name', 'price'],
   data(){
     return {
       
     }
   },
   methods: {
-	detailProduct () {
-		this.$router.push('/shop/detail');
-		}
+	// detailProduct () {
+	// 	this.$router.push('/shop/detail');
+	// 	}
+	handleProductClick() {
+		this.$emit('productClick',this.$props.id);
+	}
   }
 }
 </script>
+
+<!-- <script setup>
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps(['pic', 'name', 'price', 'id']);
+const emits = defineEmits();
+
+const handleProductClick = () => {
+  // Chuyển giá trị product.id vào sự kiện productClick
+  emits('productClick', props.id);
+};
+</script> -->
 
 <style>
 .heading-product

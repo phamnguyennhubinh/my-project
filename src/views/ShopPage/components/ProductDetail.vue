@@ -228,54 +228,43 @@
                   <a-image-preview-group>
                     <a-image
                       class="picMain"
-                      src="https://i.imgur.com/1bze9LE.png"
+                      :src="counterStore.product.pic"
                     >
                     </a-image>
                   </a-image-preview-group>
                 </div>
               </div>
-              <div class="smallPics">
-                <div class="manypic row">
-                  <a-image-preview-group>
+              <div class="grid">
+                <div class="row _margin">
+                  <div class="col-md-3">
                     <a-image
-                      class="pic"
-                      width="100px"
-                      src="https://i.imgur.com/SarTYwV.png"
-                      style="padding: 5px"
+                      :src="counterStore.product.pic"
                     ></a-image>
+                  </div>
+                  <div class="col-md-3">
                     <a-image
-                      class="pic"
-                      width="100px"
-                      src="https://i.imgur.com/EXkkAtR.png"
-                      style="padding: 5px"
+                      :src="counterStore.product.pic"
                     ></a-image>
+                  </div>
+                  <div class="col-md-3">
                     <a-image
-                      class="pic"
-                      width="100px"
-                      src="https://i.imgur.com/8C8UIlP.png"
-                      style="padding: 5px"
+                      :src="counterStore.product.pic"
                     ></a-image>
+                  </div>
+                  <div class="col-md-3">
                     <a-image
-                      class="pic"
-                      width="70px"
-                      src="https://i.imgur.com/uHpchAM.png"
-                      style="padding: 5px"
+                      :src="counterStore.product.pic"
                     ></a-image>
-                    <a-image
-                      class="pic"
-                      width="70px"
-                      src="https://i.imgur.com/EXkkAtR.png"
-                      style="padding: 5px"
-                    ></a-image>
-                  </a-image-preview-group>
+                  </div>
+                  <button class="icon-button button-arrow-1" tabindex="-1"><i class="fas fa-angle-left"></i></button>
+                  <button class="icon-button button-arrow-2" tabindex="-1"><i class="fas fa-angle-right"></i></button>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-7">
             <h3 class="nameProduct">
-              <span class="like">Yêu thích</span>&nbsp;Vòng tay nữ mạ vàng 24k
-              siêu đẹp, siêu sang
+              <span class="like">Yêu thích</span>&nbsp;{{ counterStore.product.name }}
             </h3>
             <div>
               {{ value }}
@@ -285,8 +274,8 @@
             </div>
             <div class="price-discount-background">
               <div class="margin-top-30">
-                <span class="price-discount">90.000</span>
-                <span class="price"> &nbsp;49.000&nbsp;&nbsp;</span>
+                <span class="price-discount">1200</span>
+                <span class="price"> &nbsp;{{ counterStore.product.price }}&nbsp;&nbsp;</span>
                 <span class="discount">46% GIẢM</span>
                 <div class="flex items-center">
                   <i
@@ -358,10 +347,28 @@
               </div>
             </div>
             <div class="margin-left-20">
-              <button type="button" class="button-add-cart">
+              <button type="button" class="button-add-cart" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>&ensp;Thêm vào giỏ hàng
               </button>
               <button type="button" class="button-buy-now">Mua Ngay</button>
+            </div>
+            
+            <div class="grid"> <hr>
+              <div class="row bread_crumb">
+                <div class="col-md-4">
+                  <i class="fas fa-undo" style="color: #d0011b"></i>&nbsp;
+                  7 ngày miễn phí trả hàng
+                </div>
+                <div class="col-md-4">
+                  <i class="fa-solid fa-square-check" style="color: #d0011b;"></i>
+                  &nbsp; Hàng chính hãng 100%
+                </div>
+                <div class="col-md-4">
+                  <i class="fa-solid fa-truck-fast" style="color: #d0011b;"></i>
+                &nbsp; Miễn phí vận chuyển
+                </div>
+                
+              </div>
             </div>
           </div>
         </div>
@@ -404,72 +411,90 @@
         </div>
       </section>
     </section>
-    <div>
-      <button @click="isExpanded = !isExpanded">Trigger</button>
-      <label for="moto" class="icon"> ABC </label>
-      <input type="checkbox" class="nav_input" id="moto" />
-      <label for="nav-mobile-input" class="icon" @click="toggleMenu">
-        <i :class="['fa-solid', 'fa-2x', { 'fa-bars': !isMenuOpen, 'fa-x': isMenuOpen }, { 'rotate': isMenuOpen, 'rotate2': !isMenuOpen}]"></i></label>
-      <input type="checkbox" hidden class="nav_input" id="nav-mobile-input">
-      <Collapse :when="isMenuOpen">
-        <!-- <p>{{ "Collapsed ".repeat(100) }}</p> -->
-        <div class="hidd">
-          <div id="menu2" :class="currentRoute === 'LayoutPage' ? 'backgr1' : 'backgr2'">
-            <div class="row">
-              <div class="col-sm-12">
-                <div :class="{ 'active': currentRoute === 'LayoutPage' }">
-                  <router-link :to="{name: 'LayoutPage'}">HOME</router-link>
-                </div>
-              </div>
-              <div class="col-sm-12">
-                <div :class="{ 'active2': currentRoute === 'ShopPage' }">
-                  <router-link :to="{name: 'ShopPage'}">SHOP</router-link>
-                </div>
-              </div>
-              <div class="col-sm-12">
-                <a href="#">WHY US</a>
-              </div>
-              <div class="col-sm-12">
-                <a href="#">TESTIMONIAL</a>
-              </div>
-              <div class="col-sm-12">
-                <a href="#">CONTACT US</a>
-              </div>
-              <div class="col-sm-12">
-                <a><i class="fa fa-user"></i><span>&nbsp;Login</span>&nbsp;&nbsp;</a>
-                <a><i class="fa fa-shopping-bag"></i>&nbsp;&nbsp;</a>
-                <a><i class="fa fa-search"></i></a>
-              </div>
-            </div>
-        </div>
-      </div>
-      </Collapse>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { Collapse } from "vue-collapsed";
-
-const isExpanded = ref(false);
+import { onMounted, ref } from "vue";
+import { useCounterStore } from "@/stores";
+const counterStore = useCounterStore();
 const value = ref(4.5);
 const placement = ref("topLeft");
 const value2 = ref("HangZhou");
 const value1 = ref(1);
 const value3 = ref("HangZhou1");
-const currentRoute= ref(null);
-const isMenuOpen = ref(false);
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value; // Đảo ngược trạng thái mở/đóng menu
-}
+const sanphams = ref([]);
+const listCarts = ref([]);
+onMounted(async () => {
+  await counterStore.fetchEachProduct();
+  console.log(counterStore.product);
+  sanphams.value = counterStore.product;
+})
+const addToCart = () =>{
+  if(counterStore.product in listCarts.value) {
+    console.log("trùng");
+  }
+  else {
+    listCarts.value = listCarts.value.concat(counterStore.product);
+    console.log(listCarts.value);
+  }
+  
+  // localStorage.setItem('carts',JSON.stringify(listCarts.value));
 
+  // if(!(counterStore.product in counterStore.listCarts))
+  // {
+  //   console.log("Hello");
+  //   console.log(counterStore.listCarts)
+  // }
+  // else 
+  // {
+  //   counterStore.countCart++;
+  //   counterStore.listCarts = counterStore.listCarts.concat(counterStore.product);
+  // }
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/styles/grid.css";
 $color-main: orangered;
-
+._margin{
+  position: relative;
+  margin: 20px 10px;
+}
+.icon-button {
+  outline: none;
+  cursor: pointer;
+  font-size: .875rem;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .1s cubic-bezier(.4,0,.6,1);
+}
+.button-arrow-1 {
+  position: absolute;
+  width: 1.2rem;
+  height: 2.5rem;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #fff;
+  background-color: rgba(0,0,0,.2);
+  border: none;
+}
+.button-arrow-2 {
+  position: absolute;
+  width: 1.2rem;
+  height: 2.5rem;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: #fff;
+  background-color: rgba(0,0,0,.2);
+  border: none;
+}
 .margin-50-0 {
   margin: 50px 0;
 }
@@ -610,6 +635,9 @@ a {
   margin: 0 auto;
   padding: 20px;
 }
+.border {
+  border: 1px solid ;
+}
 .flex {
   display: flex;
 }
@@ -622,203 +650,16 @@ a {
   display: inline-block;
   box-sizing: border-box;
 }
-.smallPics {
-  position: relative;
-  align-items: center;
-  margin-top: 3%;
-  display: flex;
-  justify-content: space-between;
-}
+// .smallPics {
+//   position: relative;
+//   align-items: center;
+//   margin-top: 3%;
+//   display: flex;
+//   justify-content: space-between;
+// }
 .pic {
   width: 100%;
   margin: 0 10px;
   cursor: pointer;
 }
 </style>
-
-<style lang="scss" scoped>
-@keyframes rotateAnimation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(180deg);
-  }
-}
-@keyframes rotateAnimation2 {
-  100% {
-    transform: rotate(180deg);
-  }
-  0% {
-    transform: rotate(0deg);
-  }
-}
-#header .icon .rotate {
-  animation: rotateAnimation 0.2s ease forwards;
-}
-
-#header .icon .rotate2 {
-  animation: rotateAnimation2 0.2s ease forwards;
-}
-
-
-.hidd {
-  display: block;
-}
-.loading
-{
-  position: flex;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin: auto;
-}
-.nav_input:checked ~ .hidd {
-  display: block;
-}
-.backgr2
-{
-  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  background-color: white;  
-  margin: 0 40px;
-}
-.active
-{
-	background-color: white;
-	border-radius: 5px;
-  // padding: 6px 25px;
-}
-.active3
-{
-	background-color: white;
-	border-radius: 5px;
-  // padding: 6px 25px;
-}
-.active2
-{
-	background-color: #f4f5f6;
-	border-radius: 5px;
-  // padding: 6px 25px;
-}
-#header {
-  font-family: "poppins", sans-serif;
-  position: relative;
-}
-.homepage
-{
-	background-color: white;
-	border-radius: 5px;
-}
-h1 {
-    text-align: center;
-}
-.heading
-{
-	font-family: "poppins", sans-serif;
-	font-weight: bold;
-	font-size: 35px;
-	text-align: center;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-#menu ul 
-{
-	list-style-type: none;
-	text-align: center;
-	border-radius: 15px 15px 0 0;
-	padding: 15px 0;
-	margin-bottom: 0;
-  li
-    {
-      display: inline-table;
-      // padding: 6px 20px;
-        a
-        {
-          text-decoration: none;
-          color: #514f4f;
-          font-size: 18px;
-          padding: 10px 15px;
-        }
-    }
-}
-#menu2 
-{
-	list-style-type: none;
-	text-align: center;
-	border-radius: 15px 15px 0 0;
-	padding: 15px 0;
-	margin-bottom: 0;
-        a
-        {
-          text-decoration: none;
-          color: #514f4f;
-          font-size: 18px;
-          // padding: 10px 25px;
-        }
-}
-.backgr1
-{
-	margin: 0 45px;
-  background-color: #f9ece6;
-  border-radius: 15px 15px 0 0;
-  // margin-top: 20px;
-}
-.icon 
-  {
-    position: absolute;
-    right: 0px;
-  }
-.bars {
- display: none;
- margin-top: 15px;
- padding-bottom: 0px;
- margin-bottom: 0;
-}
-@media screen and (max-width: 1023px) {
-  #menu{
-    display: none;
-  }
-  .heading {
-    display: none;
-  }
-  .heading1{
-    text-align: left;
-    padding-left: 45px;
-    font-size: 32px;
-    font-family: "poppins", sans-serif;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: inline;
-  }
-  .bars {
-    display: block;
-  }
-  .icon 
-  {
-    text-align: right;
-    padding-right: 45px;
-    margin-bottom: 20px;
-    display: inline;
-  }
-  
-}
-@media  screen and (min-width: 375px) and (max-width: 811px) {
-  .backgr1
-{
-	margin: 0;
-}
-
-}
-@media  screen and (max-width: 320px){
-  .backgr1 {
-    margin: 0;
-  }
-  .heading {
-    font-size: 30px;
-  }
-}
-</style>
-

@@ -12,6 +12,8 @@
             :pic="product.pic"
             :name="product.name"
             :price="product.price"
+            :id="product.id"
+            @productClick="handleProductClick"
           />
         </div>
       </div>
@@ -28,11 +30,19 @@
 import ItemProduct from "./ItemProduct.vue";
 import { useCounterStore } from "@/stores/index";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 const counterStore = useCounterStore();
 const listProducts = ref([]);
 const disableButton = ref(false);
 const page = ref(1);
 const newList = ref([]);
+const router = useRouter();
+const handleProductClick = (productId) => {
+  console.log('Product ID clicked:', productId);
+  router.push({ name: 'ProductDetail' });
+  counterStore.productId = productId;
+  console.log(counterStore.productId);
+};
 const updateList = async () => {
   page.value++;
   await counterStore.fetchListProduct(page.value);

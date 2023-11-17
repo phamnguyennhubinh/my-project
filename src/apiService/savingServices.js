@@ -73,3 +73,12 @@ export const listProducts = async (perPage,page) => {
     console.log(error);
   }
 }
+
+export const eachProduct = async (id) => {
+  try {
+    const res = await request.get(`products/${id}`)
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}

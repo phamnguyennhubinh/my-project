@@ -14,9 +14,36 @@ export const useCounterStore = defineStore("counter", {
     contact: [],
     listProducts: [],
     perPage: 8,
-    countProduct: 0
+    countProduct: 0,
+    product: [],
+    productId: 1,
+    countCart: 0,
+    countQuantity: 1,
+    count: 1,
+    listCarts: []
   }),
   actions: {
+    increaseQuantity(){
+      this.count++;
+    },
+    decreaseQuantity(){
+      if(this.count===0)
+      {
+        this.count===0
+      }
+      else
+      {
+        this.count--;
+      }
+    },
+    addCart(){
+      this.countCart++;
+    },
+    async fetchEachProduct() {
+      this.isLoading++;
+      this.product = await savingServices.eachProduct(this.productId);
+      this.isLoading--;
+    },
     async fetchListProduct(page) {
       this.isLoading++;
       this.listProducts = await savingServices.listProducts(this.perPage,page);
