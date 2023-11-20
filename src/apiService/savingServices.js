@@ -8,7 +8,7 @@ export const saving = async () => {
     console.log(error);
   }
 };
-//Nếu trong object cần nhận từ bên ngoài vào thì để 2 tham số vào 
+//Nếu trong object cần nhận từ bên ngoài vào thì để 2 tham số vào
 //ở sync()
 export const gift = async () => {
   try {
@@ -26,7 +26,7 @@ export const slide = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const product = async () => {
   try {
@@ -35,8 +35,7 @@ export const product = async () => {
   } catch (error) {
     console.log(error);
   }
-}
-
+};
 
 export const about = async () => {
   try {
@@ -45,7 +44,7 @@ export const about = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const help = async () => {
   try {
@@ -54,7 +53,7 @@ export const help = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const contact = async () => {
   try {
@@ -63,22 +62,22 @@ export const contact = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const listProducts = async (perPage,page) => {
+export const listProducts = async (perPage, page) => {
   try {
-    const res = await request.get(`products?_limit=${perPage}&_page=${page}`)
+    const res = await request.get(`products?_limit=${perPage}&_page=${page}`);
     return res;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const eachProduct = async (id) => {
   try {
-    const res = await request.get(`products/${id}`)
+    const res = await request.get(`products/${id}`);
     return res;
   } catch (error) {
     console.log(error);
   }
-}
+};

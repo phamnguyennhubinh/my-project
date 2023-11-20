@@ -1,207 +1,5 @@
 <template>
   <div id="main">
-    <!-- <div class="container">
-      <a-breadcrumb style="margin-bottom: 10px">
-        <a-breadcrumb-item>Home</a-breadcrumb-item>
-        <a-breadcrumb-item
-          ><a href="http://localhost:8080/shop">Shop</a></a-breadcrumb-item
-        >
-        <a-breadcrumb-item
-          ><a href="http://localhost:8080/shop/detail"
-            >Detail</a
-          ></a-breadcrumb-item
-        >
-        <a-breadcrumb-item
-          ><a href="http://localhost:8080/shop/detail"
-            >Vòng tay nữ mạ vàng 24k siêu đẹp, siêu sang</a
-          ></a-breadcrumb-item
-        >
-      </a-breadcrumb>
-      <section class="flex card">
-        <section class="d-flex flex-row">
-          <section class="p-2">
-            <div class="flex flex-column">
-              <div>
-                <div class="picdetail">
-                  <picture>
-                    <img
-                      class="picMain"
-                      src="https://i.imgur.com/1bze9LE.png"
-                    />
-                  </picture>
-                </div>
-              </div>
-              <div class="smallPics">
-                <div class="manypic">
-                  <a-image-preview-group>
-                    <a-image
-                      class="pic"
-                      width="100px"
-                      src="https://i.imgur.com/SarTYwV.png"
-                    ></a-image>
-                    <a-image
-                      class="pic"
-                      width="100px"
-                      src="https://i.imgur.com/EXkkAtR.png"
-                    ></a-image>
-                    <a-image
-                      class="pic"
-                      width="100px"
-                      src="https://i.imgur.com/8C8UIlP.png"
-                    ></a-image>
-                    <a-image
-                      class="pic"
-                      width="70px"
-                      src="https://i.imgur.com/uHpchAM.png"
-                    ></a-image>
-                  </a-image-preview-group>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section class="p-2">
-            <h2 class="nameProduct">
-              <span
-                style="
-                  background-color: orangered;
-                  color: #fff;
-                  font-size: 13px;
-                "
-                >Yêu thích</span
-              >&nbsp;Vòng tay nữ mạ vàng 24k siêu đẹp, siêu sang
-            </h2>
-            <div>
-              {{ value }}
-              <a-rate v-model:value="value" allowHalf></a-rate>
-              <a href="#" style="text-decoration: none; color: black"
-                >&nbsp;&nbsp;| 704 Đánh giá</a
-              >
-              &nbsp; | &nbsp; 2,5k Đã bán
-            </div>
-            <div class="" style="background-color: #fafafa">
-              <div style="margin-top: 30px">
-                <span style="text-decoration: line-through">90.000</span>
-                <span style="color: orangered; font-size: 40px">
-                  &nbsp;49.000&nbsp;&nbsp;</span
-                >
-                <span style="background-color: orangered; color: #fff"
-                  >46% GIẢM</span
-                >
-                <div class="flex items-center">
-                  <i
-                    class="fas fa-comments"
-                    style="padding-left: 20px; color: orangered"
-                  ></i>
-                  <div style="padding-left: 20px">
-                    <p style="color: orangered; margin-bottom: 0">Gì cũng rẻ</p>
-                    <p>Giá tốt nhất so với sản phẩm cùng loại trên Shopee!</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center" style="margin-top: 20px">
-              <span style="padding-left: 20px">Vận Chuyển</span>
-              <i class="fas fa-truck" style="padding: 0 20px"></i>
-              <div style="margin-right: 20px">
-                <div>Vận chuyển Tới</div>
-                <div>Phí Vận Chuyển</div>
-              </div>
-              <div>
-                <div>
-                  <a-select
-                    v-model:value="value2"
-                    style="width: 120px"
-                    :dropdown-match-select-width="false"
-                    :placement="placement"
-                  >
-                    <a-select-option value="HangZhou"
-                      >P4, Gò Vấp</a-select-option
-                    >
-                    <a-select-option value="NingBo"
-                      >P5, Tân Bình</a-select-option
-                    >
-                    <a-select-option value="WenZhou"
-                      >P6, Quận 1</a-select-option
-                    >
-                  </a-select>
-                </div>
-                <div>
-                  <a-select
-                    v-model:value="value3"
-                    style="width: 120px"
-                    :dropdown-match-select-width="false"
-                    :placement="placement"
-                  >
-                    <a-select-option value="HangZhou1"
-                      >15.00-19.000</a-select-option
-                    >
-                    <a-select-option value="NingBo1"
-                      >18.000-20.000</a-select-option
-                    >
-                    <a-select-option value="WenZhou1"
-                      >25.000-30.000</a-select-option
-                    >
-                  </a-select>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <span style="margin: 0 20px">Số Lượng</span>
-              <div>
-                <a-input-number
-                  id="inputNumber"
-                  v-model:value="value1"
-                  :min="1"
-                  :max="100"
-                />
-              </div>
-            </div>
-            <div style="margin-left: 20px">
-              <button type="button" class="button-add-cart">
-                <i class="fa-solid fa-cart-plus"></i>&ensp;Thêm vào giỏ hàng
-              </button>
-              <button type="button" class="button-buy-now">Mua Ngay</button>
-            </div>
-          </section>
-        </section>
-      </section>
-      <section class="flex card" style="margin: 50px 0">
-        <h3 style="padding: 20px">CHI TIẾT SẢN PHẨM</h3>
-        <div>
-          <div class="flex">
-            <label class="label-detail">Danh mục</label>
-            <div>Sản phẩm</div>
-          </div>
-          <div class="flex">
-            <label class="label-detail">Chất liệu</label>
-            <div>Vàng</div>
-          </div>
-          <div class="flex">
-            <label class="label-detail">Kho hàng</label>
-            <div>1290</div>
-          </div>
-          <div class="flex">
-            <label class="label-detail">Gửi từ</label>
-            <div>Hà Nội</div>
-          </div>
-        </div>
-      </section>
-      <section class="flex card" style="margin: 50px 0">
-        <h3 style="padding: 20px">MÔ TẢ SẢN PHẨM</h3>
-        <div style="padding-left: 20px; padding-bottom: 20px;">
-          Gấu bông heo ôm bình sữa lợn bú bình mẫu thú nhồi bông siêu cute hàng
-          cao cấp mềm mịn 28cm <br />
-          THÔNG TIN SẢN PHẨM <br />- Trọng Lượng: 0,5 kg. <br />✔️ Kích thước
-          cao: 30cm <br />✔️ Chất liệu: vải Nhung nhồi bông <br />✔️ Xuất xứ:
-          Việt Nam <br />✔️ Chất bông mềm mại, mịn màng <br />✔️ Cho bé chơi, ôm
-          ngủ hoặc trang trí phòng <br />✔️ Bông siêu mịn, ko bị xù lông khi
-          giặt. <br />✔️ Sản phẩm tuyệt đối an toàn cho bé. <br />✔️ Thích hợp
-          cho trẻ nhỏ, con nít lẫn người lớn vì sự êm ái khi ôm & an toàn, không
-          bị đổ lông. <br />✔️ Đẹp mắt, phù hợp làm quà sinh nhật, quà tặng lễ
-          tết.
-        </div>
-      </section>
-    </div> -->
     <section class="container">
       <div class="grid wide card">
         <a-breadcrumb class="bread_crumb">
@@ -226,10 +24,7 @@
               <div>
                 <div class="picdetail">
                   <a-image-preview-group>
-                    <a-image
-                      class="picMain"
-                      :src="counterStore.product.pic"
-                    >
+                    <a-image class="picMain" :src="counterStore.product.pic">
                     </a-image>
                   </a-image-preview-group>
                 </div>
@@ -237,45 +32,45 @@
               <div class="grid">
                 <div class="row _margin">
                   <div class="col-md-3">
-                    <a-image
-                      :src="counterStore.product.pic"
-                    ></a-image>
+                    <a-image :src="counterStore.product.pic"></a-image>
                   </div>
                   <div class="col-md-3">
-                    <a-image
-                      :src="counterStore.product.pic"
-                    ></a-image>
+                    <a-image :src="counterStore.product.pic"></a-image>
                   </div>
                   <div class="col-md-3">
-                    <a-image
-                      :src="counterStore.product.pic"
-                    ></a-image>
+                    <a-image :src="counterStore.product.pic"></a-image>
                   </div>
                   <div class="col-md-3">
-                    <a-image
-                      :src="counterStore.product.pic"
-                    ></a-image>
+                    <a-image :src="counterStore.product.pic"></a-image>
                   </div>
-                  <button class="icon-button button-arrow-1" tabindex="-1"><i class="fas fa-angle-left"></i></button>
-                  <button class="icon-button button-arrow-2" tabindex="-1"><i class="fas fa-angle-right"></i></button>
+                  <button class="icon-button button-arrow-1" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                  </button>
+                  <button class="icon-button button-arrow-2" tabindex="-1">
+                    <i class="fas fa-angle-right"></i>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-7">
             <h3 class="nameProduct">
-              <span class="like">Yêu thích</span>&nbsp;{{ counterStore.product.name }}
+              <span class="like">Yêu thích</span>&nbsp;{{
+                counterStore.product.name
+              }}
             </h3>
-            <div>
+            <div class="can-le-trai">
               {{ value }}
               <a-rate v-model:value="value" allowHalf></a-rate>
               <a href="#">&nbsp;&nbsp;| 704 Đánh giá</a>
               &nbsp; | &nbsp; 2,5k Đã bán
             </div>
-            <div class="price-discount-background">
+            <div class="price-discount-background can-le-trai">
               <div class="margin-top-30">
                 <span class="price-discount">1200</span>
-                <span class="price"> &nbsp;{{ counterStore.product.price }}&nbsp;&nbsp;</span>
+                <span class="price">
+                  &nbsp;{{ counterStore.product.price }}&nbsp;&nbsp;</span
+                >
                 <span class="discount">46% GIẢM</span>
                 <div class="flex items-center">
                   <i
@@ -346,28 +141,31 @@
                 />
               </div>
             </div>
-            <div class="margin-left-20">
+            <div class="margin-left-20 can-le-trai">
               <button type="button" class="button-add-cart" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>&ensp;Thêm vào giỏ hàng
               </button>
               <button type="button" class="button-buy-now">Mua Ngay</button>
             </div>
-            
-            <div class="grid"> <hr>
+
+            <div class="grid">
+              <hr />
               <div class="row bread_crumb">
                 <div class="col-md-4">
-                  <i class="fas fa-undo" style="color: #d0011b"></i>&nbsp;
-                  7 ngày miễn phí trả hàng
+                  <i class="fas fa-undo" style="color: #d0011b"></i>&nbsp; 7
+                  ngày miễn phí trả hàng
                 </div>
                 <div class="col-md-4">
-                  <i class="fa-solid fa-square-check" style="color: #d0011b;"></i>
+                  <i
+                    class="fa-solid fa-square-check"
+                    style="color: #d0011b"
+                  ></i>
                   &nbsp; Hàng chính hãng 100%
                 </div>
                 <div class="col-md-4">
-                  <i class="fa-solid fa-truck-fast" style="color: #d0011b;"></i>
-                &nbsp; Miễn phí vận chuyển
+                  <i class="fa-solid fa-truck-fast" style="color: #d0011b"></i>
+                  &nbsp; Miễn phí vận chuyển
                 </div>
-                
               </div>
             </div>
           </div>
@@ -417,6 +215,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useCounterStore } from "@/stores";
+import { useRoute } from 'vue-router'
 const counterStore = useCounterStore();
 const value = ref(4.5);
 const placement = ref("topLeft");
@@ -424,54 +223,37 @@ const value2 = ref("HangZhou");
 const value1 = ref(1);
 const value3 = ref("HangZhou1");
 const sanphams = ref([]);
-const listCarts = ref([]);
+const route = useRoute()
 onMounted(async () => {
-  await counterStore.fetchEachProduct();
+  const productId = route.params.id;
+  await counterStore.fetchEachProduct(productId);
   console.log(counterStore.product);
   sanphams.value = counterStore.product;
-})
-const addToCart = () =>{
-  if(counterStore.product in listCarts.value) {
-    console.log("trùng");
-  }
-  else {
-    listCarts.value = listCarts.value.concat(counterStore.product);
-    console.log(listCarts.value);
-  }
-  
-  // localStorage.setItem('carts',JSON.stringify(listCarts.value));
+});
 
-  // if(!(counterStore.product in counterStore.listCarts))
-  // {
-  //   console.log("Hello");
-  //   console.log(counterStore.listCarts)
-  // }
-  // else 
-  // {
-  //   counterStore.countCart++;
-  //   counterStore.listCarts = counterStore.listCarts.concat(counterStore.product);
-  // }
-}
+const addToCart = () => {
+  counterStore.addToCart(sanphams.value)
+};
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/styles/grid.css";
 $color-main: orangered;
-._margin{
+._margin {
   position: relative;
   margin: 20px 10px;
 }
 .icon-button {
   outline: none;
   cursor: pointer;
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 300;
   line-height: 1;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color .1s cubic-bezier(.4,0,.6,1);
+  transition: background-color 0.1s cubic-bezier(0.4, 0, 0.6, 1);
 }
 .button-arrow-1 {
   position: absolute;
@@ -481,7 +263,7 @@ $color-main: orangered;
   left: 0;
   transform: translateY(-50%);
   color: #fff;
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, 0.2);
   border: none;
 }
 .button-arrow-2 {
@@ -492,8 +274,11 @@ $color-main: orangered;
   right: 0;
   transform: translateY(-50%);
   color: #fff;
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, 0.2);
   border: none;
+}
+.can-le-trai {
+  text-align: left;
 }
 .margin-50-0 {
   margin: 50px 0;
@@ -636,7 +421,7 @@ a {
   padding: 20px;
 }
 .border {
-  border: 1px solid ;
+  border: 1px solid;
 }
 .flex {
   display: flex;

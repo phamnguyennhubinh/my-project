@@ -19,7 +19,11 @@
       </div>
     </div>
     <center>
-      <button @click="loadMore" class="btn-view-products" :class="{ 'disabled-btn': disableButton }">
+      <button
+        @click="loadMore"
+        class="btn-view-products"
+        :class="{ 'disabled-btn': disableButton }"
+      >
         View More Products
       </button>
     </center>
@@ -38,27 +42,27 @@ const page = ref(1);
 const newList = ref([]);
 const router = useRouter();
 const handleProductClick = (productId) => {
-  console.log('Product ID clicked:', productId);
-  router.push({ name: 'ProductDetail' });
-  counterStore.productId = productId;
-  console.log(counterStore.productId);
+  // productId = $route.params.id;
+  console.log("Product ID clicked:", productId);
+  router.push({ name: "ProductDetail", params: { id: productId } });
+  // localStorage.setItem("productId", productId);
+  // console.log(productId);
+  // counterStore.productId = productId;
+  // console.log(counterStore.productId);
 };
 const updateList = async () => {
   page.value++;
   await counterStore.fetchListProduct(page.value);
   listProducts.value = counterStore.listProducts;
   console.log(listProducts.value);
-  if (listProducts.value.length > 0 )
-  {
+  if (listProducts.value.length > 0) {
     newList.value = newList.value.concat(listProducts.value);
-    disableButton.value = false; 
-  }
-  else {
+    disableButton.value = false;
+  } else {
     disableButton.value = true;
   }
 };
-onMounted(
-  async () => {
+onMounted(async () => {
   await counterStore.fetchListProduct(page.value);
   newList.value = counterStore.listProducts;
   console.log(newList.value);

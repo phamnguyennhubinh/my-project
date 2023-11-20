@@ -15,38 +15,58 @@ export const useCounterStore = defineStore("counter", {
     listProducts: [],
     perPage: 8,
     countProduct: 0,
-    product: [],
-    productId: 1,
-    countCart: 0,
+    product: {},
+
+    countC: 0,
     countQuantity: 1,
     count: 1,
-    listCarts: []
+    listCarts: [],
+    total: Number(0),
   }),
   actions: {
-    increaseQuantity(){
+    totalBill() {
+      this.total = 0;
+      for (let i = 0; i < this.listCarts.length; i++) {
+        this.total = this.total + Number(this.listCarts[i].price);
+      }
+    },
+    countCart() {
+      this.countC = this.listCarts.length;
+    },
+    addToCart(sanpham) {
+      const findIndexProductByID = this.listCarts.findIndex(
+        (item) => item.id === sanpham.id
+      );
+      if (findIndexProductByID !== -1) {
+        this.listCarts[findIndexProductByID].quantity += 1;
+      } else {
+        this.listCarts.push({ ...sanpham, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(this.listCarts));
+
+    },
+    increaseQuantity() {
       this.count++;
     },
-    decreaseQuantity(){
-      if(this.count===0)
-      {
-        this.count===0
-      }
-      else
-      {
+    decreaseQuantity() {
+      if (this.count === 0) {
+        this.count === 0;
+      } else {
         this.count--;
       }
     },
-    addCart(){
+    addCart() {
       this.countCart++;
     },
-    async fetchEachProduct() {
+
+    async fetchEachProduct(productId) {
       this.isLoading++;
-      this.product = await savingServices.eachProduct(this.productId);
+      this.product = await savingServices.eachProduct(productId);
       this.isLoading--;
     },
     async fetchListProduct(page) {
       this.isLoading++;
-      this.listProducts = await savingServices.listProducts(this.perPage,page);
+      this.listProducts = await savingServices.listProducts(this.perPage, page);
       this.isLoading--;
     },
     async fetchApi() {
@@ -54,7 +74,7 @@ export const useCounterStore = defineStore("counter", {
       this.children = await savingServices.saving();
       this.isLoading--;
     },
-    async fetchApiGift(){
+    async fetchApiGift() {
       this.isLoading++;
       this.gift = await savingServices.gift();
       this.isLoading--;
@@ -69,20 +89,20 @@ export const useCounterStore = defineStore("counter", {
       this.products = await savingServices.product();
       this.isLoading--;
     },
-    async fetchApiFooterAbout(){
+    async fetchApiFooterAbout() {
       this.isLoading++;
       this.about = await savingServices.about();
       this.isLoading--;
     },
-    async fetchApiFooterContact(){
+    async fetchApiFooterContact() {
       this.isLoading++;
       this.help = await savingServices.help();
       this.isLoading--;
     },
-    async fetchApiFooterHelp(){
+    async fetchApiFooterHelp() {
       this.isLoading++;
       this.contact = await savingServices.contact();
       this.isLoading--;
-    }
-  }
+    },
+  },
 });
