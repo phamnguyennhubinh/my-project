@@ -16,8 +16,9 @@ export const useCounterStore = defineStore("counter", {
     perPage: 8,
     countProduct: 0,
     product: {},
+    // countPlus: 0,
 
-    countC: 0,
+    countC: Number,
     countQuantity: 1,
     count: 1,
     listCarts: [],
@@ -27,33 +28,61 @@ export const useCounterStore = defineStore("counter", {
     totalBill() {
       this.total = 0;
       for (let i = 0; i < this.listCarts.length; i++) {
-        this.total = this.total + Number(this.listCarts[i].price);
+        this.total =
+          this.total +
+          Number(this.listCarts[i].price * this.listCarts[i].quantity);
       }
+      return this.total;
+    },
+    totalEachProduct(id) {
+      // const totalEach = 0;
+      const findIndexProductByID = this.listCarts.findIndex(
+        (item) => item.id === id
+      );
+      const totalEach = Number(
+        this.listCarts[findIndexProductByID].price *
+          this.listCarts[findIndexProductByID].quantity
+      );
+      return totalEach;
     },
     countCart() {
       this.countC = this.listCarts.length;
     },
-    addToCart(sanpham) {
+    addToCart(sanpham, value) {
       const findIndexProductByID = this.listCarts.findIndex(
         (item) => item.id === sanpham.id
       );
       if (findIndexProductByID !== -1) {
-        this.listCarts[findIndexProductByID].quantity += 1;
+        if(value !== 1)
+        {
+          this.listCarts[findIndexProductByID].quantity = value;
+        }
+        else
+        {
+          this.listCarts[findIndexProductByID].quantity += 1;
+        }
       } else {
         this.listCarts.push({ ...sanpham, quantity: 1 });
       }
+      // this.countPlus++;
+      // this.countC = this.listCarts.length;
+      // this.countC++;
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
-
     },
-    increaseQuantity() {
-      this.count++;
+    increaseQuantity(id) {
+      const findIndexProductByID = this.listCarts.findIndex(
+        (item) => item.id === id
+      );
+      this.listCarts[findIndexProductByID].quantity += 1;
+      localStorage.setItem("cart", JSON.stringify(this.listCarts));
     },
-    decreaseQuantity() {
-      if (this.count === 0) {
-        this.count === 0;
-      } else {
-        this.count--;
-      }
+    decreaseQuantity(id) {
+      const findIndexProductByID = this.listCarts.findIndex(
+        (item) => item.id === id
+      );
+      this.listCarts[findIndexProductByID].quantity -= 1;
+      // this.countCart();
+      localStorage.setItem("cart", JSON.stringify(this.listCarts));
     },
     addCart() {
       this.countCart++;

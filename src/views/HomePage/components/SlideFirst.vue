@@ -161,6 +161,9 @@ onMounted(() => {
 .btn-welcome {
   font-size: 12px;
 }
+.position-welcome{
+  padding-left: 0;
+}
 }
 
 @media  screen and (max-width: 320px){
@@ -187,5 +190,13 @@ onMounted(() => {
     padding: 10px 20px;
     margin-left: 30px;
   }
+  .position-welcome {
+    padding-left: 0;
+  }
 }
+// @media screen and (max-width: 250px) {
+//   .position-welcome{
+//     padding-left: 0;
+//   }
+// }
 </style>

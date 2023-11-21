@@ -10,7 +10,13 @@
 <script setup>
 import PrimaryPage from './views/PrimaryPage.vue';
 import { useCounterStore } from "@/stores/index";
+import { computed, onMounted} from 'vue';
 const counterStore = useCounterStore();
+// const array = JSON.parse(localStorage.getItem("cart"));
+counterStore.countC = computed(() => counterStore.listCarts.length);
+onMounted(()=>{
+  counterStore.listCarts = JSON.parse(localStorage.getItem("cart"));
+})
 </script>
 
 <style>
@@ -27,22 +33,3 @@ const counterStore = useCounterStore();
   z-index: 9999;
 }
 </style>
-
-<!-- <template>
-  <div id="app">
-    <ListComponent/>
-  </div>
-</template>
-
-<script>
-import { defineComponent } from 'vue'
-import ListComponent from './components/ListComponent.vue';
-export default defineComponent({
-  components: {
-    ListComponent
-  },
-  setup() {
-    
-  },
-})
-</script> -->

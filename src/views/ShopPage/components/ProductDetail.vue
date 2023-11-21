@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <section class="container">
-      <div class="grid wide card">
+      <div class="grid card">
         <a-breadcrumb class="bread_crumb">
           <a-breadcrumb-item>Home</a-breadcrumb-item>
           <a-breadcrumb-item
@@ -14,12 +14,12 @@
           >
           <a-breadcrumb-item
             ><a href="http://localhost:8080/shop/detail"
-              >Vòng tay nữ mạ vàng 24k siêu đẹp, siêu sang</a
+              >{{ counterStore.product.name }}</a
             ></a-breadcrumb-item
           >
         </a-breadcrumb>
         <div class="row">
-          <div class="col-md-5">
+          <!-- <div class="col-md-5">
             <div class="flex flex-column">
               <div>
                 <div class="picdetail">
@@ -43,6 +43,7 @@
                   <div class="col-md-3">
                     <a-image :src="counterStore.product.pic"></a-image>
                   </div>
+                  
                   <button class="icon-button button-arrow-1" tabindex="-1">
                     <i class="fas fa-angle-left"></i>
                   </button>
@@ -52,6 +53,18 @@
                 </div>
               </div>
             </div>
+          </div> -->
+          <div class="col-md-5">
+            <a-carousel arrows dots-class="slick-dots slick-thumb">
+              <template #customPaging="props">
+                <a>
+                  <img :src="getImage(props.i)" />
+                </a>
+              </template>
+              <div v-for="item in carouselPic" :key="item">
+                <img :src="item" />
+              </div>
+            </a-carousel>
           </div>
           <div class="col-md-7">
             <h3 class="nameProduct">
@@ -215,7 +228,9 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useCounterStore } from "@/stores";
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router";
+import 'vue-slick-carousel/dist/vue-slick-carousel.css';
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
 const counterStore = useCounterStore();
 const value = ref(4.5);
 const placement = ref("topLeft");
@@ -223,21 +238,32 @@ const value2 = ref("HangZhou");
 const value1 = ref(1);
 const value3 = ref("HangZhou1");
 const sanphams = ref([]);
-const route = useRoute()
+const route = useRoute();
+const carouselPic = ref([]);
+
 onMounted(async () => {
   const productId = route.params.id;
   await counterStore.fetchEachProduct(productId);
   console.log(counterStore.product);
   sanphams.value = counterStore.product;
+  console.log(value1.value);
+  carouselPic.value = counterStore.product.pic;
+  for (let i = 0; i < carouselPic.value.length; i++) {
+    console.log(carouselPic.value[i]);
+  }
 });
-
 const addToCart = () => {
-  counterStore.addToCart(sanphams.value)
+  counterStore.addToCart(sanphams.value, value1.value);
 };
+
+const getImage = (i) =>{
+    return carouselPic.value[i];
+}
+
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/grid.css";
+// @import "@/assets/styles/grid.css";
 $color-main: orangered;
 ._margin {
   position: relative;
@@ -335,6 +361,8 @@ $color-main: orangered;
 }
 .bread_crumb {
   margin-bottom: 10px;
+  margin-left: 20px;
+  margin-top: 5px;
 }
 .row {
   .col-md-5 {
@@ -446,5 +474,34 @@ a {
   width: 100%;
   margin: 0 10px;
   cursor: pointer;
+}
+:deep(.slick-dots) {
+  position: relative;
+  height: auto;
+}
+:deep(.slick-slide img) {
+  border: 5px solid #fff;
+  display: block;
+  margin: auto;
+  max-width: 80%;
+}
+:deep(.slick-arrow) {
+  display: none !important;
+}
+:deep(.slick-thumb) {
+  bottom: 0px;
+}
+:deep(.slick-thumb li) {
+  width: 60px;
+  height: 45px;
+}
+:deep(.slick-thumb li img) {
+  width: 100%;
+  height: 100%;
+  filter: grayscale(100%);
+  display: block;
+}
+:deep .slick-thumb li.slick-active img {
+  filter: grayscale(0%);
 }
 </style>

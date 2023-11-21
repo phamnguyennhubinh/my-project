@@ -56,7 +56,7 @@
                 <a
                   ><i class="fa fa-user"></i
                   ><span class="font-menu-login">&nbsp;Login</span
-                  >&nbsp;&nbsp;</a
+                  >&nbsp;&nbsp;&nbsp;&nbsp;</a
                 >
                 <router-link :to="{ name: 'ListCart' }">
                   <a style="position: relative; cursor: pointer"
@@ -69,7 +69,7 @@
                     </p>
                   </a>
                 </router-link>
-                <a>&nbsp;&nbsp;<i class="fa fa-search"></i></a>
+                <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i></a>
               </div>
             </div>
           </div>
@@ -140,6 +140,7 @@ export default {
   watch: {
     $route(to) {
       this.currentRoute = to.name; // Lưu tên đường dẫn hiện tại
+      this.isMenuOpen = false; 
     },
   },
   methods: {
@@ -147,8 +148,18 @@ export default {
       this.isMenuOpen = !this.isMenuOpen; // Đảo ngược trạng thái mở/đóng menu
     },
   },
+  computed: {
+
+  }
 };
 </script>
+
+<!-- <script setup>
+import {computed} from "vue";
+const counterStore = useCounterStore();
+counterStore.countC = computed(() => JSON.parse(localStorage.getItem("cart")).length);
+</script> -->
+
 
 <style lang="scss" scoped>
 #count {
@@ -165,10 +176,7 @@ export default {
   bottom: 17%;
   font-weight: bold;
 }
-.cart {
-  color: orangered;
-  cursor: pointer;
-}
+
 .row .col-sm-12 .font-menu {
   font-size: 15px;
   padding: 5px 25px;
@@ -301,6 +309,22 @@ h1 {
   margin-bottom: 0;
 }
 @media screen and (max-width: 1023px) {
+  .row .col-sm-12 .font-menu-login {
+  font-size: 14px;
+  font-weight: 510;
+  
+}
+  .col-sm-12 {
+    padding: 5px;
+  }
+  #count {
+    left: 71%;
+    bottom: -12%;
+  }
+  .row .col-sm-12 .font-menu {
+  font-size: 14px;
+  font-weight: 510;
+}
   #menu {
     display: none;
   }

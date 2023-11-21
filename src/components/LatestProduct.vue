@@ -76,6 +76,7 @@ const loadMore = () => {
 .disabled-btn {
   opacity: 0.5;
   cursor: not-allowed;
+  display: none;
 }
 .content {
   z-index: 1;
