@@ -1,6 +1,22 @@
 <template>
-  <section>
+  <section id="product">
     <h1 class="text-align-center">LIST CARTS</h1>
+    <div class="grid container border">
+      <div class="col-md-4 position-relative">
+        <span class="text-align-left-absolute"><a-checkbox
+          v-model:checked="checked"
+          @change="handleCheckAllChange"
+        >
+        &ensp;
+        </a-checkbox></span>
+        
+        <span class="left-absolute">Sản phẩm</span>
+      </div>
+      <div class="col-md-2">Đơn giá</div>
+      <div class="col-md-2">Số lượng</div>
+      <div class="col-md-2">Số tiền</div>
+      <div class="col-md-2">Thao tác</div>
+    </div>
     <div
       class="grid container card"
       style="margin-top: 40px"
@@ -15,6 +31,7 @@
           :id="cart.id"
           :quantity="cart.quantity"
           @delete="deleteCart"
+          :checkAll="checkAll"
         />
       </div>
     </div>
@@ -25,17 +42,43 @@
           <span class="backgr">${{ totalCart }}</span>
         </div>
       </div> -->
-      <div class="text-align-center"><span class="font-color">Total: </span><span class="backgr">${{ totalCart }}</span></div>
+      <div class="text-align-center">
+        <span class="font-color">Total: </span
+        ><span class="backgr">${{ totalCart }}</span>
+      </div>
     </div>
   </section>
+  <section id="totalBill" >
+    <div class="row border2 background">
+      <div class="col">
+        <a-checkbox v-model:checked="checked"
+      ></a-checkbox>
+        <span>&nbsp;&nbsp;Chọn tất cả</span>
+      </div>
+      <div class="col">
+        <div>Tổng thanh toán</div>
+        <div>({{ counterStore.countC }} sản phẩm)</div>
+      </div>
+      <div class="col">
+        <span class="color-price">${{ totalCart }}</span></div>
+      <div class="col">
+        <router-link :to="{name: 'PurchaseProducts'}">
+          <button class="btn btn-add">Mua Hàng</button>
+        </router-link>
+        
+      </div>
+    </div>
+  </section>
+  <router-view/>
 </template>
 
 <script setup>
 import { useCounterStore } from "@/stores/index";
 import CartItem from "@/components/CartItem.vue";
-// import {ref} from "vue"
+import {ref} from "vue"
 import { onMounted, computed } from "vue";
 const counterStore = useCounterStore();
+const checkAll = ref(false);
 onMounted(() => {
   counterStore.listCarts = JSON.parse(localStorage.getItem("cart"));
   console.log(counterStore.listCarts);
@@ -52,12 +95,64 @@ const deleteCart = (productId) => {
   }
 };
 const totalCart = computed(() => counterStore.totalBill());
+const handleCheckAllChange = (value) => {
+  checkAll.value = value;
+  console.log(value)
+  console.log(checkAll.value)
+};
 </script>
 
 <style lang="scss" scopped>
+.background{
+  background-color: #f9ece6;
+  margin-right: 45px;
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  height: 10%;
+}
+.btn-delete {
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+.color-price {
+  color: orangered;
+}
+.btn-add {
+  border-radius: 0;
+  // padding: 10px 40px;
+}
+.left-absolute {
+  position: absolute;
+  left: 30px;
+  color: black;
+}
+.position-relative{
+  position: relative;
+}
+.text-align-left-absolute {
+  text-align: left;
+  position: absolute;
+  left: 0;
+}
+.border2 {
+  color: black;
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+}
+.border {
+  color: gray;
+  display: flex;
+  text-align: center;
+}
 .text-align-center {
   margin-top: 40px;
   text-align: center;
+  margin-bottom: 40px;
 }
 .margin-top-30 {
   margin-top: 30px;
@@ -118,9 +213,8 @@ const totalCart = computed(() => counterStore.totalBill());
   }
 }
 @media screen and (max-width: 800px) {
-    .row {
-        --bs-gutter-x: 0;
-    }
+  .row {
+    --bs-gutter-x: 0;
+  }
 }
-
 </style>

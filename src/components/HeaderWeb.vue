@@ -53,13 +53,16 @@
                 <a href="#"><span class="font-menu">CONTACT US </span></a>
               </div>
               <div class="col-sm-12">
-                <a
+                <router-link :to="{ name: 'LoginAccount' }">
+                  <a
                   ><i class="fa fa-user"></i
                   ><span class="font-menu-login">&nbsp;Login</span
                   >&nbsp;&nbsp;&nbsp;&nbsp;</a
                 >
+                </router-link>
+                
                 <router-link :to="{ name: 'ListCart' }">
-                  <a style="position: relative; cursor: pointer"
+                  <!-- <a style="position: relative; cursor: pointer"
                     ><i
                       class="fa-solid fa-cart-shopping"
                       style="color: orangered"
@@ -67,9 +70,21 @@
                     <p id="count" style="display: inline">
                       {{ counterStore.countC }}
                     </p>
-                  </a>
+                  </a> -->
+                  <a-badge :count="counterStore.countC" :overflow-count="99">
+                    <a-avatar size="large" style="background-color: orangered"
+                      ><i
+                        class="fa-solid fa-cart-shopping"
+                        style="color: white"
+                      ></i
+                    ></a-avatar>
+                  </a-badge>
                 </router-link>
-                <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i></a>
+                <a
+                  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                    class="fa fa-search"
+                  ></i
+                ></a>
               </div>
             </div>
           </div>
@@ -97,9 +112,12 @@
           <a href="#">CONTACT US</a>
         </li>
         <li>
-          <a><i class="fa fa-user"></i><span>Login</span></a>
+          <router-link :to="{name: 'LoginAccount'}">
+            <a class="pointer"><i class="fa fa-user"></i><span>Login</span></a>
+          </router-link>
+          
           <router-link :to="{ name: 'ListCart' }">
-            <a style="position: relative; cursor: pointer"
+            <!-- <a style="position: relative; cursor: pointer"
               ><i
                 class="fa-solid fa-cart-shopping"
                 style="color: orangered"
@@ -107,7 +125,12 @@
               <p id="count" style="display: inline">
                 {{ counterStore.countC }}
               </p>
-            </a>
+            </a> -->
+            <a-badge :count="counterStore.countC" :overflow-count="99">
+              <a-avatar size="large" style="background-color: orangered"
+                ><i class="fa-solid fa-cart-shopping" style="color: white"></i
+              ></a-avatar>
+            </a-badge>
           </router-link>
 
           <a><i class="fa fa-search"></i></a>
@@ -140,7 +163,7 @@ export default {
   watch: {
     $route(to) {
       this.currentRoute = to.name; // Lưu tên đường dẫn hiện tại
-      this.isMenuOpen = false; 
+      this.isMenuOpen = false;
     },
   },
   methods: {
@@ -148,9 +171,7 @@ export default {
       this.isMenuOpen = !this.isMenuOpen; // Đảo ngược trạng thái mở/đóng menu
     },
   },
-  computed: {
-
-  }
+  computed: {},
 };
 </script>
 
@@ -160,8 +181,10 @@ const counterStore = useCounterStore();
 counterStore.countC = computed(() => JSON.parse(localStorage.getItem("cart")).length);
 </script> -->
 
-
 <style lang="scss" scoped>
+.pointer {
+  cursor: pointer;
+}
 #count {
   display: flex;
   align-items: center;
@@ -183,6 +206,7 @@ counterStore.countC = computed(() => JSON.parse(localStorage.getItem("cart")).le
 }
 .row .col-sm-12 .font-menu-login {
   font-size: 15px;
+  cursor: pointer;
 }
 @keyframes rotateAnimation {
   0% {
@@ -310,10 +334,9 @@ h1 {
 }
 @media screen and (max-width: 1023px) {
   .row .col-sm-12 .font-menu-login {
-  font-size: 14px;
-  font-weight: 510;
-  
-}
+    font-size: 14px;
+    font-weight: 510;
+  }
   .col-sm-12 {
     padding: 5px;
   }
@@ -322,9 +345,9 @@ h1 {
     bottom: -12%;
   }
   .row .col-sm-12 .font-menu {
-  font-size: 14px;
-  font-weight: 510;
-}
+    font-size: 14px;
+    font-weight: 510;
+  }
   #menu {
     display: none;
   }

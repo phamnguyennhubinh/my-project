@@ -9,7 +9,7 @@
           class="col-md-4 col-lg-3 col-sm-6 padding-row"
         >
           <ItemProduct
-            :pic="product.pic"
+            :pic="product.pic[0]"
             :name="product.name"
             :price="product.price"
             :id="product.id"

@@ -53,12 +53,9 @@ export const useCounterStore = defineStore("counter", {
         (item) => item.id === sanpham.id
       );
       if (findIndexProductByID !== -1) {
-        if(value !== 1)
-        {
+        if (value !== 1) {
           this.listCarts[findIndexProductByID].quantity = value;
-        }
-        else
-        {
+        } else {
           this.listCarts[findIndexProductByID].quantity += 1;
         }
       } else {
@@ -69,6 +66,7 @@ export const useCounterStore = defineStore("counter", {
       // this.countC++;
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
     },
+    
     increaseQuantity(id) {
       const findIndexProductByID = this.listCarts.findIndex(
         (item) => item.id === id

@@ -30,7 +30,7 @@
       "id": 3,
       "name": "Teddy Bear",
       "pic": [
-        "https://i.imgur.com/2ZLdDww.png",  
+        "https://i.imgur.com/2ZLdDww.png",
         "https://down-vn.img.susercontent.com/file/415982386d47874a14c000aee90d39cb_tn",
         "https://down-vn.img.susercontent.com/file/f5ac3e118f390e261b02c53b8d54aeab_tn",
         "https://down-vn.img.susercontent.com/file/6c3e9bffbe1061d772661e14cacd0235_tn"
@@ -70,7 +70,7 @@
       "id": 6,
       "name": "Flower Bouquet",
       "pic": [
-         "https://i.imgur.com/EXkkAtR.png",
+        "https://i.imgur.com/EXkkAtR.png",
         "https://down-vn.img.susercontent.com/file/4d3c58743051c4f92835dcc662a12a58_tn",
         "https://down-vn.img.susercontent.com/file/6d4ac6cdfe539107b2bef283a2b21fdb_tn",
         "https://down-vn.img.susercontent.com/file/c6bb1100821fdef46de53c7c5f30618c_tn",
@@ -170,7 +170,7 @@
       "id": 13,
       "name": "Teddy Bear",
       "pic": [
-        "https://i.imgur.com/2ZLdDww.png",  
+        "https://i.imgur.com/2ZLdDww.png",
         "https://down-vn.img.susercontent.com/file/415982386d47874a14c000aee90d39cb_tn",
         "https://down-vn.img.susercontent.com/file/f5ac3e118f390e261b02c53b8d54aeab_tn",
         "https://down-vn.img.susercontent.com/file/6c3e9bffbe1061d772661e14cacd0235_tn"
@@ -211,12 +211,12 @@
       "name": "Flower Bouquet",
       "pic": [
         "https://i.imgur.com/EXkkAtR.png",
-       "https://down-vn.img.susercontent.com/file/4d3c58743051c4f92835dcc662a12a58_tn",
-       "https://down-vn.img.susercontent.com/file/6d4ac6cdfe539107b2bef283a2b21fdb_tn",
-       "https://down-vn.img.susercontent.com/file/c6bb1100821fdef46de53c7c5f30618c_tn",
-       "https://down-vn.img.susercontent.com/file/vn-11134201-23030-nwbqqcanmmov2a_tn",
-       "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgm7sjzwftpu34_tn"
-     ],
+        "https://down-vn.img.susercontent.com/file/4d3c58743051c4f92835dcc662a12a58_tn",
+        "https://down-vn.img.susercontent.com/file/6d4ac6cdfe539107b2bef283a2b21fdb_tn",
+        "https://down-vn.img.susercontent.com/file/c6bb1100821fdef46de53c7c5f30618c_tn",
+        "https://down-vn.img.susercontent.com/file/vn-11134201-23030-nwbqqcanmmov2a_tn",
+        "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgm7sjzwftpu34_tn"
+      ],
       "price": "70",
       "quantity": 1
     },
@@ -310,7 +310,7 @@
       "id": 23,
       "name": "Teddy Bear",
       "pic": [
-        "https://i.imgur.com/2ZLdDww.png",  
+        "https://i.imgur.com/2ZLdDww.png",
         "https://down-vn.img.susercontent.com/file/415982386d47874a14c000aee90d39cb_tn",
         "https://down-vn.img.susercontent.com/file/f5ac3e118f390e261b02c53b8d54aeab_tn",
         "https://down-vn.img.susercontent.com/file/6c3e9bffbe1061d772661e14cacd0235_tn"
@@ -333,7 +333,7 @@
       "quantity": 1
     },
     {
-      "id":25,
+      "id": 25,
       "name": "Teddy Bear",
       "pic": [
         "https://i.imgur.com/SarTYwV.png",
@@ -351,12 +351,12 @@
       "name": "Flower Bouquet",
       "pic": [
         "https://i.imgur.com/EXkkAtR.png",
-       "https://down-vn.img.susercontent.com/file/4d3c58743051c4f92835dcc662a12a58_tn",
-       "https://down-vn.img.susercontent.com/file/6d4ac6cdfe539107b2bef283a2b21fdb_tn",
-       "https://down-vn.img.susercontent.com/file/c6bb1100821fdef46de53c7c5f30618c_tn",
-       "https://down-vn.img.susercontent.com/file/vn-11134201-23030-nwbqqcanmmov2a_tn",
-       "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgm7sjzwftpu34_tn"
-     ],
+        "https://down-vn.img.susercontent.com/file/4d3c58743051c4f92835dcc662a12a58_tn",
+        "https://down-vn.img.susercontent.com/file/6d4ac6cdfe539107b2bef283a2b21fdb_tn",
+        "https://down-vn.img.susercontent.com/file/c6bb1100821fdef46de53c7c5f30618c_tn",
+        "https://down-vn.img.susercontent.com/file/vn-11134201-23030-nwbqqcanmmov2a_tn",
+        "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgm7sjzwftpu34_tn"
+      ],
       "price": "70",
       "quantity": 1
     },
@@ -450,7 +450,7 @@
       "id": 33,
       "name": "Teddy Bear",
       "pic": [
-        "https://i.imgur.com/2ZLdDww.png",  
+        "https://i.imgur.com/2ZLdDww.png",
         "https://down-vn.img.susercontent.com/file/415982386d47874a14c000aee90d39cb_tn",
         "https://down-vn.img.susercontent.com/file/f5ac3e118f390e261b02c53b8d54aeab_tn",
         "https://down-vn.img.susercontent.com/file/6c3e9bffbe1061d772661e14cacd0235_tn"
@@ -491,12 +491,12 @@
       "name": "Flower Bouquet",
       "pic": [
         "https://i.imgur.com/EXkkAtR.png",
-       "https://down-vn.img.susercontent.com/file/4d3c58743051c4f92835dcc662a12a58_tn",
-       "https://down-vn.img.susercontent.com/file/6d4ac6cdfe539107b2bef283a2b21fdb_tn",
-       "https://down-vn.img.susercontent.com/file/c6bb1100821fdef46de53c7c5f30618c_tn",
-       "https://down-vn.img.susercontent.com/file/vn-11134201-23030-nwbqqcanmmov2a_tn",
-       "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgm7sjzwftpu34_tn"
-     ],
+        "https://down-vn.img.susercontent.com/file/4d3c58743051c4f92835dcc662a12a58_tn",
+        "https://down-vn.img.susercontent.com/file/6d4ac6cdfe539107b2bef283a2b21fdb_tn",
+        "https://down-vn.img.susercontent.com/file/c6bb1100821fdef46de53c7c5f30618c_tn",
+        "https://down-vn.img.susercontent.com/file/vn-11134201-23030-nwbqqcanmmov2a_tn",
+        "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgm7sjzwftpu34_tn"
+      ],
       "price": "70",
       "quantity": 1
     },
