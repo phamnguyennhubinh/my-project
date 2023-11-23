@@ -3,13 +3,21 @@
     <h1 class="text-align-center">LIST CARTS</h1>
     <div class="grid container border">
       <div class="col-md-4 position-relative">
-        <span class="text-align-left-absolute"><a-checkbox
+        <span class="text-align-left-absolute">
+          <!-- <a-checkbox
           v-model:checked="checked"
           @change="handleCheckAllChange"
         >
         &ensp;
-        </a-checkbox></span>
-        
+        </a-checkbox> -->
+          <input
+            type="checkbox"
+            id="myCheck"
+            @click="handleCheckAllChange(1)"
+            v-model="checkboxCart"
+          />
+        </span>
+
         <span class="left-absolute">Sản phẩm</span>
       </div>
       <div class="col-md-2">Đơn giá</div>
@@ -31,7 +39,8 @@
           :id="cart.id"
           :quantity="cart.quantity"
           @delete="deleteCart"
-          :checkAll="checkAll"
+          :checkboxCart="checkboxCart.valueOf"
+          @addOrder="addOrder"
         />
       </div>
     </div>
@@ -48,11 +57,15 @@
       </div>
     </div>
   </section>
-  <section id="totalBill" >
+  <section id="totalBill">
     <div class="row border2 background">
       <div class="col">
-        <a-checkbox v-model:checked="checked"
-      ></a-checkbox>
+        <input
+          type="checkbox"
+          id="checkFixed"
+          v-model="checkboxOrder"
+          @click="handleCheckAllChange(2)"
+        />
         <span>&nbsp;&nbsp;Chọn tất cả</span>
       </div>
       <div class="col">
@@ -60,30 +73,76 @@
         <div>({{ counterStore.countC }} sản phẩm)</div>
       </div>
       <div class="col">
-        <span class="color-price">${{ totalCart }}</span></div>
-      <div class="col">
-        <router-link :to="{name: 'PurchaseProducts'}">
-          <button class="btn btn-add">Mua Hàng</button>
+        <span class="color-price">${{ computedValue.billEach }}</span>
+        <!-- totalCart computedValue.billEach totalBillBottom -->
+      </div>
+      <div class="col" id="order">
+        <router-link :to="{ name: 'PurchaseProducts' }">
+          <button :hidden="hidden" class="btn btn-add">Mua Hàng</button>
         </router-link>
-        
       </div>
     </div>
   </section>
-  <router-view/>
+  <router-view />
 </template>
 
 <script setup>
 import { useCounterStore } from "@/stores/index";
 import CartItem from "@/components/CartItem.vue";
-import {ref} from "vue"
+import { ref } from "vue";
 import { onMounted, computed } from "vue";
 const counterStore = useCounterStore();
-const checkAll = ref(false);
+// const checkAll = ref(false);
+const checkboxCart = ref(false);
+const checkboxOrder = ref(false);
+// const cartChoose = ref([]);
+// const orderCart = ref([]);
+// const billEach = ref(0);
+const hidden = ref(true);
+const arrId = ref([]);
+const totalBillBottom = ref(0);
 onMounted(() => {
   counterStore.listCarts = JSON.parse(localStorage.getItem("cart"));
+  localStorage.removeItem("addCart");
   console.log(counterStore.listCarts);
   counterStore.totalBill();
 });
+const addOrder = (productId, check) => {
+  // console.log(productId);
+  // console.log(check);
+
+  if (check === false) {
+    arrId.value = arrId.value.concat(productId);
+    localStorage.setItem("addCart", JSON.stringify(arrId.value));
+    hidden.value = false;
+  } else {
+    const index = arrId.value.findIndex((item) => item === productId);
+    if (index !== -1) {
+      arrId.value.splice(index, 1);
+      localStorage.setItem("addCart", JSON.stringify(arrId.value));
+      if(arrId.value.length === 0)
+      {
+        hidden.value = true;
+      }
+    }
+  }
+};
+const computedValue = computed(() => {
+  const totalBill = arrId.value.reduce((total, productId) => {
+    return total + counterStore.totalEachProduct(productId);
+  }, 0);
+
+  return { arrId: arrId.value, billEach: totalBill };
+});
+// const purchaseOrder = () => {
+//   const arrayPurchase = localStorage.getItem("addCart") || [];
+//   for (let i = 0; i < arrayPurchase.length; i++) {
+//     const findIndexById = counterStore.listCarts.findIndex(arrId.value[i]);
+//     cartChoose.value = counterStore.listCarts[findIndexById];
+//     orderCart.value = orderCart.value.concat(cartChoose.value);
+//     console.log(orderCart.value);
+//   }
+// };
 const deleteCart = (productId) => {
   for (var i = 0; i < counterStore.listCarts.length; i++) {
     if (counterStore.listCarts[i].id === productId) {
@@ -95,15 +154,35 @@ const deleteCart = (productId) => {
   }
 };
 const totalCart = computed(() => counterStore.totalBill());
-const handleCheckAllChange = (value) => {
-  checkAll.value = value;
-  console.log(value)
-  console.log(checkAll.value)
+// const handleCheckAllChange = (value) => {
+//   console.log(value)
+// };
+const handleCheckAllChange = (checkboxNumber) => {
+  var checkBox = document.getElementById("myCheck");
+  var checkFix = document.getElementById("checkFixed");
+  if (checkBox.checked === true || checkFix.checked === true) {
+    counterStore.check = true;
+  } else {
+    counterStore.check = false;
+  }
+  // var checkFix = document.getElementById("checkFixed");
+  if (checkboxNumber === 1) {
+    // Nếu checkbox 1 được tick, đặt giá trị của checkbox 2 thành true
+    checkboxOrder.value = !checkboxCart.value;
+    totalBillBottom.value = counterStore.totalCart;
+  } else if (checkboxNumber === 2) {
+    // Nếu checkbox 2 được tick, đặt giá trị của checkbox 1 thành true
+    checkboxCart.value = !checkboxOrder.value;
+    totalBillBottom.value = 0;
+  }
 };
 </script>
 
 <style lang="scss" scopped>
-.background{
+// .order {
+//   display: none;
+// }
+.background {
   background-color: #f9ece6;
   margin-right: 45px;
   position: fixed;
@@ -129,7 +208,7 @@ const handleCheckAllChange = (value) => {
   left: 30px;
   color: black;
 }
-.position-relative{
+.position-relative {
   position: relative;
 }
 .text-align-left-absolute {

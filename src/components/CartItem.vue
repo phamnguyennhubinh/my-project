@@ -2,8 +2,17 @@
   <div
     class="col-lg-2 col-md-2 col-sm-4 align-items-center justify-content-center position-relative"
   >
-    <span class="text-align-left-abso"><a-checkbox v-model:checked="checked" @change="ifCheckAllTrue"
-      >&nbsp;&nbsp;</a-checkbox></span>
+    <span class="text-align-left-abso">
+      <!-- <a-checkbox v-model:checked="checked" @change="ifCheckAllTrue"
+        >&nbsp;&nbsp;</a-checkbox
+      > -->
+      <input
+        type="checkbox"
+        id="checkEach"
+        v-model="checked"
+        @click="addOrder"
+      />
+    </span>
     <img class="picture-box" :src="pic" />
   </div>
   <div
@@ -43,12 +52,23 @@
 
 <script>
 import { useCounterStore } from "@/stores";
-
+// import { watch } from "vue";
 export default {
-  props: ["id", "pic", "name", "price", "quantity", "checkAll"],
+  props:
+  {
+    id: Number,
+    pic: String,
+    name: String,
+    price: Number,
+    quantity: Number,
+    checkboxCart: Boolean
+  },
+  setup(){
+  },
   data() {
     const counterStore = useCounterStore();
     const count = 1;
+    // const checkBox = document.getElementById("checkEach").checked;
     let checked = false;
     return {
       counterStore,
@@ -73,19 +93,22 @@ export default {
         this.counterStore.decreaseQuantity(this.id);
       }
     },
+    addOrder(){
+      this.$emit("addOrder", this.$props.id, this.checked);
+    }
   },
   computed: {
     totalEach() {
       const totalEachPro = this.counterStore.totalEachProduct(this.id);
       return totalEachPro;
     },
-    
   },
+ 
 };
 </script>
 
 <style lang="scss" scopped>
-.position-relative{
+.position-relative {
   position: relative;
 }
 .text-align-left-abso {
