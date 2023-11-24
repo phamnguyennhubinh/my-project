@@ -229,6 +229,7 @@
 import { onMounted, ref } from "vue";
 import { useCounterStore } from "@/stores";
 import { useRoute } from "vue-router";
+import { message } from "ant-design-vue";
 import 'vue-slick-carousel/dist/vue-slick-carousel.css';
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
 const counterStore = useCounterStore();
@@ -254,6 +255,7 @@ onMounted(async () => {
 });
 const addToCart = () => {
   counterStore.addToCart(sanphams.value, value1.value);
+  message.success("Đã thêm sản phẩm vào giỏ hàng!")
 };
 
 const getImage = (i) =>{

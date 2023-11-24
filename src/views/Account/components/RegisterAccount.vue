@@ -13,6 +13,7 @@
     </a-breadcrumb>
     <h2 class="text-align-center">REGISTER ACCOUNT</h2>
     <a-form
+      ref="formRef"
       :model="formState"
       name="basic"
       :label-col="{ span: 8 }"
@@ -22,19 +23,33 @@
       @finishFailed="onFinishFailed"
     >
       <a-form-item
-        label="Full name:"
-        name="username"
-        :rules="[{ required: true, message: 'Please input your username!' }]"
+        label="Name:"
+        name="fullname"
+        :rules="[
+          { required: true, message: 'Please input your fullname!' },
+          {
+            pattern: /^[A-Za-zÀ-ỹ\s]*[A-Za-zÀ-ỹ][A-Za-zÀ-ỹ\s]*$/,
+            message: 'Please enter a valid name with only letters and spaces',
+            trigger: ['blur', 'change'],
+          },
+        ]"
       >
-        <a-input v-model:value="formState.username" class="border-none" />
+        <a-input v-model:value="formState.fullname" class="border-none" />
       </a-form-item>
 
       <a-form-item
         label="Email:"
         name="email"
-        :rules="[{ required: true, message: 'Please input your email!' }]"
+        :rules="[
+          { required: true, message: 'Please input your email!' },
+          {
+            type: 'email',
+            message: 'Please enter a valid email address',
+            trigger: ['blur', 'change'],
+          },
+        ]"
       >
-        <a-input v-model:value="formState.username" class="border-none" />
+        <a-input v-model:value="formState.email" class="border-none" />
       </a-form-item>
 
       <a-form-item
@@ -42,19 +57,32 @@
         name="phone"
         :rules="[
           { required: true, message: 'Please input your phone number!' },
+          {
+            pattern: /^(0[2-9][0-9]{8}|[2-9][0-9]{8})$/,
+            message: 'Please enter a valid phone number',
+            trigger: ['blur', 'change'],
+          },
         ]"
       >
-        <a-input v-model:value="formState.username" class="border-none" />
+        <a-input v-model:value="formState.phone" class="border-none" />
       </a-form-item>
 
       <a-form-item
         label="Birthday:"
         name="birthday"
-        :rules="[{ required: true, message: 'Please input your birthday!' }]"
+        :rules="[
+          { required: true, message: 'Please input your birthday!' },
+          {
+            validator: validateBirthday,
+            message:
+              'Please enter a valid birthday in the format dd/mm/yyyy and not in the future',
+            trigger: ['blur', 'change'],
+          },
+        ]"
       >
         <a-date-picker
-          v-model:value="formState['date-picker']"
-          value-format="DD-MM-YYYY"
+          v-model:value="formState.birthday"
+          format="DD/MM/YYYY"
           class="border-none"
         />
       </a-form-item>
@@ -62,7 +90,10 @@
       <a-form-item
         label="Password"
         name="password"
-        :rules="[{ required: true, message: 'Please input your password!' }]"
+        :rules="[
+          { required: true, message: 'Please input your password!' },
+          { validator: validateStrongPassword, trigger: ['blur', 'change'] },
+        ]"
       >
         <a-input-password
           v-model:value="formState.password"
@@ -74,7 +105,10 @@
         has-feedback
         label="Confirm"
         name="checkPass"
-        :rules="[{ required: true, message: 'Please input your password!' }]"
+        :rules="[
+          { required: true, message: 'Please input your password!' },
+          { validator: validateCheckPassword, trigger: ['blur', 'change'] },
+        ]"
       >
         <a-input
           v-model:value="formState.checkPass"
@@ -90,8 +124,8 @@
         >
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 8, span: 8 }" class="center">
-        <router-link :to="{name: 'LoginAccount'}">
-            <a>Đăng nhập</a>
+        <router-link :to="{ name: 'LoginAccount' }">
+          <a>LOGIN</a>
         </router-link>
       </a-form-item>
     </a-form>
@@ -99,23 +133,124 @@
 </template>
 <script setup>
 import { reactive } from "vue";
+import { nextTick } from "vue";
+import { message } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
+// import {computed} from "vue";
+import { ref } from "vue";
+// import moment from "moment";
+const arrayFormRegister = ref([]);
+const router = useRouter();
+const formRef = ref(null);
 const formState = reactive({
-  username: "",
+  fullname: "",
   password: "",
+  phone: "",
+  email: "",
+  checkPass: "",
+  birthday: "",
   remember: true,
 });
 const onFinish = (values) => {
+  registerAcc();
   console.log("Success:", values);
 };
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
+};
+// Check password
+const validateCheckPassword = (_, value) => {
+  if (value !== formState.password) {
+    return Promise.reject("Passwords do not match.");
+  }
+
+  return Promise.resolve();
+};
+
+const validateStrongPassword = (_, value) => {
+  // Define your criteria for a strong password
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  if (!passwordRegex.test(value)) {
+    return Promise.reject(
+      "Password must be strong: at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character."
+    );
+  }
+
+  return Promise.resolve();
+};
+
+function formatBirthday(birthdayObject) {
+  if (birthdayObject) {
+    const day = birthdayObject.$D;
+    const month = birthdayObject.$M + 1; // Tháng trong Day.js bắt đầu từ 0, nên cần cộng thêm 1
+    const year = birthdayObject.$y;
+    return `${day}/${month}/${year}`;
+  } else {
+    console.log("Ngày sinh không hợp lệ.");
+  }
+}
+
+const validateBirthday = (_, value) => {
+  const selectedDate = new Date(value);
+
+  if (isNaN(selectedDate.getTime())) {
+    // Invalid date
+    return Promise.reject("Invalid date format");
+  }
+
+  // Check if the date is not in the future
+  const currentDate = new Date();
+  if (selectedDate > currentDate) {
+    return Promise.reject("Birthday cannot be in the future");
+  }
+
+  return Promise.resolve();
+};
+const registerAcc = async () => {
+  await nextTick();
+  arrayFormRegister.value = JSON.parse(localStorage.getItem("listAcc")) || [];
+  if (formRef.value) {
+    const findIndexByPhone = arrayFormRegister.value.findIndex(
+      (item) => item.phone === formState.phone
+    );
+    if (findIndexByPhone !== -1) {
+      console.log("Exist account");
+      message.error("Tài khoản đã tồn tại!")
+    } else {
+      console.log("Register!");
+      message.success('Đăng ký thành công!');
+      router.push({ name: 'LoginAccount' });
+      formRef.value.validate().then((valid) => {
+        if (valid) {
+          arrayFormRegister.value.push({
+            fullname: formState.fullname,
+            phone: formState.phone,
+            email: formState.email,
+            birthday: formatBirthday(formState.birthday),
+            password: formState.password,
+          });
+          console.log(arrayFormRegister.value);
+          localStorage.setItem(
+            "listAcc",
+            JSON.stringify(arrayFormRegister.value)
+          );
+        } else {
+          console.log("Form is not valid");
+        }
+      });
+    }
+  } else {
+    console.error("Form reference is not available");
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/style/styles.scss";
 .center {
-    text-align: center;
+  text-align: center;
 }
 .border-none {
   border-radius: 0;
@@ -143,6 +278,6 @@ const onFinishFailed = (errorInfo) => {
   }
 }
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 </style>

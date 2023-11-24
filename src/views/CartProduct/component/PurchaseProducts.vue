@@ -8,11 +8,29 @@
         >&ensp;Địa chỉ nhận hàng
       </div>
       <div>
-        <a-button type="primary" @click="showDrawer" class="button-add-address">
-          <template #icon><PlusOutlined /></template>
-          <i class="fa-solid fa-plus" style="color: #fff">&ensp;</i>&ensp;
-          Thêm/Thay đổi địa chỉ
-        </a-button>
+        <div class="margin-left">
+          <span
+            ><b
+              >{{ counterStore.infoDeliveryDetail[0].name }}&ensp;{{
+                counterStore.infoDeliveryDetail[0].phone
+              }}</b
+            >
+            &ensp;{{ counterStore.infoDeliveryDetail[0].specificAddress }},
+            {{ counterStore.infoDeliveryDetail[0].ward }},
+            {{ counterStore.infoDeliveryDetail[0].district }},
+            {{ counterStore.infoDeliveryDetail[0].city }}&ensp;&ensp;
+          </span>
+          <a-button
+            type="primary"
+            @click="showDrawer"
+            class="button-add-address"
+          >
+            <template #icon><PlusOutlined /></template>
+            <i class="fa-solid fa-plus" style="color: #fff">&ensp;</i>&ensp;
+            Thay đổi
+          </a-button>
+        </div>
+
         <a-drawer
           title="Add delivery address"
           :width="720"
@@ -21,29 +39,27 @@
           :footer-style="{ textAlign: 'right' }"
           @close="onClose"
         >
-          <a-form :model="form" :rules="rules" layout="vertical">
+          <a-form ref="formRef" :model="form" :rules="rules" layout="vertical">
             <a-row :gutter="16">
               <a-col :span="12">
                 <a-form-item label="Name" name="name">
-                  <button @click="getFullName">Hi</button>
                   <a-input
-                  id="getName"
+                    id="getName"
                     v-model:value="form.name"
                     v-model="message"
                     placeholder="Please enter your name"
                     pattern="[A-Za-z]+"
-                  /> 
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
                 <a-form-item label="Phone number" name="phone">
                   <a-input
-                  id="phoneNumber"
+                    id="phoneNumber"
                     v-model:value="form.phone"
                     placeholder="Please enter your phone number"
-                    type="number"
                     maxlength="10"
-                    pattern=" /^[0-9-+]+$/"
+                    pattern="/^(0[39]\d{8}|[39]\d{8})$/"
                   />
                 </a-form-item>
               </a-col>
@@ -51,21 +67,11 @@
             <a-row :gutter="16">
               <a-col :span="8">
                 <a-form-item label="City" name="city">
-                  <!-- <a-select
-                   v-model:value="form.owner"
-                   placeholder="Please a-s an owner"
-                 >
-                   <a-select-option value="xiao">Xiaoxiao Fu</a-select-option>
-                   <a-select-option value="mao">Maomao Zhou</a-select-option>
-                 </a-select> -->
                   <a-select
-                    v-model:value="selectedCity"
+                    v-model:value="form.city"
                     @change="loadDistricts"
                     placeholder="Choose your city"
                   >
-                    <!-- <a-select-option value="" selected
-                     ></a-select-option
-                   > -->
                     <a-select-option
                       v-for="city in cities"
                       :key="city.code"
@@ -78,7 +84,7 @@
               <a-col :span="8">
                 <a-form-item label="District" name="district">
                   <a-select
-                    v-model:value="selectedDistrict"
+                    v-model:value="form.district"
                     @change="loadWards"
                     placeholder="Choose your district"
                   >
@@ -97,13 +103,10 @@
               <a-col :span="8">
                 <a-form-item label="Ward" name="ward">
                   <a-select
-                    v-model:value="selectedWard"
+                    v-model:value="form.ward"
                     @change="printResult"
                     placeholder="Choose your ward"
                   >
-                    <!-- <a-select-option value="" selected
-                     ></a-select-option
-                   > -->
                     <a-select-option
                       v-for="ward in wards"
                       :key="ward.code"
@@ -123,15 +126,6 @@
                   />
                 </a-form-item>
               </a-col>
-              <!-- <a-col :span="12">
-               <a-form-item label="DateTime" name="dateTime">
-                 <a-date-picker
-                   v-model:value="form.dateTime"
-                   style="width: 100%"
-                   :get-popup-container="(trigger) => trigger.parentElement"
-                 />
-               </a-form-item>
-             </a-col> -->
             </a-row>
             <a-row :gutter="16">
               <a-col :span="24">
@@ -148,7 +142,7 @@
           <template #extra>
             <a-space>
               <a-button @click="onClose">Cancel</a-button>
-              <a-button type="primary" @click="onClose">Submit</a-button>
+              <a-button type="primary" @click="handleSubmit">Submit</a-button>
             </a-space>
           </template>
         </a-drawer>
@@ -161,14 +155,19 @@
         <div class="col-md-2">Số lượng</div>
         <div class="col-md-2">Thành tiền</div>
       </div>
-      <div class="row margin-top align-item-center" v-for="item in counterStore.arrayTicked" :key="item.id"><hr>
+      <div
+        class="row margin-top align-item-center"
+        v-for="item in counterStore.arrayTicked"
+        :key="item.id"
+      >
+        <hr />
         <div class="col-md-3">
-          <img class="pictureCart" :src="item.pic[0]">
+          <img class="pictureCart" :src="item.pic[0]" />
         </div>
         <div class="col-md-3">{{ item.name }}</div>
         <div class="col-md-2">${{ item.price }}</div>
         <div class="col-md-2">{{ item.quantity }}</div>
-        <div class="col-md-2">${{ item.price*item.quantity }}</div>
+        <div class="col-md-2">${{ item.price * item.quantity }}</div>
       </div>
     </div>
     <hr />
@@ -200,8 +199,10 @@
     <hr />
     <!-- <hr>
    <div class="display-grid text-align-right font-color-title">
-
-
+ 
+ 
+ 
+ 
            <h6 class="ajust bawp">Tổng tiền hàng</h6>
            <div class="bawp">$14000</div>
        <div class=" margin-top">Phí vân chuyển:&emsp;  $14000</div>
@@ -211,39 +212,51 @@
       <div class="col-md-10" style="text-align: right">
         <span>Tổng tiền hàng:</span>
       </div>
-      <div class="col-md-2"><span>${{ counterStore.billOrder }}</span></div>
+      <div class="col-md-2">
+        <span>${{ counterStore.billOrder }}</span>
+      </div>
     </div>
     <div class="row margin-top-15 middle-center">
       <div class="col-md-10" style="text-align: right">
         <span>Phí vận chuyển:</span>
       </div>
-      <div class="col-md-2"><span>${{ ship }}</span></div>
+      <div class="col-md-2">
+        <span>${{ ship }}</span>
+      </div>
     </div>
     <div class="row margin-top-15 middle-center">
       <div class="col-md-10" style="text-align: right">
         <span>Tổng thanh toán:</span>
       </div>
-      <div class="col-md-2"><span class="totalBill">${{ ship + counterStore.billOrder }}</span></div>
+      <div class="col-md-2">
+        <span class="totalBill">${{ ship + counterStore.billOrder }}</span>
+      </div>
     </div>
     <hr />
     <div class="text-align-right">
       <button class="btn-order">Đặt hàng</button>
     </div>
-
   </section>
 </template>
 
-<script setup>
-// import { ref } from "vue";
-import { onMounted, reactive, ref } from "vue";
-import { useCounterStore } from "@/stores";
-const counterStore = useCounterStore();
-// const arrayCart = ref([]);
-// const cartChoose = ref([]);
-// const orderCart = ref([]);
-const value2 = ref("HangZhou");
-const ship = ref(15);
-const form = reactive({
+<!--
+ <script setup>
+ // import { ref } from "vue";
+ import { onMounted, reactive, ref } from "vue";
+ import { useCounterStore } from "@/stores";
+ // import axios from "axios";
+ // import { a-form } from 'ant-design-vue';
+ const counterStore = useCounterStore();
+ 
+ 
+ // const arrayCart = ref([]);
+ // const cartChoose = ref([]);
+ // const orderCart = ref([]);
+ const value2 = ref("HangZhou");
+ const ship = ref(15);
+ const formDataArray = ref([]);
+ const formRef = ref(null);
+ const form = reactive({
   name: "",
   city: "",
   phone: "",
@@ -251,8 +264,8 @@ const form = reactive({
   ward: "",
   specificAddress: "",
   description: "",
-});
-const rules = {
+ });
+ const rules = {
   name: [
     {
       required: true,
@@ -263,7 +276,8 @@ const rules = {
   //   {
   //     required: true,
   //     message: "Please enter your City",
-
+ 
+ 
   //   },
   // ],
   phone: [
@@ -276,7 +290,8 @@ const rules = {
   //   {
   //     required: true,
   //     message: "Please choose your district",
-
+ 
+ 
   //   },
   // ],
   // ward: [
@@ -297,30 +312,61 @@ const rules = {
       message: "Please enter url description",
     },
   ],
-};
-const open = ref(false);
-const showDrawer = () => {
+ };
+ const open = ref(false);
+ const showDrawer = () => {
   open.value = true;
-};
-const onClose = () => {
+  formRef.value = form;
+ };
+ const onClose = () => {
   open.value = false;
-};
-onMounted( ()=>{  counterStore.productTicked();
+ };
+ onMounted( ()=>{  counterStore.productTicked();
   // console.log(orderCart.value);
   // console.log(document.getElementById("getName").value);
-});
-const getFullName = () => {
-  let getFull = document.getElementById("phoneNumber").value; //getFullName 
-
+ });
+ const getFullName = () => {
+  let getFull = document.getElementById("phoneNumber").value; //getFullName
+ 
+ 
   alert(getFull);
-}
-</script>
-
-<script>
-// import { ASelect, AOption } from 'ant-design-vue';
-import axios from "axios";
-// import { useCompactItemContext } from "ant-design-vue/es/space/Compact";
-export default {
+ };
+ const handleSubmit = () => {
+  formRef.value.validate().then(valid => {
+        if (valid) {
+          // Biểu mẫu hợp lệ, thêm thông tin vào mảng
+          formDataArray.value.push({
+            name: form.value.name,
+            phone: form.value.phone,
+            city: this.selectedCity.value,
+            district: this.selectedDistrict.value,
+            ward: this.selectedWard.value,
+            specificAddress: form.value.specificAddress,
+            description: form.value.description,
+          });
+ 
+ 
+          // Tùy chỉnh xử lý lưu dữ liệu, ví dụ: có thể gọi API để lưu vào cơ sở dữ liệu
+          // this.saveDataToDatabase();
+          console.log(formDataArray.value);
+          // Đóng Drawer sau khi xử lý
+          this.onClose();
+        } else {
+          // Biểu mẫu không hợp lệ, hiển thị thông báo hoặc thực hiện các hành động khác
+          console.log("Form is not valid");
+        }
+      });
+ };
+ 
+ 
+ </script>
+ 
+ 
+ <script>
+ // import { ASelect, AOption } from 'ant-design-vue';
+ import axios from "axios";
+ // import { useCompactItemContext } from "ant-design-vue/es/space/Compact";
+ export default {
   components: {},
   data() {
     return {
@@ -353,7 +399,8 @@ export default {
       this.callApiWard(`${this.host}d/${this.selectedDistrict}?depth=2`);
       this.printResult();
     },
-
+ 
+ 
     callApiDistrict(api) {
       axios.get(api).then((response) => {
         this.districts = response.data.districts;
@@ -391,10 +438,169 @@ export default {
       );
     },
   },
+ };
+ </script>
+ -->
+
+<script setup>
+import { ref, reactive, onMounted } from "vue";
+import { useCounterStore } from "@/stores";
+import axios from "axios";
+const host = "https://provinces.open-api.vn/api/";
+const cities = ref([]);
+const districts = ref([]);
+const wards = ref([]);
+const result = ref("");
+
+onMounted(() => {
+  callAPI(`${host}?depth=1`);
+});
+
+const callAPI = (api) => {
+  axios.get(api).then((response) => {
+    cities.value = response.data;
+  });
+};
+
+const counterStore = useCounterStore();
+const value2 = ref("HangZhou");
+const ship = ref(15);
+const formDataArray = ref([]);
+const form = reactive({
+  name: "",
+  city: "",
+  phone: "",
+  district: "",
+  ward: "",
+  specificAddress: "",
+  description: "",
+});
+const rules = {
+  name: [
+    {
+      required: true,
+      message: "Please enter user name",
+    },
+  ],
+  phone: [
+    {
+      required: true,
+      message: "Please enter your phone number",
+    },
+  ],
+  specificAddress: [
+    {
+      required: true,
+      message: "Please choose your specific address",
+    },
+  ],
+  description: [
+    {
+      required: true,
+      message: "Please enter url description",
+    },
+  ],
+};
+const open = ref(false);
+
+const showDrawer = () => {
+  open.value = true;
+};
+
+const onClose = () => {
+  open.value = false;
+};
+
+onMounted(() => {
+  counterStore.productTicked();
+  counterStore.infoDelivery();
+});
+
+const handleSubmit = () => {
+  formDataArray.value = JSON.parse(localStorage.getItem("infoDelivery")) || [];
+  formRef.value.validate().then((valid) => {
+    if (valid) {
+      formDataArray.value.push({
+        name: form.name,
+        phone: form.phone,
+        city: getCityName(),
+        district: getDistrictName(),
+        ward: getWardName(),
+        specificAddress: form.specificAddress,
+        description: form.description,
+      });
+      console.log(formDataArray.value);
+      localStorage.setItem("infoDelivery", JSON.stringify(formDataArray.value));
+      counterStore.infoDelivery();
+      onClose();
+    } else {
+      console.log("Form is not valid");
+    }
+  });
+};
+
+const formRef = ref(null);
+
+const loadDistricts = () => {
+  console.log("Selected City:", form.city);
+  callApiDistrict(`${host}p/${form.city}?depth=2`);
+  printResult();
+};
+
+const loadWards = () => {
+  console.log("Selected District:", form.ward);
+  callApiWard(`${host}d/${form.district}?depth=2`);
+  printResult();
+};
+
+const callApiDistrict = (api) => {
+  axios.get(api).then((response) => {
+    districts.value = response.data.districts;
+  });
+};
+
+const callApiWard = (api) => {
+  axios.get(api).then((response) => {
+    wards.value = response.data.wards;
+  });
+};
+
+const printResult = () => {
+  // if (
+  //   selectedCity.value !== "" &&
+  //   selectedDistrict.value !== "" &&
+  //   selectedWard.value !== ""
+  // ) {
+  //   result.value = `${getCityName()} | ${getDistrictName()} | ${getWardName()}`;
+  // }
+  console.log("Thành phố:", getCityName());
+  console.log("Quận:", getDistrictName());
+  console.log("Phường:", getWardName());
+  if (form.city !== "" && form.district !== "" && form.ward !== "") {
+    result.value = `${getCityName()} | ${getDistrictName()} | ${getWardName()}`;
+  }
+};
+
+const getCityName = () => {
+  return cities.value.find((city) => city.code === form.city)?.name || "";
+};
+
+const getDistrictName = () => {
+  return (
+    districts.value.find((district) => district.code === form.district)?.name ||
+    ""
+  );
+};
+
+const getWardName = () => {
+  return wards.value.find((ward) => ward.code === form.ward)?.name || "";
 };
 </script>
 
 <style lang="scss" scoped>
+.margin-left {
+ margin-left: 30px;
+}
 .align-item-center {
   display: flex;
   align-items: center;
@@ -484,7 +690,7 @@ export default {
   background-color: orangered;
   color: white;
   margin-top: 5px;
-  padding: 8px 20px;
+  // padding: 8px 20px;
   &:hover {
     background: #f18d9b;
   }

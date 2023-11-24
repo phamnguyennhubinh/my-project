@@ -13,6 +13,7 @@
           <input
             type="checkbox"
             id="myCheck"
+            @change="selectAll"
             @click="handleCheckAllChange(1)"
             v-model="checkboxCart"
           />
@@ -39,8 +40,10 @@
           :id="cart.id"
           :quantity="cart.quantity"
           @delete="deleteCart"
-          :checkboxCart="checkboxCart.valueOf"
           @addOrder="addOrder"
+          v-model:checkboxCart="checkboxCart"
+          @followChange="followChecked"
+          @checkedSomeToAll="checkedSomeToAll"
         />
       </div>
     </div>
@@ -64,6 +67,7 @@
           type="checkbox"
           id="checkFixed"
           v-model="checkboxOrder"
+          @change="selectAll"
           @click="handleCheckAllChange(2)"
         />
         <span>&nbsp;&nbsp;Chọn tất cả</span>
@@ -89,7 +93,7 @@
 <script setup>
 import { useCounterStore } from "@/stores/index";
 import CartItem from "@/components/CartItem.vue";
-import { ref } from "vue";
+import { ref} from "vue";
 import { onMounted, computed } from "vue";
 const counterStore = useCounterStore();
 // const checkAll = ref(false);
@@ -101,6 +105,7 @@ const checkboxOrder = ref(false);
 const hidden = ref(true);
 const arrId = ref([]);
 const totalBillBottom = ref(0);
+// const emitChecked = ref();
 onMounted(() => {
   counterStore.listCarts = JSON.parse(localStorage.getItem("cart"));
   localStorage.removeItem("addCart");
@@ -120,13 +125,30 @@ const addOrder = (productId, check) => {
     if (index !== -1) {
       arrId.value.splice(index, 1);
       localStorage.setItem("addCart", JSON.stringify(arrId.value));
-      if(arrId.value.length === 0)
-      {
+      if (arrId.value.length === 0) {
         hidden.value = true;
       }
     }
   }
+
 };
+const checkedSomeToAll = () => {
+  checkboxCart.value = true;
+  checkboxOrder.value = true;
+}
+const selectAll = () => {
+  console.log(checkboxCart.value);
+  if(checkboxCart.value === true) {
+    checkboxOrder.value = true;
+    counterStore.checkedbox = true;
+  }
+  else 
+  {
+    checkboxOrder.value = false;
+    counterStore.checkedbox = false;
+  }
+}
+
 const computedValue = computed(() => {
   const totalBill = arrId.value.reduce((total, productId) => {
     return total + counterStore.totalEachProduct(productId);
@@ -134,15 +156,11 @@ const computedValue = computed(() => {
 
   return { arrId: arrId.value, billEach: totalBill };
 });
-// const purchaseOrder = () => {
-//   const arrayPurchase = localStorage.getItem("addCart") || [];
-//   for (let i = 0; i < arrayPurchase.length; i++) {
-//     const findIndexById = counterStore.listCarts.findIndex(arrId.value[i]);
-//     cartChoose.value = counterStore.listCarts[findIndexById];
-//     orderCart.value = orderCart.value.concat(cartChoose.value);
-//     console.log(orderCart.value);
-//   }
-// };
+
+const followChecked = () => {
+  checkboxCart.value = false;
+  checkboxOrder.value = false;
+};
 const deleteCart = (productId) => {
   for (var i = 0; i < counterStore.listCarts.length; i++) {
     if (counterStore.listCarts[i].id === productId) {
@@ -158,6 +176,8 @@ const totalCart = computed(() => counterStore.totalBill());
 //   console.log(value)
 // };
 const handleCheckAllChange = (checkboxNumber) => {
+  selectAll();
+  followChecked();
   var checkBox = document.getElementById("myCheck");
   var checkFix = document.getElementById("checkFixed");
   if (checkBox.checked === true || checkFix.checked === true) {
@@ -176,6 +196,7 @@ const handleCheckAllChange = (checkboxNumber) => {
     totalBillBottom.value = 0;
   }
 };
+
 </script>
 
 <style lang="scss" scopped>

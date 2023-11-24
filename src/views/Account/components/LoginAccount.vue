@@ -15,7 +15,8 @@
         name="username"
         :rules="[{ required: true, message: 'Please input your username!' }]"
       >
-        <a-input v-model:value="formState.username" class="border-none"/>
+        <a-input v-model:value="formState.username" class="border-none" 
+        ref="userNameInput"/>
       </a-form-item>
 
       <a-form-item
@@ -23,25 +24,39 @@
         name="password"
         :rules="[{ required: true, message: 'Please input your password!' }]"
       >
-        <a-input-password v-model:value="formState.password" class="border-none"/>
+        <a-input-password
+          v-model:value="formState.password"
+          class="border-none"
+          ref="passwordInput"
+        />
       </a-form-item>
       <a-form-item name="remember" :wrapper-col="{ offset: 8, span: 8 }">
         <span class="space"
           ><a class="forgot-pass" href="#">Forgot password</a>
-          <router-link :to="{name: 'RegisterAccount'}"><a href="#">Register now!</a></router-link></span
+          <router-link :to="{ name: 'RegisterAccount' }"
+            ><a href="#">Register now!</a></router-link
+          ></span
         >
       </a-form-item>
 
-      <a-form-item :wrapper-col="{ offset: 8, span: 8 }" class="text-align-center">
+      <a-form-item
+        :wrapper-col="{ offset: 8, span: 8 }"
+        class="text-align-center"
+      >
         <a-button class="btn-welcome" html-type="submit">LOGIN</a-button>
       </a-form-item>
     </a-form>
   </section>
-  <router-view/>
+  <router-view />
 </template>
 
 <script setup>
+import { message } from "ant-design-vue";
 import { reactive } from "vue";
+import { ref } from "vue";
+const userNameInput = ref(null);
+const passwordInput = ref(null);
+const arrAccount = ref([]);
 const formState = reactive({
   username: "",
   password: "",
@@ -49,21 +64,48 @@ const formState = reactive({
 });
 const onFinish = (values) => {
   console.log("Success:", values);
+  loginAccount();
 };
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
+};
+const loginAccount = () => {
+  arrAccount.value = JSON.parse(localStorage.getItem("listAcc")) || [];
+  const getIndexByUsername = arrAccount.value.findIndex(
+    (item) => item.phone === formState.username
+  );
+  if(getIndexByUsername !== -1)
+  {
+    if(arrAccount.value[getIndexByUsername].password === formState.password)
+    {
+      message.success("Đăng nhập thành công!");
+    }
+    else 
+    {
+      message.error("Sai mật khẩu!")
+      formState.password = '';
+      passwordInput.value.focus();
+    }
+  }
+  else
+  {
+    formState.password = '';
+    formState.username = '';
+    userNameInput.value.focus();
+    message.error("Tài khoản chưa được đăng ký!")
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/style/styles.scss";
-.border-none{
-    border-radius: 0;
+.border-none {
+  border-radius: 0;
 }
 .shadow {
-   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-   margin-top: 45px;
-//    padding: 60px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+  margin-top: 45px;
+  //    padding: 60px;
 }
 .space {
   justify-content: space-between;

@@ -24,9 +24,13 @@ export const useCounterStore = defineStore("counter", {
     listCarts: [],
     total: Number(0),
     check: Boolean,
+    checkedbox: true,
     arrayTicked: [],
     arrProduct: [],
-    billOrder: 0
+    billOrder: 0,
+    infoDeliveryDetail: [],
+    listAccount: [],
+    checkedSomeToAll: false
   }),
   actions: {
     // async productTicked(){
@@ -42,6 +46,10 @@ export const useCounterStore = defineStore("counter", {
     //   }
     //   console.log(this.arrayTicked);
     // },
+    infoDelivery(){
+      this.infoDeliveryDetail = JSON.parse(localStorage.getItem("infoDelivery")) || [];
+
+    },
     productTicked() {
       try {
         this.arrayTicked = [];
@@ -85,8 +93,8 @@ export const useCounterStore = defineStore("counter", {
         (item) => item.id === id
       );
       const totalEach = Number(
-        this.listCarts[findIndexProductByID].price *
-          this.listCarts[findIndexProductByID].quantity
+        this.listCarts[findIndexProductByID]?.price *
+          this.listCarts[findIndexProductByID]?.quantity
       );
       return totalEach;
     },

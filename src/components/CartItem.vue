@@ -8,9 +8,10 @@
       > -->
       <input
         type="checkbox"
-        id="checkEach"
+        :id="id"
         v-model="checked"
         @click="addOrder"
+        @change="followChecked"
       />
     </span>
     <img class="picture-box" :src="pic" />
@@ -52,21 +53,21 @@
 
 <script>
 import { useCounterStore } from "@/stores";
+// import { ref, defineProps, defineEmits } from "vue";
 // import { watch } from "vue";
 export default {
-  props:
-  {
+  props: {
     id: Number,
     pic: String,
     name: String,
     price: Number,
     quantity: Number,
-    checkboxCart: Boolean
-  },
-  setup(){
+    checkboxCart: Boolean,
   },
   data() {
     const counterStore = useCounterStore();
+    // const props = defineProps(["checkboxCart"]);
+    // const emit = defineEmits(["update:checkboxCart", "followChange"]);
     const count = 1;
     // const checkBox = document.getElementById("checkEach").checked;
     let checked = false;
@@ -93,9 +94,30 @@ export default {
         this.counterStore.decreaseQuantity(this.id);
       }
     },
-    addOrder(){
+    addOrder() {
       this.$emit("addOrder", this.$props.id, this.checked);
+    },
+    followChecked() {
+      if (this.counterStore.checkedbox === true && this.checked === false) {
+        this.$emit("followChange", this.checked);
+      }
+      this.checkedSomeToAll();
+    },
+    checkedSomeToAll(){
+      const selected = JSON.parse(localStorage.getItem("addCart")) || [];
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      if(selected.length === cart.length)
+      {
+        this.$emit("checkedSomeToAll");
+      }
     }
+    // handleCheckboxChange() {
+    //   // Gửi giá trị của checkbox lên component cha
+    //   this.$emit("update:checkboxCart", this.checked);
+
+    //   // Gửi sự kiện followChange lên component cha
+    //   this.$emit("followChange");
+    // },
   },
   computed: {
     totalEach() {
@@ -103,7 +125,11 @@ export default {
       return totalEachPro;
     },
   },
- 
+  watch: {
+    "counterStore.checkedbox": function (newVal) {
+      this.checked = newVal === true;
+    },
+  },
 };
 </script>
 
