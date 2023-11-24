@@ -20,5 +20,19 @@ yarn build
 yarn lint
 ```
 
+### Install yarn cli 
+```
+yarn global add @vue/cli
+```
+### Install JSON
+```
+yarn add json-server
+```
+
+### Using JSON file
+```
+json-server --watch src/data/db.json
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
