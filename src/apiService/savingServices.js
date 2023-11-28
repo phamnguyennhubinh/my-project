@@ -81,3 +81,66 @@ export const eachProduct = async (id) => {
     console.log(error);
   }
 };
+export const getCustomerCart = async (customerId) => {
+  try {
+    const res = await request.get(`customerCarts/${customerId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getListAccounts = async () => {
+  try {
+    const res = await request.get("listAccounts");
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+//////POST
+export const addListAcc = async (newAccountData) => {
+  try {
+    const res = await request.post("listAccounts", newAccountData);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addCustomerCart = async (newCart) => {
+  try {
+    const res = await request.post("customerCarts", newCart);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addProductToCart = async (product) => {
+  try {
+    const res = await request.post("customerCarts", product);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+//PATCH
+export const updateCartCustomer = async (data,customerId) => {
+  try {
+    const res = await request.patch(`customerCarts/${customerId}/cart`,  { cart: data });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+//DELETE 
+// DELETE
+export const deleteCart = async (customerId) => {
+  try {
+    const res = await request.remove(`customerCarts/${customerId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+

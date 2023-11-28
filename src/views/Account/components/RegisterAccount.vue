@@ -136,12 +136,18 @@ import { reactive } from "vue";
 import { nextTick } from "vue";
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
+import { useCounterStore } from "@/stores";
+// import { v4 as uuidv4 } from 'uuid';
+
 // import {computed} from "vue";
 import { ref } from "vue";
 // import moment from "moment";
+const counterStore = useCounterStore();
 const arrayFormRegister = ref([]);
 const router = useRouter();
 const formRef = ref(null);
+const arrayNew = ref([]);
+// const randomId = ref(generateRandomId());
 const formState = reactive({
   fullname: "",
   password: "",
@@ -151,6 +157,9 @@ const formState = reactive({
   birthday: "",
   remember: true,
 });
+const generateRandomId = () => {
+  return Math.random().toString(36).substring(2, 10);
+}
 const onFinish = (values) => {
   registerAcc();
   console.log("Success:", values);
@@ -224,18 +233,32 @@ const registerAcc = async () => {
       router.push({ name: 'LoginAccount' });
       formRef.value.validate().then((valid) => {
         if (valid) {
-          arrayFormRegister.value.push({
+          const newAccountId = generateRandomId();
+          // arrayFormRegister.value = [];
+          const newAccountObject = {
+            id: newAccountId,
             fullname: formState.fullname,
             phone: formState.phone,
             email: formState.email,
             birthday: formatBirthday(formState.birthday),
             password: formState.password,
-          });
+          };
           console.log(arrayFormRegister.value);
-          localStorage.setItem(
-            "listAcc",
-            JSON.stringify(arrayFormRegister.value)
-          );
+          // Xóa toàn bộ mảng và thêm đối tượng mới
+          arrayFormRegister.value = [newAccountObject];
+          // localStorage.setItem(
+          //   "listAcc",
+          //   JSON.stringify(arrayFormRegister.value)
+          // );
+          counterStore.addAcc(newAccountObject);
+          // Tạo đối tượng mới cho giỏ hàng và truyền vào counterStore.addCartForAcc()
+          const newCartObject = { id: newAccountId, cart: [] };
+          arrayNew.value = [newCartObject];
+          counterStore.addCartForAcc(newCartObject);
+          // arrayNew.value = [];
+          // arrayNew.value.push({id: newAccountId, cart: []});
+          // counterStore.addCartForAcc(arrayNew.value);
+          // counterStore.addCartForAcc()
         } else {
           console.log("Form is not valid");
         }

@@ -9,9 +9,8 @@
       <input
         type="checkbox"
         :id="id"
-        v-model="checked"
-        @click="addOrder"
-        @change="followChecked"
+        :checked="status"
+        @change="updateStatus"
       />
     </span>
     <img class="picture-box" :src="pic" />
@@ -49,19 +48,22 @@
   >
     <button @click="deleteCart" class="btn">Xóa</button>
   </div>
-</template>
-
-<script>
-import { useCounterStore } from "@/stores";
-// import { ref, defineProps, defineEmits } from "vue";
-// import { watch } from "vue";
-export default {
+ </template>
+ 
+ 
+ <script>
+ import { useCounterStore } from "@/stores";
+ import {ref} from "vue";
+ // import { ref, defineProps, defineEmits } from "vue";
+ // import { watch } from "vue";
+ export default {
   props: {
     id: Number,
     pic: String,
     name: String,
     price: Number,
     quantity: Number,
+    status: Boolean,
     checkboxCart: Boolean,
   },
   data() {
@@ -70,7 +72,7 @@ export default {
     // const emit = defineEmits(["update:checkboxCart", "followChange"]);
     const count = 1;
     // const checkBox = document.getElementById("checkEach").checked;
-    let checked = false;
+    let checked = ref(this.status);
     return {
       counterStore,
       count,
@@ -79,8 +81,8 @@ export default {
   },
   methods: {
     // detailProduct () {
-    // 	this.$router.push('/shop/detail');
-    // 	}
+    //  this.$router.push('/shop/detail');
+    //  }
     deleteCart() {
       this.$emit("delete", this.$props.id);
     },
@@ -101,20 +103,25 @@ export default {
       if (this.counterStore.checkedbox === true && this.checked === false) {
         this.$emit("followChange", this.checked);
       }
-      this.checkedSomeToAll();
-    },
-    checkedSomeToAll(){
+      // this.checkedSomeToAll();
       const selected = JSON.parse(localStorage.getItem("addCart")) || [];
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       if(selected.length === cart.length)
       {
         this.$emit("checkedSomeToAll");
       }
+    },
+    updateStatus(event) {
+      this.$emit("updateStatus", event.target.checked, this.id);
+    },
+    computedProductId() {
+      return this.id;
     }
     // handleCheckboxChange() {
     //   // Gửi giá trị của checkbox lên component cha
     //   this.$emit("update:checkboxCart", this.checked);
-
+ 
+ 
     //   // Gửi sự kiện followChange lên component cha
     //   this.$emit("followChange");
     // },
@@ -125,36 +132,65 @@ export default {
       return totalEachPro;
     },
   },
+  // watch: {
+  //   "counterStore.checkedbox": function (newVal) {
+  //     this.checked = newVal === true;
+  //   },
   watch: {
-    "counterStore.checkedbox": function (newVal) {
-      this.checked = newVal === true;
+    // checkboxCart: function (newValue) {
+    //   if (newValue) {
+    //     this.checked = newValue;
+    //   } else {
+    //     this.checked = !newValue;
+    //   }
+    // },
+    // Loại bỏ watcher này nếu không cần
+    // "counterStore.checkedbox": function (newVal) {
+    //   this.checked = newVal === true;
+    // },
+    status: function (newValue) {
+      this.checked = newValue;
     },
   },
-};
-</script>
-
-<style lang="scss" scopped>
-.position-relative {
+    // checkboxCart: function(newValue) {
+    //   console.log("Helooooooooooo"+newValue);
+    //   if(newValue)
+    //   {
+    //   this.checked = newValue;
+    //   }
+    //   else
+    //   {
+    //     this.checked = !newValue;
+    //   }
+     
+    // }
+  // },
+ };
+ </script>
+ 
+ 
+ <style lang="scss" scopped>
+ .position-relative {
   position: relative;
-}
-.text-align-left-abso {
+ }
+ .text-align-left-abso {
   position: absolute;
   left: 10px;
-}
-.display-none {
+ }
+ .display-none {
   display: none;
-}
-.display-block {
+ }
+ .display-block {
   display: block;
-}
-.font-weight {
+ }
+ .font-weight {
   font-weight: bold;
-}
-.color-price {
+ }
+ .color-price {
   color: orangered;
   font-weight: bold;
-}
-.btn {
+ }
+ .btn {
   background-color: orangered;
   border: none;
   padding: 10px 20px;
@@ -163,19 +199,19 @@ export default {
     background-color: rgb(246, 132, 88);
     color: #fff;
   }
-}
-.align-items-center {
+ }
+ .align-items-center {
   align-items: center;
-}
-.justify-content-center {
+ }
+ .justify-content-center {
   justify-content: center;
-}
-.picture-box {
+ }
+ .picture-box {
   width: 60%;
   //   height: 100%;
   padding: 10px;
-}
-.quantity {
+ }
+ .quantity {
   outline: none;
   cursor: pointer;
   font-size: 0.875rem;
@@ -193,8 +229,8 @@ export default {
   width: 25px;
   height: 30px;
   display: inline;
-}
-.inputQuantity {
+ }
+ .inputQuantity {
   width: 25px;
   height: 30px;
   border-left: 0;
@@ -208,27 +244,32 @@ export default {
   display: inline;
   margin: 7px 0;
   padding-bottom: 4px;
-}
-
-.grid .row {
+ }
+ 
+ 
+ .grid .row {
   display: flex;
   justify-content: center;
   vertical-align: middle;
   text-align: center;
-}
-@media screen and (max-width: 1023px) {
+ }
+ @media screen and (max-width: 1023px) {
   .picture-box {
     width: 100%;
   }
-}
-@media screen and (max-width: 768px) {
+ }
+ @media screen and (max-width: 768px) {
   .picture-box {
     width: 50%;
   }
-}
-@media screen and (min-width: 375px) and (max-width: 811px) {
+ }
+ @media screen and (min-width: 375px) and (max-width: 811px) {
   .picture-box {
     width: 50%;
   }
-}
-</style>
+ }
+ </style>
+ 
+ 
+ 
+ 

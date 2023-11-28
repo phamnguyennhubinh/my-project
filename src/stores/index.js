@@ -17,7 +17,7 @@ export const useCounterStore = defineStore("counter", {
     countProduct: 0,
     product: {},
     // countPlus: 0,
-
+    listAcc: [],
     countC: Number,
     countQuantity: 1,
     count: 1,
@@ -30,7 +30,10 @@ export const useCounterStore = defineStore("counter", {
     billOrder: 0,
     infoDeliveryDetail: [],
     listAccount: [],
-    checkedSomeToAll: false
+    checkedSomeToAll: false,
+    arrTicked: [],
+    getListAcc: [],
+    getListCart: [],
   }),
   actions: {
     // async productTicked(){
@@ -46,38 +49,45 @@ export const useCounterStore = defineStore("counter", {
     //   }
     //   console.log(this.arrayTicked);
     // },
-    infoDelivery(){
-      this.infoDeliveryDetail = JSON.parse(localStorage.getItem("infoDelivery")) || [];
-
+    infoDelivery() {
+      this.infoDeliveryDetail =
+        JSON.parse(localStorage.getItem("infoDelivery")) || [];
     },
+    // productTicked() {
+    //   try {
+    //     this.arrayTicked = [];
+    //     const arr = JSON.parse(localStorage.getItem("addCart"));
+
+    //     if (!Array.isArray(arr)) {
+    //       throw new Error("Invalid 'addCart' in localStorage");
+    //     }
+    //     for (let i = 0; i < arr.length; i++) {
+    //       const findIndexById = this.listCarts.findIndex((item) => item.id === arr[i]);
+    //       const producted = this.listCarts[findIndexById];
+    //       // console.log(producted);
+
+    //       if (producted) {
+    //         this.arrayTicked.push(producted);
+    //       }
+    //     }
+    //     this.billOrder = 0;
+    //     for(let i=0; i<this.arrayTicked.length; i++)
+    //     {
+    //       this.billOrder += this.arrayTicked[i].price * this.arrayTicked[i].quantity;
+    //     }
+    //     // console.log(this.arrayTicked);
+    //   } catch (error) {
+    //     console.error("Error in productTicked:", error);
+    //   }
+    // },
     productTicked() {
-      try {
-        this.arrayTicked = [];
-        const arr = JSON.parse(localStorage.getItem("addCart"));
-        
-        if (!Array.isArray(arr)) {
-          throw new Error("Invalid 'addCart' in localStorage");
+      // const arr = this.listCarts;
+      for (let i = 0; i < this.listCarts.length; i++) {
+        if (this.listCarts[i].status === true) {
+          this.arrTicked = this.arrTicked.concat(this.listCarts[i]);
         }
-        for (let i = 0; i < arr.length; i++) {
-          const findIndexById = this.listCarts.findIndex((item) => item.id === arr[i]);
-          const producted = this.listCarts[findIndexById];
-          // console.log(producted);
-          
-          if (producted) {
-            this.arrayTicked.push(producted);
-          }
-        }
-        this.billOrder = 0;
-        for(let i=0; i<this.arrayTicked.length; i++)
-        {
-          this.billOrder += this.arrayTicked[i].price * this.arrayTicked[i].quantity;
-        }
-        // console.log(this.arrayTicked);
-      } catch (error) {
-        console.error("Error in productTicked:", error);
       }
     },
-    
     totalBill() {
       this.total = 0;
       for (let i = 0; i < this.listCarts.length; i++) {
@@ -102,6 +112,7 @@ export const useCounterStore = defineStore("counter", {
       this.countC = this.listCarts.length;
     },
     addToCart(sanpham, value) {
+      // const idCus = JSON.parse(localStorage.getItem("idCustomer"));
       const findIndexProductByID = this.listCarts.findIndex(
         (item) => item.id === sanpham.id
       );
@@ -114,12 +125,9 @@ export const useCounterStore = defineStore("counter", {
       } else {
         this.listCarts.push({ ...sanpham, quantity: 1 });
       }
-      // this.countPlus++;
-      // this.countC = this.listCarts.length;
-      // this.countC++;
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
     },
-    
+
     increaseQuantity(id) {
       const findIndexProductByID = this.listCarts.findIndex(
         (item) => item.id === id
@@ -138,7 +146,33 @@ export const useCounterStore = defineStore("counter", {
     addCart() {
       this.countCart++;
     },
-
+    //PATCH
+    async updateCart(data, customerId) 
+    {
+      await savingServices.updateCartCustomer(data, customerId);
+    },
+    //DELETE 
+    async removeCart (customerId) 
+    {
+      await savingServices.deleteCart(customerId);
+    },
+    //POST
+    async addAcc(data) {
+      await savingServices.addListAcc(data);
+    },
+    async addCartForAcc(data) {
+      await savingServices.addCustomerCart(data);
+    },
+    async addProductToCustomerCart(product) {
+      await savingServices.addProductToCart(product)
+    },
+    //GET
+    async fetchListCustomerCart(customerId) {
+     this.getListCart = await savingServices.getCustomerCart(customerId);
+    },
+    async fetchListAccounts() {
+      this.getListAcc = await savingServices.getListAccounts();
+    },
     async fetchEachProduct(productId) {
       this.isLoading++;
       this.product = await savingServices.eachProduct(productId);

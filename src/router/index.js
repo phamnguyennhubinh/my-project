@@ -42,7 +42,27 @@ const routes = [
         path: '/register',
         name: 'RegisterAccount',
         component: RegisterAccount
-    }
+    },
+    // {
+    //     path: '/shop/:idCustomer',
+    //     name: 'ShopPageCustomer',
+    //     component: ShopPage
+    // },
+    // {
+    //     path:'/shop/detail/listcart/:idCustomer',
+    //     name: 'ListCartCustomer',
+    //     component: ListCart
+    // },
+    // {
+    //     path: '/shop/detail/:id/:idCustomer',
+    //     name: 'ProductDetailCustomer',
+    //     component: ProductDetail
+    // },
+    {
+        path: '/:idCustomer',
+        name: 'LayoutPageCustomer',
+        component: LayoutPage
+    },
 
 ]
 

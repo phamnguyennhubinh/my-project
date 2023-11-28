@@ -9,7 +9,7 @@
       </div>
       <div>
         <div class="margin-left">
-          <span
+          <!-- <span
             ><b
               >{{ counterStore.infoDeliveryDetail[0].name }}&ensp;{{
                 counterStore.infoDeliveryDetail[0].phone
@@ -19,7 +19,7 @@
             {{ counterStore.infoDeliveryDetail[0].ward }},
             {{ counterStore.infoDeliveryDetail[0].district }},
             {{ counterStore.infoDeliveryDetail[0].city }}&ensp;&ensp;
-          </span>
+          </span> -->
           <a-button
             type="primary"
             @click="showDrawer"
@@ -30,7 +30,8 @@
             Thay đổi
           </a-button>
         </div>
-
+ 
+ 
         <a-drawer
           title="Add delivery address"
           :width="720"
@@ -44,7 +45,8 @@
               <a-col :span="12">
                 <a-form-item label="Name" name="name">
                   <a-input
-                    id="getName"
+ 
+ 
                     v-model:value="form.name"
                     v-model="message"
                     placeholder="Please enter your name"
@@ -55,7 +57,7 @@
               <a-col :span="12">
                 <a-form-item label="Phone number" name="phone">
                   <a-input
-                    id="phoneNumber"
+    
                     v-model:value="form.phone"
                     placeholder="Please enter your phone number"
                     maxlength="10"
@@ -155,9 +157,9 @@
         <div class="col-md-2">Số lượng</div>
         <div class="col-md-2">Thành tiền</div>
       </div>
-      <div
+      <!-- <div
         class="row margin-top align-item-center"
-        v-for="item in counterStore.arrayTicked"
+        v-for="item in counterStore.arrTicked"
         :key="item.id"
       >
         <hr />
@@ -168,7 +170,7 @@
         <div class="col-md-2">${{ item.price }}</div>
         <div class="col-md-2">{{ item.quantity }}</div>
         <div class="col-md-2">${{ item.price * item.quantity }}</div>
-      </div>
+      </div> -->
     </div>
     <hr />
     <div>
@@ -192,17 +194,13 @@
           </a-select>
           <span>&ensp;&ensp;Nhận hàng vào ngày 24/11 đến 26/11</span>
           <div>Được đồng kiểm</div>
-          <div>Tổng số tiền: ${{ counterStore.billOrder }}</div>
+          <div>Tổng số tiền: $</div>
         </div>
       </div>
     </div>
     <hr />
     <!-- <hr>
    <div class="display-grid text-align-right font-color-title">
- 
- 
- 
- 
            <h6 class="ajust bawp">Tổng tiền hàng</h6>
            <div class="bawp">$14000</div>
        <div class=" margin-top">Phí vân chuyển:&emsp;  $14000</div>
@@ -237,9 +235,10 @@
       <button class="btn-order">Đặt hàng</button>
     </div>
   </section>
-</template>
-
-<!--
+ </template>
+ 
+ 
+ <!--
  <script setup>
  // import { ref } from "vue";
  import { onMounted, reactive, ref } from "vue";
@@ -247,8 +246,6 @@
  // import axios from "axios";
  // import { a-form } from 'ant-design-vue';
  const counterStore = useCounterStore();
- 
- 
  // const arrayCart = ref([]);
  // const cartChoose = ref([]);
  // const orderCart = ref([]);
@@ -276,8 +273,6 @@
   //   {
   //     required: true,
   //     message: "Please enter your City",
- 
- 
   //   },
   // ],
   phone: [
@@ -290,8 +285,6 @@
   //   {
   //     required: true,
   //     message: "Please choose your district",
- 
- 
   //   },
   // ],
   // ward: [
@@ -327,8 +320,6 @@
  });
  const getFullName = () => {
   let getFull = document.getElementById("phoneNumber").value; //getFullName
- 
- 
   alert(getFull);
  };
  const handleSubmit = () => {
@@ -344,8 +335,6 @@
             specificAddress: form.value.specificAddress,
             description: form.value.description,
           });
- 
- 
           // Tùy chỉnh xử lý lưu dữ liệu, ví dụ: có thể gọi API để lưu vào cơ sở dữ liệu
           // this.saveDataToDatabase();
           console.log(formDataArray.value);
@@ -357,11 +346,7 @@
         }
       });
  };
- 
- 
  </script>
- 
- 
  <script>
  // import { ASelect, AOption } from 'ant-design-vue';
  import axios from "axios";
@@ -399,8 +384,6 @@
       this.callApiWard(`${this.host}d/${this.selectedDistrict}?depth=2`);
       this.printResult();
     },
- 
- 
     callApiDistrict(api) {
       axios.get(api).then((response) => {
         this.districts = response.data.districts;
@@ -441,32 +424,35 @@
  };
  </script>
  -->
-
-<script setup>
-import { ref, reactive, onMounted } from "vue";
-import { useCounterStore } from "@/stores";
-import axios from "axios";
-const host = "https://provinces.open-api.vn/api/";
-const cities = ref([]);
-const districts = ref([]);
-const wards = ref([]);
-const result = ref("");
-
-onMounted(() => {
+ 
+ 
+ <script setup>
+ import { ref, reactive, onMounted } from "vue";
+ import { useCounterStore } from "@/stores";
+ import axios from "axios";
+ const host = "https://provinces.open-api.vn/api/";
+ const cities = ref([]);
+ const districts = ref([]);
+ const wards = ref([]);
+ const result = ref("");
+ // const arr = ref([]);
+ onMounted(() => {
   callAPI(`${host}?depth=1`);
-});
-
-const callAPI = (api) => {
+ });
+ 
+ 
+ const callAPI = (api) => {
   axios.get(api).then((response) => {
     cities.value = response.data;
   });
-};
-
-const counterStore = useCounterStore();
-const value2 = ref("HangZhou");
-const ship = ref(15);
-const formDataArray = ref([]);
-const form = reactive({
+ };
+ 
+ 
+ const counterStore = useCounterStore();
+ const value2 = ref("HangZhou");
+ const ship = ref(15);
+ // const formDataArray = ref([]);
+ const form = reactive({
   name: "",
   city: "",
   phone: "",
@@ -474,8 +460,8 @@ const form = reactive({
   ward: "",
   specificAddress: "",
   description: "",
-});
-const rules = {
+ });
+ const rules = {
   name: [
     {
       required: true,
@@ -500,72 +486,86 @@ const rules = {
       message: "Please enter url description",
     },
   ],
-};
-const open = ref(false);
-
-const showDrawer = () => {
+ };
+ const open = ref(false);
+ 
+ 
+ const showDrawer = () => {
   open.value = true;
-};
-
-const onClose = () => {
-  open.value = false;
-};
-
-onMounted(() => {
-  counterStore.productTicked();
-  counterStore.infoDelivery();
-});
-
-const handleSubmit = () => {
-  formDataArray.value = JSON.parse(localStorage.getItem("infoDelivery")) || [];
-  formRef.value.validate().then((valid) => {
-    if (valid) {
-      formDataArray.value.push({
-        name: form.name,
-        phone: form.phone,
-        city: getCityName(),
-        district: getDistrictName(),
-        ward: getWardName(),
-        specificAddress: form.specificAddress,
-        description: form.description,
-      });
-      console.log(formDataArray.value);
-      localStorage.setItem("infoDelivery", JSON.stringify(formDataArray.value));
-      counterStore.infoDelivery();
-      onClose();
-    } else {
-      console.log("Form is not valid");
-    }
-  });
-};
-
-const formRef = ref(null);
-
-const loadDistricts = () => {
+ };
+ 
+ 
+ const onClose = () => {
+  // open.value = false;
+  if (formRef.value) {
+    open.value = false;
+  }
+ };
+ 
+ 
+ onMounted(() => {
+  // counterStore.productTicked();
+  // counterStore.infoDelivery();
+  // console.log(counterStore.listCarts);
+ });
+ 
+ 
+ // const handleSubmit = () => {
+ //   formDataArray.value = JSON.parse(localStorage.getItem("infoDelivery")) || [];
+ //   formRef.value.validate().then((valid) => {
+ //     if (valid) {
+ //       formDataArray.value.push({
+ //         name: form.name,
+ //         phone: form.phone,
+ //         city: getCityName(),
+ //         district: getDistrictName(),
+ //         ward: getWardName(),
+ //         specificAddress: form.specificAddress,
+ //         description: form.description,
+ //       });
+ //       console.log(formDataArray.value);
+ //       localStorage.setItem("infoDelivery", JSON.stringify(formDataArray.value));
+ //       counterStore.infoDelivery();
+ //       onClose();
+ //     } else {
+ //       console.log("Form is not valid");
+ //     }
+ //   });
+ // };
+ 
+ 
+ const formRef = ref(null);
+ 
+ 
+ const loadDistricts = () => {
   console.log("Selected City:", form.city);
   callApiDistrict(`${host}p/${form.city}?depth=2`);
   printResult();
-};
-
-const loadWards = () => {
+ };
+ 
+ 
+ const loadWards = () => {
   console.log("Selected District:", form.ward);
   callApiWard(`${host}d/${form.district}?depth=2`);
   printResult();
-};
-
-const callApiDistrict = (api) => {
+ };
+ 
+ 
+ const callApiDistrict = (api) => {
   axios.get(api).then((response) => {
     districts.value = response.data.districts;
   });
-};
-
-const callApiWard = (api) => {
+ };
+ 
+ 
+ const callApiWard = (api) => {
   axios.get(api).then((response) => {
     wards.value = response.data.wards;
   });
-};
-
-const printResult = () => {
+ };
+ 
+ 
+ const printResult = () => {
   // if (
   //   selectedCity.value !== "" &&
   //   selectedDistrict.value !== "" &&
@@ -579,50 +579,54 @@ const printResult = () => {
   if (form.city !== "" && form.district !== "" && form.ward !== "") {
     result.value = `${getCityName()} | ${getDistrictName()} | ${getWardName()}`;
   }
-};
-
-const getCityName = () => {
+ };
+ 
+ 
+ const getCityName = () => {
   return cities.value.find((city) => city.code === form.city)?.name || "";
-};
-
-const getDistrictName = () => {
+ };
+ 
+ 
+ const getDistrictName = () => {
   return (
     districts.value.find((district) => district.code === form.district)?.name ||
     ""
   );
-};
-
-const getWardName = () => {
+ };
+ 
+ 
+ const getWardName = () => {
   return wards.value.find((ward) => ward.code === form.ward)?.name || "";
-};
-</script>
-
-<style lang="scss" scoped>
-.margin-left {
+ };
+ </script>
+ 
+ 
+ <style lang="scss" scoped>
+ .margin-left {
  margin-left: 30px;
-}
-.align-item-center {
+ }
+ .align-item-center {
   display: flex;
   align-items: center;
-}
-.center {
+ }
+ .center {
   text-align: center;
-}
-.margin-top {
+ }
+ .margin-top {
   margin-top: 10px;
-}
-.pictureCart {
+ }
+ .pictureCart {
   width: 20%;
   height: auto;
   margin-left: 30px;
-}
-.middle-center {
+ }
+ .middle-center {
   display: flex;
   vertical-align: middle;
   align-items: center;
   font-size: 18px;
-}
-.btn-order {
+ }
+ .btn-order {
   border: none;
   background-color: orangered;
   color: white;
@@ -632,59 +636,59 @@ const getWardName = () => {
   &:hover {
     background-color: lightcoral;
   }
-}
-.margin-top-15 {
+ }
+ .margin-top-15 {
   margin-top: 15px;
   color: gray;
-}
-.text-align-right {
+ }
+ .text-align-right {
   text-align: right;
-}
-.text-align-left {
+ }
+ .text-align-left {
   text-align: left;
-}
-.bawp {
+ }
+ .bawp {
   display: flex;
   align-items: center;
-}
-.ajust {
+ }
+ .ajust {
   grid-column-start: 2;
   grid-column-end: 3;
-}
-.display-grid {
+ }
+ .display-grid {
   display: grid;
   grid-template-columns: 1fr max-content max-content;
   grid-template: auto;
   padding-top: 15px;
-}
-.margin-top {
+ }
+ .margin-top {
   margin-top: 10px;
-}
-.totalBill {
+ }
+ .totalBill {
   color: orangered;
   font-size: 25px;
   font-weight: 500;
-}
-.textarea {
+ }
+ .textarea {
   width: 100%;
   height: 100%;
   padding: 10px;
-}
-.color-shipping {
+ }
+ .color-shipping {
   color: green;
-}
-.text-align-right {
+ }
+ .text-align-right {
   text-align: right;
   margin-right: 20px;
-}
-.margin-top-30 {
+ }
+ .margin-top-30 {
   margin-top: 30px;
   margin-bottom: 30px;
-}
-.font-color-title {
+ }
+ .font-color-title {
   color: gray;
-}
-.button-add-address {
+ }
+ .button-add-address {
   border: none;
   border-radius: 5px;
   background-color: orangered;
@@ -694,14 +698,14 @@ const getWardName = () => {
   &:hover {
     background: #f18d9b;
   }
-}
-.font-color {
+ }
+ .font-color {
   color: orangered;
   font-size: 20px;
   margin-top: 10px;
   margin-left: 20px;
-}
-.backgr-img {
+ }
+ .backgr-img {
   height: 3px;
   width: 100%;
   background-position-x: -30px;
@@ -717,5 +721,10 @@ const getWardName = () => {
     transparent 0,
     transparent 82px
   );
-}
-</style>
+ }
+ </style>
+ 
+ 
+ 
+ 
+ 

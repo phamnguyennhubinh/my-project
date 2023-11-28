@@ -152,12 +152,14 @@ export default {
   },
   data() {
     const counterStore = useCounterStore();
+    // const accId = this.$route.params.idCustomer;
     return {
       imageURL: "./assets/slider.png",
       currentRoute: null,
       isMenuOpen: false,
       alwaysTrue: true,
       counterStore,
+      // accId
     };
   },
   watch: {

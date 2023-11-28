@@ -238,13 +238,15 @@ const placement = ref("topLeft");
 const value2 = ref("HangZhou");
 const value1 = ref(1);
 const value3 = ref("HangZhou1");
-const sanphams = ref([]);
+const sanphams = ref([]); 
 const route = useRoute();
 const carouselPic = ref([]);
+// const temp = ref([]);
 
 onMounted(async () => {
   const productId = route.params.id;
   await counterStore.fetchEachProduct(productId);
+
   console.log(counterStore.product);
   sanphams.value = counterStore.product;
   console.log(value1.value);
@@ -253,9 +255,15 @@ onMounted(async () => {
     console.log(carouselPic.value[i]);
   }
 });
-const addToCart = () => {
+const addToCart = async () => {
   counterStore.addToCart(sanphams.value, value1.value);
-  message.success("Đã thêm sản phẩm vào giỏ hàng!")
+  message.success("Đã thêm sản phẩm vào giỏ hàng!");
+  const idCustom = JSON.parse(localStorage.getItem("idCustomer"));
+  await counterStore.removeCart(idCustom);
+  // await counterStore.updateCart(idCustom,counterStore.listCarts)
+  const temp = {id: idCustom, cart: counterStore.listCarts};
+  console.log(temp);
+  await counterStore.addCartForAcc(temp);
 };
 
 const getImage = (i) =>{

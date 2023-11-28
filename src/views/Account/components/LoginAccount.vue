@@ -52,11 +52,20 @@
 
 <script setup>
 import { message } from "ant-design-vue";
-import { reactive } from "vue";
+// import { stringify } from "uuid";
+import { onMounted, reactive } from "vue";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useCounterStore } from "@/stores";
+// import { useRouter } from "vue-router";
 const userNameInput = ref(null);
+const  counterStore = useCounterStore();
 const passwordInput = ref(null);
+const idAcc = ref(null);
 const arrAccount = ref([]);
+// const router = useRouter();
+const router = useRouter();
+// const arrCartForAcc = ref([]);
 const formState = reactive({
   username: "",
   password: "",
@@ -65,13 +74,21 @@ const formState = reactive({
 const onFinish = (values) => {
   console.log("Success:", values);
   loginAccount();
+  localStorage.setItem("whologin",JSON.stringify(idAcc.value));
+  console.log(idAcc.value);
+  router.push({ name: "LayoutPage"});
 };
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
-const loginAccount = () => {
-  arrAccount.value = JSON.parse(localStorage.getItem("listAcc")) || [];
-  const getIndexByUsername = arrAccount.value.findIndex(
+onMounted(async () => {
+  await counterStore.fetchListAccounts();
+})
+const loginAccount = async () => {
+  // arrAccount.value = JSON.parse(localStorage.getItem("listAcc")) || [];
+  arrAccount.value = counterStore.getListAcc;
+  // console.log(arrAccount.value);
+    const getIndexByUsername = arrAccount.value.findIndex(
     (item) => item.phone === formState.username
   );
   if(getIndexByUsername !== -1)
@@ -79,6 +96,16 @@ const loginAccount = () => {
     if(arrAccount.value[getIndexByUsername].password === formState.password)
     {
       message.success("Đăng nhập thành công!");
+      idAcc.value = arrAccount.value[getIndexByUsername].id;
+      await counterStore.fetchListCustomerCart(idAcc.value);
+      localStorage.setItem("idCustomer",JSON.stringify(idAcc.value));
+      const arr1 = counterStore.getListCart;
+      // console.log();
+      console.log(arr1);
+      console.log(arr1.cart);
+      const targetCart = arr1.cart || [];
+      console.log(targetCart);
+      counterStore.listCarts = targetCart;
     }
     else 
     {
