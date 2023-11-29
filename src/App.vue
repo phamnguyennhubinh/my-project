@@ -15,8 +15,9 @@ const counterStore = useCounterStore();
 // const array = JSON.parse(localStorage.getItem("cart"));
 counterStore.countC = computed(() => counterStore.listCarts.length);
 onMounted(()=>{
-  counterStore.listCarts = JSON.parse(localStorage.getItem("cart")) || [];
+  // counterStore.listCarts = JSON.parse(localStorage.getItem("updateCart")) || [];
 })
+// counterStore.listCarts =
 </script>
 
 <style>

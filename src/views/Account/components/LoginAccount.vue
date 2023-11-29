@@ -99,7 +99,7 @@ const loginAccount = async () => {
       idAcc.value = arrAccount.value[getIndexByUsername].id;
       await counterStore.fetchListCustomerCart(idAcc.value);
       localStorage.setItem("idCustomer",JSON.stringify(idAcc.value));
-      const arr1 = counterStore.getListCart;
+      const arr1 = counterStore.getListCart || [];
       // console.log();
       console.log(arr1);
       console.log(arr1.cart);

@@ -34,6 +34,8 @@ export const useCounterStore = defineStore("counter", {
     arrTicked: [],
     getListAcc: [],
     getListCart: [],
+    getListInfo: [],
+    getListOrderById: [],
   }),
   actions: {
     // async productTicked(){
@@ -80,13 +82,33 @@ export const useCounterStore = defineStore("counter", {
     //     console.error("Error in productTicked:", error);
     //   }
     // },
+    totalBillOrder() {
+      try {
+        this.billOrder = 0;
+        for (let i = 0; i < this.arrTicked.length; i++) {
+          this.billOrder +=
+            this.arrTicked[i].price * this.arrTicked[i].quantity;
+        }
+        // console.log(this.arrayTicked);
+      } catch (error) {
+        console.error("Error in productTicked:", error);
+      }
+    },
     productTicked() {
       // const arr = this.listCarts;
+      // localStorage.setItem("orderPending", JSON.stringify([]));
+      this.arrTicked = [];
+      console.log(this.arrayTicked);
+      // const count = 0;
       for (let i = 0; i < this.listCarts.length; i++) {
         if (this.listCarts[i].status === true) {
           this.arrTicked = this.arrTicked.concat(this.listCarts[i]);
-        }
+          localStorage.setItem("orderPending", JSON.stringify(this.arrTicked));
+        } 
       }
+      console.log(this.listCarts.length);
+      this.arrTicked = JSON.parse(localStorage.getItem("orderPending")) || [];
+      
     },
     totalBill() {
       this.total = 0;
@@ -147,16 +169,23 @@ export const useCounterStore = defineStore("counter", {
       this.countCart++;
     },
     //PATCH
-    async updateCart(data, customerId) 
-    {
+    async updateCart(data, customerId) {
       await savingServices.updateCartCustomer(data, customerId);
     },
-    //DELETE 
-    async removeCart (customerId) 
-    {
+    //DELETE
+    async removeCart(customerId) {
       await savingServices.deleteCart(customerId);
     },
+    async removeInfoDelivery(customerId) {
+      await savingServices.deleteInfoDelivery(customerId);
+    },
+    async removeOrderDetail(customerId) {
+      await savingServices.deleteOrderDetail(customerId);
+    },
     //POST
+    async addInfoDelivery(info) {
+      await savingServices.infoDeliveryOrder(info);
+    },
     async addAcc(data) {
       await savingServices.addListAcc(data);
     },
@@ -164,11 +193,25 @@ export const useCounterStore = defineStore("counter", {
       await savingServices.addCustomerCart(data);
     },
     async addProductToCustomerCart(product) {
-      await savingServices.addProductToCart(product)
+      await savingServices.addProductToCart(product);
+    },
+    async addOrderDetail(info) {
+      await savingServices.addOrder(info);
+    },
+    async addHasOrder(info, customerId) {
+      await savingServices.hasOrder(info, customerId);
     },
     //GET
+    async fetchOrderById(customerId) {
+      this.getListOrderById =
+        (await savingServices.getOrderDetail(customerId)) || [];
+    },
+    async fetchInfoDelivery(customerId) {
+      this.getListInfo =
+        (await savingServices.getInfoDelivery(customerId)) || [];
+    },
     async fetchListCustomerCart(customerId) {
-     this.getListCart = await savingServices.getCustomerCart(customerId);
+      this.getListCart = await savingServices.getCustomerCart(customerId);
     },
     async fetchListAccounts() {
       this.getListAcc = await savingServices.getListAccounts();

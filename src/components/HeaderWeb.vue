@@ -54,13 +54,13 @@
               </div>
               <div class="col-sm-12">
                 <router-link :to="{ name: 'LoginAccount' }">
-                  <a
-                  ><i class="fa fa-user"></i
-                  ><span class="font-menu-login">&nbsp;Login</span
-                  >&nbsp;&nbsp;&nbsp;&nbsp;</a
-                >
+                  <a type="button" @click="toggleLogin"
+                    ><i class="fa fa-user"></i
+                    ><span class="font-menu-login">&nbsp;{{ loginText }}</span
+                    >&nbsp;&nbsp;&nbsp;&nbsp;</a
+                  >
                 </router-link>
-                
+
                 <router-link :to="{ name: 'ListCart' }">
                   <!-- <a style="position: relative; cursor: pointer"
                     ><i
@@ -112,11 +112,20 @@
           <a href="#">CONTACT US</a>
         </li>
         <li>
-          <router-link :to="{name: 'LoginAccount'}">
-            <a class="pointer"><i class="fa fa-user"></i><span>Login</span></a>
+          <router-link :to="{ name: 'LoginAccount' }">
+            <a class="pointer" type="button" @click="toggleLogin"
+              ><i class="fa fa-user"></i><span>{{ loginText }}</span></a
+            >
           </router-link>
-          
-          <router-link :to="{ name: 'ListCart' }">
+
+          <!-- <router-link :to="{ name: 'ListCart' }"> -->
+            <a @click="navigateToCart" class="pointer">
+              <a-badge :count="counterStore.countC" :overflow-count="99">
+                <a-avatar size="large" style="background-color: orangered"
+                  ><i class="fa-solid fa-cart-shopping" style="color: white"></i
+                ></a-avatar>
+              </a-badge>
+            </a>
             <!-- <a style="position: relative; cursor: pointer"
               ><i
                 class="fa-solid fa-cart-shopping"
@@ -126,12 +135,7 @@
                 {{ counterStore.countC }}
               </p>
             </a> -->
-            <a-badge :count="counterStore.countC" :overflow-count="99">
-              <a-avatar size="large" style="background-color: orangered"
-                ><i class="fa-solid fa-cart-shopping" style="color: white"></i
-              ></a-avatar>
-            </a-badge>
-          </router-link>
+          <!-- </router-link> -->
 
           <a><i class="fa fa-search"></i></a>
         </li>
@@ -144,6 +148,7 @@
 <script>
 import { Collapse } from "vue-collapsed";
 import { useCounterStore } from "@/stores";
+import { message } from 'ant-design-vue';
 
 export default {
   name: "HeaderWeb",
@@ -172,8 +177,46 @@ export default {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen; // Đảo ngược trạng thái mở/đóng menu
     },
+    toggleLogin() {
+      // Thực hiện các bước đăng nhập hoặc đăng xuất tại đây
+      // Ví dụ: Cập nhật trạng thái đăng nhập và xử lý đăng xuất
+      const temp = JSON.parse(localStorage.getItem("idCustomer"));
+      if (temp !== null && this.currentRoute !== "LoginAccount") {
+        // Xử lý đăng xuất
+        localStorage.removeItem("idCustomer");
+        this.isLoggedIn = true;
+      } else {
+        // Xử lý đăng nhập
+        // ... (thêm logic đăng nhập ở đây)
+        this.isLoggedIn = false;
+      }
+    },
+    navigateToCart() {
+      // Thực hiện chuyển route đến trang giỏ hàng
+      const getId = JSON.parse(localStorage.getItem("idCustomer")) || 2;
+      if(getId === 2)
+      {
+        message.error("Vui lòng đăng nhập");
+      }
+      else
+      {
+        this.$router.push({ name: 'ListCart' });
+      }
+    },
+
+    showLoginPrompt() {
+      // Hiển thị thông báo đăng nhập
+      alert("Vui lòng đăng nhập!");
+    },
   },
-  computed: {},
+  computed: {
+    loginText() {
+      return this.isLoggedIn ? "Log out" : "Login";
+    },
+    hasIdCustomer() {
+      return localStorage.getItem("idCustomer") !== null;
+    },
+  },
 };
 </script>
 

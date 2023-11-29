@@ -96,8 +96,44 @@ export const getListAccounts = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+export const getInfoDelivery = async (customerId) => {
+  try {
+    const res = await request.get(`infoDelivery/${customerId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getOrderDetail = async (customerId) => {
+  try {
+    const res = await request.get(`listOrders/${customerId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
 }
 //////POST
+//Nếu KH chưa có trong addOrder
+export const addOrder = async (info) => {
+  try {
+    const res = await request.post("listOrders", info);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+//Nếu KH đã có trong Order
+export const hasOrder = async (info, customerId) => {
+  try {
+    const res = await request.post(`listOrders/${customerId}`, info);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const addListAcc = async (newAccountData) => {
   try {
     const res = await request.post("listAccounts", newAccountData);
@@ -124,6 +160,15 @@ export const addProductToCart = async (product) => {
     console.log(error);
   }
 }
+
+export const infoDeliveryOrder = async (info) => {
+  try {
+    const res = await request.post("infoDelivery", info);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
 //PATCH
 export const updateCartCustomer = async (data,customerId) => {
   try {
@@ -142,5 +187,24 @@ export const deleteCart = async (customerId) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const deleteInfoDelivery = async (customerId) => {
+  try {
+    const res = await request.remove(`infoDelivery/${customerId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteOrderDetail = async (customerId) => {
+  try {
+    const res = await request.remove(`listOrders/${customerId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 

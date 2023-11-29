@@ -14,7 +14,7 @@
            type="checkbox"
            id="myCheck"
            @change="selectAll"
-           @click="handleCheckAllChange(1)"
+           @click="handleCheckAllChange()"
            v-model="checkboxCart"
          />
        </span>
@@ -65,7 +65,7 @@
  </section>
  <section id="totalBill">
    <div class="row border2 background">
-     <div class="col">
+     <!-- <div class="col">
        <input
          type="checkbox"
          id="checkFixed"
@@ -74,10 +74,10 @@
          @click="handleCheckAllChange(2)"
        />
        <span>&nbsp;&nbsp;Chọn tất cả</span>
-     </div>
+     </div> -->
      <div class="col">
        <div>Tổng thanh toán</div>
-       <div>({{ computedValue.billEach }} sản phẩm)</div>
+       <div>({{ computedValue.countPro }} sản phẩm)</div>
      </div>
      <div class="col">
        <span class="color-price">${{ computedValue.billEach }}</span>
@@ -107,8 +107,10 @@ const howMuchTrue = ref(0);
 const count = ref(0);
 const hasFalse = ref();
 const hidden = ref(true);
+const update = ref([]);
+// const countChoosePro = ref(0);
 // const arrId = ref([]);
-const totalBillBottom = ref(0);
+// const totalBillBottom = ref(0);
 
 
 // Hàm watcher để theo dõi thay đổi của checkboxCart
@@ -135,13 +137,23 @@ watch(
    }
  }
 );
-
+watch(
+  () => counterStore.listCarts,
+  (newValue, oldValue) => {
+    // Đây là nơi xử lý khi có sự thay đổi trong counterStore.listCarts
+    console.log('New value:', newValue);
+    console.log('Old value:', oldValue);
+    update.value = oldValue;
+    // Gọi hàm hoặc thực hiện các hành động khác cần thiết khi có sự thay đổi
+    // Ví dụ: computedValue.refresh(); // Cập nhật giá trị computed
+  }
+);
 
 onMounted(async () => {
  // Lấy danh sách cart từ localStorage
  const idTemp = JSON.parse(localStorage.getItem("idCustomer"));
  await counterStore.fetchListCustomerCart(idTemp);
- const storedCarts = counterStore.getListCart.cart;
+ const storedCarts = counterStore.getListCart.cart || [];
  // Thêm biến status: true vào mỗi object
  if (storedCarts) {
    counterStore.listCarts = storedCarts.map((cart) => ({
@@ -155,8 +167,12 @@ onMounted(async () => {
  console.log(counterStore.listCarts);
  counterStore.totalBill();
 });
+
+// const listCartComputed = computed(()=>{
+//   return {list: counterStore.listCarts}
+// })
 const updateStatus = (newStatus, productId) => {
- // this.status = newStatus;
+ // this.status = newStatus;counterStore.listCarts
  console.log(newStatus);
  const storedCarts = counterStore.getListCart.cart;
  if(newStatus === true){
@@ -218,19 +234,17 @@ const selectAll = () => {
 
 const computedValue = computed(() => {
  let totalBill = 0;
-
-
+//  let count = 0;
+let count = 0;
  for (let i = 0; i < counterStore.listCarts.length; i++) {
+  
    const cart = counterStore.listCarts[i];
-
-
    if (cart.status === true) {
-     // Giả sử `totalEachProduct` là một phương thức nhận vào `productId`
-     // và trả về tổng cho sản phẩm đó
+     count++;
      totalBill += counterStore.totalEachProduct(cart.id);
    }
  }
- return { billEach: totalBill };
+ return { billEach: totalBill, countPro: count };
 });
 const deleteCart = async (productId) => {
  for (var i = 0; i < counterStore.listCarts.length; i++) {
@@ -252,26 +266,26 @@ const totalCart = computed(() => counterStore.totalBill());
 // const handleCheckAllChange = (value) => {
 //   console.log(value)
 // };
-const handleCheckAllChange = (checkboxNumber) => {
+const handleCheckAllChange = () => {
  selectAll();
  // followChecked();
  var checkBox = document.getElementById("myCheck");
- var checkFix = document.getElementById("checkFixed");
- if (checkBox.checked === true || checkFix.checked === true) {
+//  var checkFix = document.getElementById("checkFixed");
+ if (checkBox.checked === true) {
    counterStore.check = true;
  } else {
    counterStore.check = false;
  }
  // var checkFix = document.getElementById("checkFixed");
- if (checkboxNumber === 1) {
-   // Nếu checkbox 1 được tick, đặt giá trị của checkbox 2 thành true
-   checkboxOrder.value = !checkboxCart.value;
-   totalBillBottom.value = counterStore.totalCart;
- } else if (checkboxNumber === 2) {
-   // Nếu checkbox 2 được tick, đặt giá trị của checkbox 1 thành true
-   checkboxCart.value = !checkboxOrder.value;
-   totalBillBottom.value = 0;
- }
+//  if (checkboxNumber === 1) {
+//    // Nếu checkbox 1 được tick, đặt giá trị của checkbox 2 thành true
+//    checkboxOrder.value = !checkboxCart.value;
+//    totalBillBottom.value = counterStore.totalCart;
+//  } else if (checkboxNumber === 2) {
+//    // Nếu checkbox 2 được tick, đặt giá trị của checkbox 1 thành true
+//    checkboxCart.value = !checkboxOrder.value;
+//    totalBillBottom.value = 0;
+//  }
 };
 </script>
 
