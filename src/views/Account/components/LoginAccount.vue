@@ -76,7 +76,8 @@ const onFinish = (values) => {
   loginAccount();
   localStorage.setItem("whologin",JSON.stringify(idAcc.value));
   console.log(idAcc.value);
-  router.push({ name: "LayoutPage"});
+  // localStorage.setItem("Logout",JSON.stringify("Log out"));
+  // counterStore.setLoggedIn("Log out");
 };
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
@@ -96,6 +97,7 @@ const loginAccount = async () => {
     if(arrAccount.value[getIndexByUsername].password === formState.password)
     {
       message.success("Đăng nhập thành công!");
+      router.push({ name: "LayoutPage"});
       idAcc.value = arrAccount.value[getIndexByUsername].id;
       await counterStore.fetchListCustomerCart(idAcc.value);
       localStorage.setItem("idCustomer",JSON.stringify(idAcc.value));
@@ -106,12 +108,15 @@ const loginAccount = async () => {
       const targetCart = arr1.cart || [];
       console.log(targetCart);
       counterStore.listCarts = targetCart;
+      localStorage.setItem("Logout",JSON.stringify("Log out"));
+  counterStore.setLoggedIn("Log out");
     }
     else 
     {
       message.error("Sai mật khẩu!")
       formState.password = '';
       passwordInput.value.focus();
+      // counterStore.setLoggedIn("Log out");
     }
   }
   else

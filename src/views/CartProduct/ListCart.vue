@@ -2,7 +2,7 @@
  <section id="product">
    <h1 class="text-align-center">LIST CARTS</h1>
    <div class="grid container border">
-     <div class="col-md-4 position-relative">
+     <div class="col-md-4 col-sm-4 position-relative">
        <span class="text-align-left-absolute">
          <!-- <a-checkbox
          v-model:checked="checked"
@@ -22,10 +22,10 @@
 
        <span class="left-absolute">Sản phẩm</span>
      </div>
-     <div class="col-md-2">Đơn giá</div>
-     <div class="col-md-2">Số lượng</div>
-     <div class="col-md-2">Số tiền</div>
-     <div class="col-md-2">Thao tác</div>
+     <div class="col-md-2 col-sm-2">Đơn giá</div>
+     <div class="col-md-2 col-sm-2">Số lượng</div>
+     <div class="col-md-2 col-sm-2" >Số tiền</div>
+     <div class="col-md-2 col-sm-2">Thao tác</div>
    </div>
    <div
      class="grid container card"
@@ -64,7 +64,7 @@
    </div>
  </section>
  <section id="totalBill">
-   <div class="row border2 background">
+   <div class="row border2 background  ">
      <!-- <div class="col">
        <input
          type="checkbox"
@@ -89,6 +89,7 @@
        </router-link>
      </div>
    </div>
+   
  </section>
  <router-view />
 </template>
@@ -294,6 +295,9 @@ const handleCheckAllChange = () => {
 // .order {
 //   display: none;
 // }
+.margin-left-0 {
+  margin-left: 0px;
+}
 .background {
  background-color: #f9ece6;
  margin-right: 45px;
@@ -403,10 +407,17 @@ const handleCheckAllChange = () => {
  .btn {
    margin: 20px;
  }
+ .picture-box {}
+ .background {
+  height: 15%;
+ }
 }
 @media screen and (max-width: 800px) {
  .row {
    --bs-gutter-x: 0;
+ }
+ .border {
+  display: none;
  }
 }
 </style>

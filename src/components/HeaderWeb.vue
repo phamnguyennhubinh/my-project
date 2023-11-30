@@ -56,7 +56,7 @@
                 <router-link :to="{ name: 'LoginAccount' }">
                   <a type="button" @click="toggleLogin"
                     ><i class="fa fa-user"></i
-                    ><span class="font-menu-login">&nbsp;{{ loginText }}</span
+                    ><span class="font-menu-login">&nbsp;{{ counterStore.isLoggedIn }}</span
                     >&nbsp;&nbsp;&nbsp;&nbsp;</a
                   >
                 </router-link>
@@ -112,11 +112,14 @@
           <a href="#">CONTACT US</a>
         </li>
         <li>
-          <router-link :to="{ name: 'LoginAccount' }">
+          <!-- <router-link :to="{ name: 'LoginAccount' }"> -->
+            <!-- <a class="pointer" type="button" @click="toggleLogin" :hidden="hidden"
+              ><i class="fa fa-user"></i><span>Login</span></a
+            > -->
             <a class="pointer" type="button" @click="toggleLogin"
-              ><i class="fa fa-user"></i><span>{{ loginText }}</span></a
+              ><i class="fa fa-user"></i><span>{{ counterStore.isLoggedIn }}</span></a
             >
-          </router-link>
+          <!-- </router-link> -->
 
           <!-- <router-link :to="{ name: 'ListCart' }"> -->
             <a @click="navigateToCart" class="pointer">
@@ -158,12 +161,21 @@ export default {
   data() {
     const counterStore = useCounterStore();
     // const accId = this.$route.params.idCustomer;
+    const statusLogin = "Login";
+    let hidden = false;
+    let hidden2 = true;
+    const templ = JSON.parse(localStorage.getItem("idCustomer"));
     return {
       imageURL: "./assets/slider.png",
       currentRoute: null,
       isMenuOpen: false,
       alwaysTrue: true,
       counterStore,
+      statusLogin,
+      hidden,
+      hidden2,
+      templ,
+      
       // accId
     };
   },
@@ -181,14 +193,19 @@ export default {
       // Thực hiện các bước đăng nhập hoặc đăng xuất tại đây
       // Ví dụ: Cập nhật trạng thái đăng nhập và xử lý đăng xuất
       const temp = JSON.parse(localStorage.getItem("idCustomer"));
-      if (temp !== null && this.currentRoute !== "LoginAccount") {
-        // Xử lý đăng xuất
+      
+      if(temp!==null)
+      {
         localStorage.removeItem("idCustomer");
-        this.isLoggedIn = true;
-      } else {
-        // Xử lý đăng nhập
-        // ... (thêm logic đăng nhập ở đây)
-        this.isLoggedIn = false;
+        message.success("Đã đăng xuất!");
+        this.$router.push({ name: 'LayoutPage' });
+        this.counterStore.setLoggedIn("Login");
+        localStorage.setItem(("orderPending"), JSON.stringify([]));
+        localStorage.setItem("Logout",JSON.stringify("Login"));
+      }
+      else
+      {
+        this.$router.push({ name: 'LoginAccount' });
       }
     },
     navigateToCart() {
@@ -211,7 +228,7 @@ export default {
   },
   computed: {
     loginText() {
-      return this.isLoggedIn ? "Log out" : "Login";
+      return this.counterStore.isLoggedIn ? "Log out" : "Login";
     },
     hasIdCustomer() {
       return localStorage.getItem("idCustomer") !== null;
@@ -378,6 +395,9 @@ h1 {
   margin-bottom: 0;
 }
 @media screen and (max-width: 1023px) {
+  .backgr2 {
+    margin: 0 0;
+  }
   .row .col-sm-12 .font-menu-login {
     font-size: 14px;
     font-weight: 510;
@@ -423,6 +443,9 @@ h1 {
   .backgr1 {
     margin: 0;
   }
+  // .backgr2 {
+  //   margin: 0 0;
+  // }
 }
 @media screen and (max-width: 320px) {
   .backgr1 {
@@ -431,5 +454,14 @@ h1 {
   .heading {
     font-size: 30px;
   }
+  .backgr2 {
+    margin: 0 0;
+  }
 }
+@media screen and (max-width: 576px) {
+  .backgr2 {
+    margin: 0 0;
+  }
+}
+
 </style>

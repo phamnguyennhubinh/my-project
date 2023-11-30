@@ -41,6 +41,8 @@
     "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^4.2.5",
     "vue-slick-carousel": "^1.0.6",
+    "vue-sticky": "^3.3.4",
+    "vue-sticky-element": "^1.7.0",
     "vue3-pagination": "^1.0.16",
     "vuex": "^4.0.2"
   },

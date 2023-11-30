@@ -15,9 +15,7 @@
                 getInfoDeliver.info.phone
               }}</b
             >
-            &ensp;{{ getInfoDeliver.info.specificAddress }},
-            {{ getInfoDeliver.info.ward }}, {{ getInfoDeliver.info.district }},
-            {{ getInfoDeliver.info.city }}&ensp;&ensp;
+            &ensp;<br class="displayForRes"/>{{ getInfoDeliver.arrInfoDeliver }}&ensp;&ensp;
           </span>
           <a-button
             type="primary"
@@ -147,10 +145,10 @@
     </div>
     <div>
       <div class="row font-color-title margin-top-30">
-        <div class="col-md-6 center">Sản phẩm</div>
-        <div class="col-md-2">Đơn giá</div>
-        <div class="col-md-2">Số lượng</div>
-        <div class="col-md-2">Thành tiền</div>
+        <div class="col-md-6 col-sm-6 center">Sản phẩm</div>
+        <div class="col-md-2 col-sm-2">Đơn giá</div>
+        <div class="col-md-2 col-sm-2">Số lượng</div>
+        <div class="col-md-2 col-sm-2">Thành tiền</div>
       </div>
       <div
         class="row margin-top align-item-center"
@@ -158,26 +156,26 @@
         :key="item.id"
       >
         <hr />
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-3">
           <img class="pictureCart" :src="item.pic[0]" />
         </div>
-        <div class="col-md-3">{{ item.name }}</div>
-        <div class="col-md-2">${{ item.price }}</div>
-        <div class="col-md-2">{{ item.quantity }}</div>
-        <div class="col-md-2">${{ item.price * item.quantity }}</div>
+        <div class="col-md-3 col-sm-3">{{ item.name }}</div>
+        <div class="col-md-2 col-sm-2">${{ item.price }}</div>
+        <div class="col-md-2 col-sm-2">{{ item.quantity }}</div>
+        <div class="col-md-2 col-sm-2">${{ item.price * item.quantity }}</div>
       </div>
     </div>
     <hr />
     <div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
           <textarea
             id="myTextArea"
             placeholder="Lưu ý cho người bán"
             class="textarea"
           ></textarea>
         </div>
-        <div class="col-md-6 font-color-title">
+        <div class="col-md-6 col-sm-6 font-color-title">
           <span class="color-shipping">Đơn vị vận chuyển: &ensp; </span>
           <a-select
             v-model:value="value2"
@@ -188,13 +186,13 @@
             <a-select-option value="HangZhou">Nhanh</a-select-option>
             <a-select-option value="NingBo">Hỏa tốc</a-select-option>
           </a-select>
-          <span>&ensp;&ensp;Nhận hàng vào ngày 24/11 đến 26/11</span>
+          <span class="hidden-res">&ensp;&ensp;Nhận hàng vào ngày 24/11 đến 26/11</span>
           <div>Được đồng kiểm</div>
           <div>Tổng số tiền: ${{ counterStore.billOrder }}</div>
         </div>
       </div>
     </div>
-    <hr />
+    <hr class="hidden-res"/>
     <hr />
     <!-- <div class="display-grid text-align-right font-color-title">
            <h6 class="ajust bawp">Tổng tiền hàng</h6>
@@ -203,26 +201,26 @@
        <div class="margin-top">Tổng thanh toán:&emsp;  <span class="totalBill">$14000</span></div>
    </div> -->
     <div class="row margin-top-15 middle-center">
-      <div class="col-md-10" style="text-align: right">
+      <div class="col-md-10 col-sm-10" style="text-align: right">
         <span>Tổng tiền hàng:</span>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-2">
         <span>${{ counterStore.billOrder }}</span>
       </div>
     </div>
     <div class="row margin-top-15 middle-center">
-      <div class="col-md-10" style="text-align: right">
+      <div class="col-md-10 col-sm-10" style="text-align: right">
         <span>Phí vận chuyển:</span>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-2">
         <span>${{ ship }}</span>
       </div>
     </div>
     <div class="row margin-top-15 middle-center">
-      <div class="col-md-10" style="text-align: right">
+      <div class="col-md-10 col-sm-10" style="text-align: right">
         <span>Tổng thanh toán:</span>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-2">
         <span class="totalBill">${{ ship + counterStore.billOrder }}</span>
       </div>
     </div>
@@ -559,7 +557,14 @@ const handleSubmit = () => {
   });
 };
 const getInfoDeliver = computed(() => {
-  return { info: counterStore.getListInfo };
+  const arrayTemp = counterStore.getListInfo;
+  const arrtemp = [];
+  arrtemp.push(arrayTemp.specificAddress);
+  arrtemp.push(arrayTemp.ward);
+  arrtemp.push(arrayTemp.district);
+  arrtemp.push(arrayTemp.city);
+  const finalArr =  arrtemp.join(", ");
+  return { info: counterStore.getListInfo, arrInfoDeliver: finalArr };
 });
 
 const addOrder = () => {
@@ -611,54 +616,6 @@ const addOrder = () => {
   console.log(temp);
   counterStore.addCartForAcc(temp);
 
-  // if (counterStore.getListOrderById.length !== 0) {
-  //   console.log("Đã có!");
-  //   const arrDetail = counterStore.getListOrderById;
-  //   const countid = arrDetail.orders.length;
-  //   const infoDetail = {
-  //     id: countid + 1,
-  //     products: counterStore.arrTicked,
-  //     total: ship.value + counterStore.billOrder,
-  //     dateOrder: date + " " + time,
-  //     status: "is Pending",
-  //     note: element.value,
-  //   };
-  //   arrDetail.orders.push(infoDetail);
-  //   await counterStore.removeOrderDetail(idC);
-  //   await counterStore.addHasOrder(arrDetail, idC);
-  //   message.success("Đặt hàng thành công!");
-  // } else {
-  //   const arrOrder = {
-  //     id: idC,
-  //     orders: {
-  //       products: [
-
-  //       ],
-  //       total: ship.value + counterStore.billOrder,
-  //       dateOrder: date + " " + time,
-  //       status: "is Pending",
-  //       note: element.value,
-  //     },
-  //   };
-  //   counterStore.addOrderDetail(arrOrder);
-  //   message.success("Đặt hàng thành công!");
-  // }
-  // for (let i = 0; i < counterStore.listCarts.length; i++) {
-  //   for (let j = 0; j < counterStore.arrTicked.length; j++) {
-  //     if (counterStore.listCarts[i].id === counterStore.arrTicked[j].id) {
-  //       counterStore.listCarts.splice(i, 1); //xóa hết phần tử counterStore.listCart[i]
-  //     }
-  //   }
-  // }
-  // localStorage.setItem("updateCart", JSON.stringify(counterStore.listCarts));
-  // console.log(counterStore.listCarts);
-
-  // counterStore.removeCart(idC);
-  // // await counterStore.updateCart(idCustom,counterStore.listCarts)
-  // const updateCa = JSON.parse(localStorage.getItem("updateCart"));
-  // const temp = { id: idC, cart: updateCa };
-  // console.log(temp);
-  // counterStore.addCartForAcc(temp);
 };
 
 const formRef = ref(null);
@@ -759,6 +716,9 @@ const getWardName = () => {
   margin-top: 15px;
   color: gray;
 }
+.displayForRes {
+  display: none;
+}
 .text-align-right {
   text-align: right;
 }
@@ -839,5 +799,22 @@ const getWardName = () => {
     transparent 0,
     transparent 82px
   );
+}
+@media screen and (max-width: 1023px) {
+  .textarea {
+    width: 80%;
+  }
+  .hidden-res {
+    display: none;
+  }
+}
+@media screen and (max-width: 800px) {
+  .container {
+    padding: 0px;
+  }
+  .displayForRes {
+    display: block;
+  }
+
 }
 </style>

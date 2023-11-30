@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <section class="container">
-      <div class="grid card">
+      <div class="grid card shadow">
         <a-breadcrumb class="bread_crumb">
           <a-breadcrumb-item>Home</a-breadcrumb-item>
           <a-breadcrumb-item
@@ -55,36 +55,36 @@
             </div>
           </div> -->
           <div class="col-md-5">
-            <a-carousel arrows dots-class="slick-dots slick-thumb">
+            <a-carousel arrows dots-class="slick-dots slick-thumb " class="margin-top-30">
               <template #customPaging="props">
                 <a>
                   <img :src="getImage(props.i)" />
                 </a>
               </template>
               <div v-for="item in carouselPic" :key="item">
-                <img :src="item" />
+                <img :src="item"/>
               </div>
             </a-carousel>
           </div>
           <div class="col-md-7">
-            <h3 class="nameProduct">
+            <h3 class="nameProduct can-le-respon-1">
               <span class="like">Yêu thích</span>&nbsp;{{
                 counterStore.product.name
               }}
             </h3>
-            <div class="can-le-trai">
+            <div class="can-le-trai can-le-respon">
               {{ value }}
-              <a-rate v-model:value="value" allowHalf></a-rate>
+              <a-rate v-model:value="value" allowHalf class="changeRes"></a-rate>
               <a href="#">&nbsp;&nbsp;| 704 Đánh giá</a>
               &nbsp; | &nbsp; 2,5k Đã bán
             </div>
             <div class="price-discount-background can-le-trai">
-              <div class="margin-top-30">
-                <span class="price-discount">1200</span>
+              <div class="margin-top-30 text-align-center-res">
+                <span class="price-discount margin-left-20">{{ counterStore.product.price*2 }}</span>
                 <span class="price">
                   &nbsp;{{ counterStore.product.price }}&nbsp;&nbsp;</span
                 >
-                <span class="discount">46% GIẢM</span>
+                <span class="discount">50% GIẢM</span>
                 <div class="flex items-center">
                   <i
                     class="fas fa-comments"
@@ -154,16 +154,16 @@
                 />
               </div>
             </div>
-            <div class="margin-left-20 can-le-trai">
+            <div class="margin-left-20 can-le-trai center-res">
               <button type="button" class="button-add-cart" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>&ensp;Thêm vào giỏ hàng
               </button>
-              <button type="button" class="button-buy-now">Mua Ngay</button>
+              <!-- <button type="button" class="button-buy-now" @click="buyNoew">Mua Ngay</button> -->
             </div>
 
             <div class="grid">
-              <hr />
-              <div class="row bread_crumb">
+              <hr style="margin-right: 10px;"/>
+              <div class="row bread_crumb" style="margin-right: 30px;">
                 <div class="col-md-4">
                   <i class="fas fa-undo" style="color: #d0011b"></i>&nbsp; 7
                   ngày miễn phí trả hàng
@@ -185,7 +185,7 @@
         </div>
       </div>
 
-      <section class="flex card margin-50-0">
+      <section class="flex card margin-50-0 shadow">
         <h3 style="padding: 20px">CHI TIẾT SẢN PHẨM</h3>
         <div>
           <div class="flex">
@@ -200,15 +200,15 @@
             <label class="label-detail">Kho hàng</label>
             <div>1290</div>
           </div>
-          <div class="flex">
+          <div class="flex padding-bottom-20">
             <label class="label-detail">Gửi từ</label>
             <div>Hà Nội</div>
           </div>
         </div>
       </section>
-      <section class="flex card" style="margin: 50px 0">
+      <section class="flex card shadow" style="margin: 50px 0">
         <h3 style="padding: 20px">MÔ TẢ SẢN PHẨM</h3>
-        <div style="padding-left: 20px; padding-bottom: 20px">
+        <div style="padding-left: 20px;" class="padding-bottom-20">
           Gấu bông heo ôm bình sữa lợn bú bình mẫu thú nhồi bông siêu cute hàng
           cao cấp mềm mịn 28cm <br />
           THÔNG TIN SẢN PHẨM <br />- Trọng Lượng: 0,5 kg. <br />✔️ Kích thước
@@ -241,8 +241,8 @@ const value3 = ref("HangZhou1");
 const sanphams = ref([]); 
 const route = useRoute();
 const carouselPic = ref([]);
+// const priceNoDiscount = Number(Number(counterStore.product.price)*2)
 // const temp = ref([]);
-
 onMounted(async () => {
   const productId = route.params.id;
   await counterStore.fetchEachProduct(productId);
@@ -275,6 +275,12 @@ const getImage = (i) =>{
 <style lang="scss" scoped>
 // @import "@/assets/styles/grid.css";
 $color-main: orangered;
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+.padding-bottom-20 {
+  padding-bottom: 20px;
+}
 ._margin {
   position: relative;
   margin: 20px 10px;
@@ -340,7 +346,7 @@ $color-main: orangered;
 .margin-top-30 {
   margin-top: 30px;
 }
-.margin-left-20 {
+.margin-left-20 { 
   margin-left: 20px;
 }
 .padding-left-20 {
@@ -392,6 +398,9 @@ $color-main: orangered;
   box-sizing: border-box;
   width: 8.75rem;
   padding-right: 0.75rem;
+}
+.shadow {
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.03);
 }
 .button-add-cart {
   background-color: #fef6f5;
@@ -488,6 +497,7 @@ a {
 :deep(.slick-dots) {
   position: relative;
   height: auto;
+  margin-top: 30px;
 }
 :deep(.slick-slide img) {
   border: 5px solid #fff;
@@ -508,10 +518,62 @@ a {
 :deep(.slick-thumb li img) {
   width: 100%;
   height: 100%;
-  filter: grayscale(100%);
   display: block;
 }
 :deep .slick-thumb li.slick-active img {
   filter: grayscale(0%);
+}
+@media screen and (max-width: 576px) {
+  .items-center {
+    display: none;
+  }
+  .button-add-cart {
+    padding: 10px 10px;
+    // display: inline;
+  }
+  .button-buy-now {
+    padding: 10px 10px;
+    // display: inline;
+  }
+  .container {
+    margin: 0;
+    padding: 0;
+  }
+  .card {
+    // margin-top: 0px;
+    padding: 0;
+  }
+  .changeRes {
+    display: none;
+  }
+  .can-le-respon {
+    text-align: center;
+  }
+  .can-le-respon-1 {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .text-align-center-res {
+    text-align: center;
+  }
+  .margin-left-20 {
+    margin-left: 10px;
+  }
+  .center-res {
+    text-align: center;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .button-add-cart {
+    padding: 10px 20px;
+    // display: inline;
+  }
+  .button-buy-now {
+    padding: 10px 20px;
+    // display: inline;
+  }
+  .center-res {
+    text-align: center;
+  }
 }
 </style>

@@ -36,6 +36,7 @@ export const useCounterStore = defineStore("counter", {
     getListCart: [],
     getListInfo: [],
     getListOrderById: [],
+    isLoggedIn: JSON.parse(localStorage.getItem("Logout")),
   }),
   actions: {
     // async productTicked(){
@@ -51,6 +52,9 @@ export const useCounterStore = defineStore("counter", {
     //   }
     //   console.log(this.arrayTicked);
     // },
+    setLoggedIn(value) {
+      this.isLoggedIn = value;
+    },
     infoDelivery() {
       this.infoDeliveryDetail =
         JSON.parse(localStorage.getItem("infoDelivery")) || [];
@@ -163,6 +167,13 @@ export const useCounterStore = defineStore("counter", {
       );
       this.listCarts[findIndexProductByID].quantity -= 1;
       // this.countCart();
+      localStorage.setItem("cart", JSON.stringify(this.listCarts));
+    },
+    inputQuantity(id, value){
+      const findIndexProductByID = this.listCarts.findIndex(
+        (item) => item.id === id
+      );
+      this.listCarts[findIndexProductByID].quantity = value;
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
     },
     addCart() {

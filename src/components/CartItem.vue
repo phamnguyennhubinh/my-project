@@ -32,7 +32,14 @@
       <button @click="countMinus" class="quantity">
         <i class="fa-solid fa-minus"></i>
       </button>
-      <input class="quantity inputQuantity" type="text" :value="quantity" />
+      <input
+        class="quantity inputQuantity"
+        type="text"
+        id="inputBuy"
+        :value="quantity"
+        @input="updateQuantity"
+        @keydown="handleKeyDown"
+      />
       <button @click="counterStore.increaseQuantity(id)" class="quantity">
         <i class="fa-solid fa-plus"></i>
       </button>
@@ -48,15 +55,14 @@
   >
     <button @click="deleteCart" class="btn">Xóa</button>
   </div>
- </template>
- 
- 
- <script>
- import { useCounterStore } from "@/stores";
- import {ref} from "vue";
- // import { ref, defineProps, defineEmits } from "vue";
- // import { watch } from "vue";
- export default {
+</template>
+
+<script>
+import { useCounterStore } from "@/stores";
+import { ref } from "vue";
+// import { ref, defineProps, defineEmits } from "vue";
+// import { watch } from "vue";
+export default {
   props: {
     id: Number,
     pic: String,
@@ -71,6 +77,8 @@
     // const props = defineProps(["checkboxCart"]);
     // const emit = defineEmits(["update:checkboxCart", "followChange"]);
     const count = 1;
+    // const ex = document.getElementById("inputBuy");
+    // console.log(ex.value);
     // const checkBox = document.getElementById("checkEach").checked;
     let checked = ref(this.status);
     return {
@@ -83,6 +91,31 @@
     // detailProduct () {
     //  this.$router.push('/shop/detail');
     //  }
+    handleKeyDown(event) {
+      // Kiểm tra xem phím được nhấn có phải là số hay không
+      if (!/^\d$|^Backspace$|^Delete$/.test(event.key)) {
+        // Nếu không phải số, ngăn chặn sự kiện
+        event.preventDefault();
+      }
+    },
+    updateQuantity(event) {
+      // Được gọi mỗi khi giá trị của trường input thay đổi
+      // this.quantity = event.target.value;
+      const num = Number(event.target.value);
+      if(num === 0)
+      {
+        this.deleteCart();
+      }
+      else {
+        this.counterStore.inputQuantity(this.id, num);
+      }
+      
+      // Xử lý logic của bạn tại đây
+    },
+    getValue() {
+      const ex = document.getElementById("inputBuy");
+      console.log(ex.value);
+    },
     deleteCart() {
       this.$emit("delete", this.$props.id);
     },
@@ -106,8 +139,7 @@
       // this.checkedSomeToAll();
       const selected = JSON.parse(localStorage.getItem("addCart")) || [];
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      if(selected.length === cart.length)
-      {
+      if (selected.length === cart.length) {
         this.$emit("checkedSomeToAll");
       }
     },
@@ -116,12 +148,11 @@
     },
     computedProductId() {
       return this.id;
-    }
+    },
     // handleCheckboxChange() {
     //   // Gửi giá trị của checkbox lên component cha
     //   this.$emit("update:checkboxCart", this.checked);
- 
- 
+
     //   // Gửi sự kiện followChange lên component cha
     //   this.$emit("followChange");
     // },
@@ -152,45 +183,44 @@
       this.checked = newValue;
     },
   },
-    // checkboxCart: function(newValue) {
-    //   console.log("Helooooooooooo"+newValue);
-    //   if(newValue)
-    //   {
-    //   this.checked = newValue;
-    //   }
-    //   else
-    //   {
-    //     this.checked = !newValue;
-    //   }
-     
-    // }
+  // checkboxCart: function(newValue) {
+  //   console.log("Helooooooooooo"+newValue);
+  //   if(newValue)
+  //   {
+  //   this.checked = newValue;
+  //   }
+  //   else
+  //   {
+  //     this.checked = !newValue;
+  //   }
+
+  // }
   // },
- };
- </script>
- 
- 
- <style lang="scss" scopped>
- .position-relative {
+};
+</script>
+
+<style lang="scss" scopped>
+.position-relative {
   position: relative;
- }
- .text-align-left-abso {
+}
+.text-align-left-abso {
   position: absolute;
   left: 10px;
- }
- .display-none {
+}
+.display-none {
   display: none;
- }
- .display-block {
+}
+.display-block {
   display: block;
- }
- .font-weight {
+}
+.font-weight {
   font-weight: bold;
- }
- .color-price {
+}
+.color-price {
   color: orangered;
   font-weight: bold;
- }
- .btn {
+}
+.btn {
   background-color: orangered;
   border: none;
   padding: 10px 20px;
@@ -199,19 +229,19 @@
     background-color: rgb(246, 132, 88);
     color: #fff;
   }
- }
- .align-items-center {
+}
+.align-items-center {
   align-items: center;
- }
- .justify-content-center {
+}
+.justify-content-center {
   justify-content: center;
- }
- .picture-box {
+}
+.picture-box {
   width: 60%;
   //   height: 100%;
   padding: 10px;
- }
- .quantity {
+}
+.quantity {
   outline: none;
   cursor: pointer;
   font-size: 0.875rem;
@@ -229,8 +259,8 @@
   width: 25px;
   height: 30px;
   display: inline;
- }
- .inputQuantity {
+}
+.inputQuantity {
   width: 25px;
   height: 30px;
   border-left: 0;
@@ -244,32 +274,27 @@
   display: inline;
   margin: 7px 0;
   padding-bottom: 4px;
- }
- 
- 
- .grid .row {
+}
+
+.grid .row {
   display: flex;
   justify-content: center;
   vertical-align: middle;
   text-align: center;
- }
- @media screen and (max-width: 1023px) {
+}
+@media screen and (max-width: 1023px) {
   .picture-box {
     width: 100%;
   }
- }
- @media screen and (max-width: 768px) {
+}
+@media screen and (max-width: 768px) {
   .picture-box {
     width: 50%;
   }
- }
- @media screen and (min-width: 375px) and (max-width: 811px) {
+}
+@media screen and (min-width: 375px) and (max-width: 811px) {
   .picture-box {
     width: 50%;
   }
- }
- </style>
- 
- 
- 
- 
+}
+</style>
