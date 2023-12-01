@@ -202,6 +202,10 @@ export default {
         this.counterStore.setLoggedIn("Login");
         localStorage.setItem(("orderPending"), JSON.stringify([]));
         localStorage.setItem("Logout",JSON.stringify("Login"));
+        this.$router.push({ name: 'LoginAccount' });
+        localStorage.setItem(("cart"), JSON.stringify([]));
+        localStorage.setItem(("updateCart"), JSON.stringify([]));
+        this.counterStore.listCarts =[];
       }
       else
       {

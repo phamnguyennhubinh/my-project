@@ -244,9 +244,9 @@ const carouselPic = ref([]);
 // const priceNoDiscount = Number(Number(counterStore.product.price)*2)
 // const temp = ref([]);
 onMounted(async () => {
+  scrollToTop();
   const productId = route.params.id;
   await counterStore.fetchEachProduct(productId);
-
   console.log(counterStore.product);
   sanphams.value = counterStore.product;
   console.log(value1.value);
@@ -255,10 +255,13 @@ onMounted(async () => {
     console.log(carouselPic.value[i]);
   }
 });
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 const addToCart = async () => {
+  const idCustom = JSON.parse(localStorage.getItem("idCustomer"));
   counterStore.addToCart(sanphams.value, value1.value);
   message.success("Đã thêm sản phẩm vào giỏ hàng!");
-  const idCustom = JSON.parse(localStorage.getItem("idCustomer"));
   await counterStore.removeCart(idCustom);
   // await counterStore.updateCart(idCustom,counterStore.listCarts)
   const temp = {id: idCustom, cart: counterStore.listCarts};

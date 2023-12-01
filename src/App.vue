@@ -14,8 +14,20 @@ import { computed, onMounted} from 'vue';
 const counterStore = useCounterStore();
 // const array = JSON.parse(localStorage.getItem("cart"));
 counterStore.countC = computed(() => counterStore.listCarts.length);
-onMounted(()=>{
-  // counterStore.listCarts = JSON.parse(localStorage.getItem("updateCart")) || [];
+onMounted(async ()=>{
+  counterStore.listCarts = JSON.parse(localStorage.getItem("updateCart")) || [];
+  // const idTemp = JSON.parse(localStorage.getItem("idCustomer")) || null;
+  // if(idTemp !== null)
+  // {
+  //   await counterStore.fetchListCustomerCart(idTemp);
+  //   counterStore.listCarts  = counterStore.getListCart;
+  //   counterStore.countC = computed(() => counterStore.listCarts.length);
+  // }
+  // else
+  // {
+  //   counterStore.listCarts = [];
+  //   counterStore.countC = computed(() => counterStore.listCarts.length);
+  // }
 })
 // counterStore.listCarts =
 </script>

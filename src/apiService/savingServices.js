@@ -169,6 +169,18 @@ export const infoDeliveryOrder = async (info) => {
     console.log(error);
   }
 }
+//PUT
+export const addToCart = async (data) => {
+  try {
+    const tempp = JSON.parse(localStorage.getItem("idCustomer"));
+    const res = await request.put(`customerCarts/${tempp}`, data);
+    return res;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 //PATCH
 export const updateCartCustomer = async (data,customerId) => {
   try {

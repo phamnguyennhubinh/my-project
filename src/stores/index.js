@@ -137,10 +137,10 @@ export const useCounterStore = defineStore("counter", {
     countCart() {
       this.countC = this.listCarts.length;
     },
-    addToCart(sanpham, value) {
+    async addToCart(sanpham, value) {
       // const idCus = JSON.parse(localStorage.getItem("idCustomer"));
       const findIndexProductByID = this.listCarts.findIndex(
-        (item) => item.id === sanpham.id
+        (item) => item.id === sanpham.id 
       );
       if (findIndexProductByID !== -1) {
         if (value !== 1) {
@@ -152,29 +152,45 @@ export const useCounterStore = defineStore("counter", {
         this.listCarts.push({ ...sanpham, quantity: 1 });
       }
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
+      await this.addToCartCustomer(this.listCarts);
+      // await this.removeCart(idCustom);
+      // const arrr = {id: idCustom, cart: this.listCarts};
+      // await this.addCartForAcc(arrr);
     },
-
-    increaseQuantity(id) {
+    async increaseQuantity(id) {
       const findIndexProductByID = this.listCarts.findIndex(
         (item) => item.id === id
       );
+      const idCustom = JSON.parse(localStorage.getItem("idCustomer"));
       this.listCarts[findIndexProductByID].quantity += 1;
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
+      await this.removeCart(idCustom)
+      const arrr = {id: idCustom , cart: this.listCarts};
+      await this.addCartForAcc(arrr);
     },
     decreaseQuantity(id) {
       const findIndexProductByID = this.listCarts.findIndex(
         (item) => item.id === id
       );
+      const idCustom = JSON.parse(localStorage.getItem("idCustomer"));
       this.listCarts[findIndexProductByID].quantity -= 1;
       // this.countCart();
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
+      this.removeCart(idCustom).then(()=> {
+        const arrr = {id: idCustom, cart: this.listCarts};
+        this.addCartForAcc(arrr);
+      });
     },
     inputQuantity(id, value){
       const findIndexProductByID = this.listCarts.findIndex(
         (item) => item.id === id
       );
+      const idCustom = JSON.parse(localStorage.getItem("idCustomer"));
       this.listCarts[findIndexProductByID].quantity = value;
       localStorage.setItem("cart", JSON.stringify(this.listCarts));
+      this.removeCart(idCustom);
+      const arrr = {id: idCustom , cart: this.listCarts};
+      this.addCartForAcc(arrr);
     },
     addCart() {
       this.countCart++;
@@ -192,6 +208,11 @@ export const useCounterStore = defineStore("counter", {
     },
     async removeOrderDetail(customerId) {
       await savingServices.deleteOrderDetail(customerId);
+    },
+    //PUT 
+    async addToCartCustomer(data)
+    {
+      await savingServices.addToCart(data);
     },
     //POST
     async addInfoDelivery(info) {

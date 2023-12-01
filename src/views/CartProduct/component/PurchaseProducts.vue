@@ -36,6 +36,10 @@
           :footer-style="{ textAlign: 'right' }"
           @close="onClose"
         >
+        <a-button-group>
+          <button>Add</button>
+          <button>Update</button>
+        </a-button-group>
           <a-form ref="formRef" :model="form" :rules="rules" layout="vertical">
             <a-row :gutter="16">
               <a-col :span="12">
@@ -431,7 +435,7 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import { useCounterStore } from "@/stores";
 import axios from "axios";
-import { message } from "ant-design-vue";
+import { message } from "ant-design-vue";                   
 const host = "https://provinces.open-api.vn/api/";
 const cities = ref([]);
 const districts = ref([]);

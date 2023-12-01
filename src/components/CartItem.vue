@@ -60,8 +60,6 @@
 <script>
 import { useCounterStore } from "@/stores";
 import { ref } from "vue";
-// import { ref, defineProps, defineEmits } from "vue";
-// import { watch } from "vue";
 export default {
   props: {
     id: Number,
@@ -74,12 +72,7 @@ export default {
   },
   data() {
     const counterStore = useCounterStore();
-    // const props = defineProps(["checkboxCart"]);
-    // const emit = defineEmits(["update:checkboxCart", "followChange"]);
     const count = 1;
-    // const ex = document.getElementById("inputBuy");
-    // console.log(ex.value);
-    // const checkBox = document.getElementById("checkEach").checked;
     let checked = ref(this.status);
     return {
       counterStore,
@@ -88,9 +81,6 @@ export default {
     };
   },
   methods: {
-    // detailProduct () {
-    //  this.$router.push('/shop/detail');
-    //  }
     handleKeyDown(event) {
       // Kiểm tra xem phím được nhấn có phải là số hay không
       if (!/^\d$|^Backspace$|^Delete$/.test(event.key)) {
@@ -132,30 +122,13 @@ export default {
     addOrder() {
       this.$emit("addOrder", this.$props.id, this.checked);
     },
-    followChecked() {
-      if (this.counterStore.checkedbox === true && this.checked === false) {
-        this.$emit("followChange", this.checked);
-      }
-      // this.checkedSomeToAll();
-      const selected = JSON.parse(localStorage.getItem("addCart")) || [];
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      if (selected.length === cart.length) {
-        this.$emit("checkedSomeToAll");
-      }
-    },
     updateStatus(event) {
       this.$emit("updateStatus", event.target.checked, this.id);
     },
     computedProductId() {
       return this.id;
     },
-    // handleCheckboxChange() {
-    //   // Gửi giá trị của checkbox lên component cha
-    //   this.$emit("update:checkboxCart", this.checked);
 
-    //   // Gửi sự kiện followChange lên component cha
-    //   this.$emit("followChange");
-    // },
   },
   computed: {
     totalEach() {
@@ -163,39 +136,12 @@ export default {
       return totalEachPro;
     },
   },
-  // watch: {
-  //   "counterStore.checkedbox": function (newVal) {
-  //     this.checked = newVal === true;
-  //   },
   watch: {
-    // checkboxCart: function (newValue) {
-    //   if (newValue) {
-    //     this.checked = newValue;
-    //   } else {
-    //     this.checked = !newValue;
-    //   }
-    // },
-    // Loại bỏ watcher này nếu không cần
-    // "counterStore.checkedbox": function (newVal) {
-    //   this.checked = newVal === true;
-    // },
     status: function (newValue) {
       this.checked = newValue;
     },
   },
-  // checkboxCart: function(newValue) {
-  //   console.log("Helooooooooooo"+newValue);
-  //   if(newValue)
-  //   {
-  //   this.checked = newValue;
-  //   }
-  //   else
-  //   {
-  //     this.checked = !newValue;
-  //   }
-
-  // }
-  // },
+  
 };
 </script>
 

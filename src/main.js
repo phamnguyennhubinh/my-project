@@ -5,7 +5,7 @@ import "font-awesome/css/font-awesome.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap";
-// import VueStickyElement from "vue-sticky"
+import VueStickyElement from "vue-sticky"
 import router from "./router";
 import VueRouter from "vue-router";
 import { createWebHistory } from "vue-router";
@@ -26,5 +26,5 @@ createApp(App)
   .use(Pagination)
   .use(createWebHistory)
   .use(VueRouter)
-  // .use(VueStickyElement)
+  .use(VueStickyElement)
   .mount("#app");
