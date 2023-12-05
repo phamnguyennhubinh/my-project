@@ -60,7 +60,8 @@
                     >&nbsp;&nbsp;&nbsp;&nbsp;</a
                   >
                 </router-link>
-
+ 
+ 
                 <router-link :to="{ name: 'ListCart' }">
                   <!-- <a style="position: relative; cursor: pointer"
                     ><i
@@ -120,7 +121,8 @@
               ><i class="fa fa-user"></i><span>{{ counterStore.isLoggedIn }}</span></a
             >
           <!-- </router-link> -->
-
+ 
+ 
           <!-- <router-link :to="{ name: 'ListCart' }"> -->
             <a @click="navigateToCart" class="pointer">
               <a-badge :count="counterStore.countC" :overflow-count="99">
@@ -139,21 +141,24 @@
               </p>
             </a> -->
           <!-- </router-link> -->
-
+ 
+ 
           <a><i class="fa fa-search"></i></a>
         </li>
       </ul>
     </div>
   </div>
   <router-view />
-</template>
-
-<script>
-import { Collapse } from "vue-collapsed";
-import { useCounterStore } from "@/stores";
-import { message } from 'ant-design-vue';
-
-export default {
+ </template>
+ 
+ 
+ <script>
+ import { Collapse } from "vue-collapsed";
+ import { useCounterStore } from "@/stores";
+ import { message } from 'ant-design-vue';
+ 
+ 
+ export default {
   name: "HeaderWeb",
   components: {
     Collapse,
@@ -175,7 +180,7 @@ export default {
       hidden,
       hidden2,
       templ,
-      
+     
       // accId
     };
   },
@@ -193,7 +198,7 @@ export default {
       // Thực hiện các bước đăng nhập hoặc đăng xuất tại đây
       // Ví dụ: Cập nhật trạng thái đăng nhập và xử lý đăng xuất
       const temp = JSON.parse(localStorage.getItem("idCustomer"));
-      
+     
       if(temp!==null)
       {
         localStorage.removeItem("idCustomer");
@@ -206,6 +211,7 @@ export default {
         localStorage.setItem(("cart"), JSON.stringify([]));
         localStorage.setItem(("updateCart"), JSON.stringify([]));
         this.counterStore.listCarts =[];
+        this.counterStore.getListInfo = [];
       }
       else
       {
@@ -224,7 +230,8 @@ export default {
         this.$router.push({ name: 'ListCart' });
       }
     },
-
+ 
+ 
     showLoginPrompt() {
       // Hiển thị thông báo đăng nhập
       alert("Vui lòng đăng nhập!");
@@ -238,20 +245,22 @@ export default {
       return localStorage.getItem("idCustomer") !== null;
     },
   },
-};
-</script>
-
-<!-- <script setup>
-import {computed} from "vue";
-const counterStore = useCounterStore();
-counterStore.countC = computed(() => JSON.parse(localStorage.getItem("cart")).length);
-</script> -->
-
-<style lang="scss" scoped>
-.pointer {
+ };
+ </script>
+ 
+ 
+ <!-- <script setup>
+ import {computed} from "vue";
+ const counterStore = useCounterStore();
+ counterStore.countC = computed(() => JSON.parse(localStorage.getItem("cart")).length);
+ </script> -->
+ 
+ 
+ <style lang="scss" scoped>
+ .pointer {
   cursor: pointer;
-}
-#count {
+ }
+ #count {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,95 +273,98 @@ counterStore.countC = computed(() => JSON.parse(localStorage.getItem("cart")).le
   left: 60%;
   bottom: 17%;
   font-weight: bold;
-}
-
-.row .col-sm-12 .font-menu {
+ }
+ 
+ 
+ .row .col-sm-12 .font-menu {
   font-size: 15px;
   padding: 5px 25px;
-}
-.row .col-sm-12 .font-menu-login {
+ }
+ .row .col-sm-12 .font-menu-login {
   font-size: 15px;
   cursor: pointer;
-}
-@keyframes rotateAnimation {
+ }
+ @keyframes rotateAnimation {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(180deg);
   }
-}
-@keyframes rotateAnimation2 {
+ }
+ @keyframes rotateAnimation2 {
   100% {
     transform: rotate(180deg);
   }
   0% {
     transform: rotate(0deg);
   }
-}
-#header .icon .rotate {
+ }
+ #header .icon .rotate {
   animation: rotateAnimation 0.2s ease forwards;
-}
-
-#header .icon .rotate2 {
+ }
+ 
+ 
+ #header .icon .rotate2 {
   animation: rotateAnimation2 0.2s ease forwards;
-}
-
-.hidd {
+ }
+ 
+ 
+ .hidd {
   display: block;
-}
-.loading {
+ }
+ .loading {
   position: flex;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   margin: auto;
-}
-.nav_input:checked ~ .hidd {
+ }
+ .nav_input:checked ~ .hidd {
   display: block;
-}
-.backgr2 {
+ }
+ .backgr2 {
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   background-color: white;
   margin: 0 40px;
-}
-.active {
+ }
+ .active {
   background-color: white;
   border-radius: 5px;
   // padding: 6px 25px;
-}
-.active3 {
+ }
+ .active3 {
   background-color: white;
   border-radius: 5px;
   // padding: 6px 25px;
-}
-.active2 {
+ }
+ .active2 {
   background-color: #f4f5f6;
   border-radius: 5px;
   // padding: 6px 25px;
-}
-#header {
+ }
+ #header {
   font-family: "poppins", sans-serif;
   position: relative;
-}
-.homepage {
+ }
+ .homepage {
   background-color: white;
   border-radius: 5px;
-}
-h1 {
+ }
+ h1 {
   text-align: center;
-}
-.heading {
+ }
+ .heading {
   font-family: "poppins", sans-serif;
   font-weight: bold;
   font-size: 35px;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-#menu ul {
+ }
+ #menu ul {
   list-style-type: none;
   text-align: center;
   border-radius: 15px 15px 0 0;
@@ -368,8 +380,8 @@ h1 {
       padding: 10px 15px;
     }
   }
-}
-#menu2 {
+ }
+ #menu2 {
   list-style-type: none;
   text-align: center;
   border-radius: 15px 15px 0 0;
@@ -381,24 +393,24 @@ h1 {
     font-size: 18px;
     // padding: 10px 25px;
   }
-}
-.backgr1 {
+ }
+ .backgr1 {
   margin: 0 45px;
   background-color: #f9ece6;
   border-radius: 15px 15px 0 0;
   // margin-top: 20px;
-}
-.icon {
+ }
+ .icon {
   position: absolute;
   right: 0px;
-}
-.bars {
+ }
+ .bars {
   display: none;
   margin-top: 15px;
   padding-bottom: 0px;
   margin-bottom: 0;
-}
-@media screen and (max-width: 1023px) {
+ }
+ @media screen and (max-width: 1023px) {
   .backgr2 {
     margin: 0 0;
   }
@@ -442,16 +454,16 @@ h1 {
     margin-bottom: 20px;
     display: inline;
   }
-}
-@media screen and (min-width: 375px) and (max-width: 811px) {
+ }
+ @media screen and (min-width: 375px) and (max-width: 811px) {
   .backgr1 {
     margin: 0;
   }
   // .backgr2 {
   //   margin: 0 0;
   // }
-}
-@media screen and (max-width: 320px) {
+ }
+ @media screen and (max-width: 320px) {
   .backgr1 {
     margin: 0;
   }
@@ -461,11 +473,16 @@ h1 {
   .backgr2 {
     margin: 0 0;
   }
-}
-@media screen and (max-width: 576px) {
+ }
+ @media screen and (max-width: 576px) {
   .backgr2 {
     margin: 0 0;
   }
-}
-
-</style>
+ }
+ 
+ 
+ </style>
+ 
+ 
+ 
+ 

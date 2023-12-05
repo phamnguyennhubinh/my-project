@@ -43,7 +43,7 @@
                   <div class="col-md-3">
                     <a-image :src="counterStore.product.pic"></a-image>
                   </div>
-                  
+                 
                   <button class="icon-button button-arrow-1" tabindex="-1">
                     <i class="fas fa-angle-left"></i>
                   </button>
@@ -158,9 +158,13 @@
               <button type="button" class="button-add-cart" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>&ensp;Thêm vào giỏ hàng
               </button>
-              <!-- <button type="button" class="button-buy-now" @click="buyNoew">Mua Ngay</button> -->
+              <router-link :to="{name: 'PurchaseProducts'}">
+                <button type="button" class="button-buy-now" @click="buyNow">Mua Ngay</button>
+              </router-link>
+              <!-- <button type="button" class="button-buy-now" @click="buyNow">Mua Ngay</button> -->
             </div>
-
+ 
+ 
             <div class="grid">
               <hr style="margin-right: 10px;"/>
               <div class="row bread_crumb" style="margin-right: 30px;">
@@ -184,7 +188,8 @@
           </div>
         </div>
       </div>
-
+ 
+ 
       <section class="flex card margin-50-0 shadow">
         <h3 style="padding: 20px">CHI TIẾT SẢN PHẨM</h3>
         <div>
@@ -223,27 +228,30 @@
       </section>
     </section>
   </div>
-</template>
-
-<script setup>
-import { onMounted, ref } from "vue";
-import { useCounterStore } from "@/stores";
-import { useRoute } from "vue-router";
-import { message } from "ant-design-vue";
-import 'vue-slick-carousel/dist/vue-slick-carousel.css';
-import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
-const counterStore = useCounterStore();
-const value = ref(4.5);
-const placement = ref("topLeft");
-const value2 = ref("HangZhou");
-const value1 = ref(1);
-const value3 = ref("HangZhou1");
-const sanphams = ref([]); 
-const route = useRoute();
-const carouselPic = ref([]);
-// const priceNoDiscount = Number(Number(counterStore.product.price)*2)
-// const temp = ref([]);
-onMounted(async () => {
+  <router-view/>
+ </template>
+ 
+ 
+ <script setup>
+ import { onMounted, ref } from "vue";
+ import { useCounterStore } from "@/stores";
+ import { useRoute } from "vue-router";
+ import { message } from "ant-design-vue";
+ import 'vue-slick-carousel/dist/vue-slick-carousel.css';
+ import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
+ const counterStore = useCounterStore();
+ const value = ref(4.5);
+ const placement = ref("topLeft");
+ const value2 = ref("HangZhou");
+ const value1 = ref(1);
+ const value3 = ref("HangZhou1");
+ const sanphams = ref([]);
+ const route = useRoute();
+ // const router = useRoute();
+ const carouselPic = ref([]);
+ // const priceNoDiscount = Number(Number(counterStore.product.price)*2)
+ // const temp = ref([]);
+ onMounted(async () => {
   scrollToTop();
   const productId = route.params.id;
   await counterStore.fetchEachProduct(productId);
@@ -254,41 +262,47 @@ onMounted(async () => {
   for (let i = 0; i < carouselPic.value.length; i++) {
     console.log(carouselPic.value[i]);
   }
-});
-const scrollToTop = () => {
+ });
+ const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-const addToCart = async () => {
+ }
+ const addToCart = async () => {
   const idCustom = JSON.parse(localStorage.getItem("idCustomer"));
   counterStore.addToCart(sanphams.value, value1.value);
   message.success("Đã thêm sản phẩm vào giỏ hàng!");
   await counterStore.removeCart(idCustom);
-  // await counterStore.updateCart(idCustom,counterStore.listCarts)
   const temp = {id: idCustom, cart: counterStore.listCarts};
-  console.log(temp);
+  // console.log(temp);
   await counterStore.addCartForAcc(temp);
-};
-
-const getImage = (i) =>{
+ };
+ const buyNow =  async () => {
+  const productId = route.params.id;
+  await counterStore.buyNow(productId, value1);
+  // router.push({ name: "PurchaseProducts" });
+  counterStore.totalBillOrder
+ };
+ const getImage = (i) =>{
     return carouselPic.value[i];
-}
-
-</script>
-
-<style lang="scss" scoped>
-// @import "@/assets/styles/grid.css";
-$color-main: orangered;
-.margin-bottom-20 {
+ }
+ 
+ 
+ </script>
+ 
+ 
+ <style lang="scss" scoped>
+ // @import "@/assets/styles/grid.css";
+ $color-main: orangered;
+ .margin-bottom-20 {
   margin-bottom: 20px;
-}
-.padding-bottom-20 {
+ }
+ .padding-bottom-20 {
   padding-bottom: 20px;
-}
-._margin {
+ }
+ ._margin {
   position: relative;
   margin: 20px 10px;
-}
-.icon-button {
+ }
+ .icon-button {
   outline: none;
   cursor: pointer;
   font-size: 0.875rem;
@@ -299,8 +313,8 @@ $color-main: orangered;
   align-items: center;
   justify-content: center;
   transition: background-color 0.1s cubic-bezier(0.4, 0, 0.6, 1);
-}
-.button-arrow-1 {
+ }
+ .button-arrow-1 {
   position: absolute;
   width: 1.2rem;
   height: 2.5rem;
@@ -310,8 +324,8 @@ $color-main: orangered;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.2);
   border: none;
-}
-.button-arrow-2 {
+ }
+ .button-arrow-2 {
   position: absolute;
   width: 1.2rem;
   height: 2.5rem;
@@ -321,77 +335,77 @@ $color-main: orangered;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.2);
   border: none;
-}
-.can-le-trai {
+ }
+ .can-le-trai {
   text-align: left;
-}
-.margin-50-0 {
+ }
+ .margin-50-0 {
   margin: 50px 0;
-}
-.margin-0-20 {
+ }
+ .margin-0-20 {
   margin: 0 20px;
-}
-.width-option {
+ }
+ .width-option {
   width: 120px;
-}
-.margin-right-20 {
+ }
+ .margin-right-20 {
   margin-right: 20px;
-}
-.padding-0-20 {
+ }
+ .padding-0-20 {
   padding: 0 20px;
-}
-.color-main {
+ }
+ .color-main {
   color: $color-main;
-}
-.margin-top-20 {
+ }
+ .margin-top-20 {
   margin-top: 20px;
-}
-.margin-top-30 {
+ }
+ .margin-top-30 {
   margin-top: 30px;
-}
-.margin-left-20 { 
+ }
+ .margin-left-20 {
   margin-left: 20px;
-}
-.padding-left-20 {
+ }
+ .padding-left-20 {
   padding-left: 20px;
-}
-.padding-left-20-icon {
+ }
+ .padding-left-20-icon {
   @extend .padding-left-20;
   color: $color-main;
-}
-.discount {
+ }
+ .discount {
   background-color: orangered;
   color: #fff;
-}
-.price {
+ }
+ .price {
   color: orangered;
   font-size: 40px;
-}
-.price-discount {
+ }
+ .price-discount {
   text-decoration: line-through;
-}
-.price-discount-background {
+ }
+ .price-discount-background {
   background-color: #fafafa;
-}
-.like {
+ }
+ .like {
   background-color: orangered;
   color: #fff;
   font-size: 13px;
-}
-.bread_crumb {
+ }
+ .bread_crumb {
   margin-bottom: 10px;
   margin-left: 20px;
   margin-top: 5px;
-}
-.row {
+ }
+ .row {
   .col-md-5 {
     text-align: center;
     justify-content: center;
     vertical-align: middle;
   }
-}
-// HIDDEN
-.label-detail {
+ }
+ // HIDDEN
+ .label-detail {
   padding-left: 30px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -401,11 +415,11 @@ $color-main: orangered;
   box-sizing: border-box;
   width: 8.75rem;
   padding-right: 0.75rem;
-}
-.shadow {
+ }
+ .shadow {
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.03);
-}
-.button-add-cart {
+ }
+ .button-add-cart {
   background-color: #fef6f5;
   border: 1px solid #ee4d2d;
   padding: 10px 40px;
@@ -417,8 +431,8 @@ $color-main: orangered;
     background-color: #fff;
     border: 1px solid #ee4d2d;
   }
-}
-.button-buy-now {
+ }
+ .button-buy-now {
   background-color: #ee4d2d;
   color: #fff;
   border: 1px solid #ee4d2d;
@@ -430,103 +444,103 @@ $color-main: orangered;
     background: linear-gradient(#ee4d2d, #ff7337);
     border: 1px linear-gradient(#ee4d2d, #ff7337);
   }
-}
-a {
+ }
+ a {
   text-decoration: none;
   color: black;
-}
-.items-center {
+ }
+ .items-center {
   align-items: center;
-}
-.bonus {
+ }
+ .bonus {
   width: 100%;
   box-sizing: border-box;
   padding: 1.25rem 2.1875rem 0 1.25rem;
-}
-.col-left {
+ }
+ .col-left {
   width: 450px;
   padding: 15px;
   flex-shrink: 0;
-}
-.col-right {
+ }
+ .col-right {
   flex: 1 0 auto;
   /* width: 0; */
-}
-.flex-auto {
+ }
+ .flex-auto {
   flex: 1 1 auto;
-}
-.picMain {
+ }
+ .picMain {
   padding-top: 30px;
-}
-.nameProduct {
+ }
+ .nameProduct {
   text-align: left;
   /* margin-right: 180px; */
-}
-// .container {
-//   margin: 0 45px;
-// }
-.container {
+ }
+ // .container {
+ //   margin: 0 45px;
+ // }
+ .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-}
-.border {
+ }
+ .border {
   border: 1px solid;
-}
-.flex {
+ }
+ .flex {
   display: flex;
-}
-.picdetail {
+ }
+ .picdetail {
   width: 100%;
   position: relative;
   /* padding-bottom: 100%; */
-}
-.manypic {
+ }
+ .manypic {
   display: inline-block;
   box-sizing: border-box;
-}
-// .smallPics {
-//   position: relative;
-//   align-items: center;
-//   margin-top: 3%;
-//   display: flex;
-//   justify-content: space-between;
-// }
-.pic {
+ }
+ // .smallPics {
+ //   position: relative;
+ //   align-items: center;
+ //   margin-top: 3%;
+ //   display: flex;
+ //   justify-content: space-between;
+ // }
+ .pic {
   width: 100%;
   margin: 0 10px;
   cursor: pointer;
-}
-:deep(.slick-dots) {
+ }
+ :deep(.slick-dots) {
   position: relative;
   height: auto;
   margin-top: 30px;
-}
-:deep(.slick-slide img) {
+ }
+ :deep(.slick-slide img) {
   border: 5px solid #fff;
   display: block;
   margin: auto;
   max-width: 80%;
-}
-:deep(.slick-arrow) {
+ }
+ :deep(.slick-arrow) {
   display: none !important;
-}
-:deep(.slick-thumb) {
+ }
+ :deep(.slick-thumb) {
   bottom: 0px;
-}
-:deep(.slick-thumb li) {
+ }
+ :deep(.slick-thumb li) {
   width: 60px;
   height: 45px;
-}
-:deep(.slick-thumb li img) {
+ }
+ :deep(.slick-thumb li img) {
   width: 100%;
   height: 100%;
   display: block;
-}
-:deep .slick-thumb li.slick-active img {
+ }
+ :deep .slick-thumb li.slick-active img {
   filter: grayscale(0%);
-}
-@media screen and (max-width: 576px) {
+ }
+ @media screen and (max-width: 576px) {
   .items-center {
     display: none;
   }
@@ -565,8 +579,8 @@ a {
   .center-res {
     text-align: center;
   }
-}
-@media screen and (min-width: 768px) and (max-width: 992px) {
+ }
+ @media screen and (min-width: 768px) and (max-width: 992px) {
   .button-add-cart {
     padding: 10px 20px;
     // display: inline;
@@ -578,5 +592,9 @@ a {
   .center-res {
     text-align: center;
   }
-}
-</style>
+ }
+ </style>
+ 
+ 
+ 
+ 

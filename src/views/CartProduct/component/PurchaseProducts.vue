@@ -9,13 +9,16 @@
       </div>
       <div>
         <div class="margin-left">
-          <span
-            ><b
-              >{{ getInfoDeliver.info.name }}&ensp;{{
-                getInfoDeliver.info.phone
-              }}</b
-            >
-            &ensp;<br class="displayForRes"/>{{ getInfoDeliver.arrInfoDeliver }}&ensp;&ensp;
+          <span :hidden="!hiddenInfo"
+            ><b>{{ getInfoDeliver.name }}&ensp;{{ getInfoDeliver.phone }}</b>
+            &ensp;<br class="displayForRes" />{{
+              getInfoDeliver.arrInfoDeliver
+            }}&ensp;&ensp;
+          </span>
+          <span :hidden="hiddenInfo"
+            ><b>{{ name }}&ensp;{{ phone }}</b> &ensp;<br
+              class="displayForRes"
+            />{{ arraySelect }}&ensp;&ensp;
           </span>
           <a-button
             type="primary"
@@ -30,20 +33,48 @@
 
         <a-drawer
           title="Add delivery address"
-          :width="720"
+          :width="820"
           :open="open"
           :body-style="{ paddingBottom: '80px' }"
           :footer-style="{ textAlign: 'right' }"
           @close="onClose"
         >
-        <a-button-group>
-          <button>Add</button>
-          <button>Update</button>
-        </a-button-group>
+          <a-space class="flex-container">
+            <a-select
+              ref="select"
+              v-model:value="valueOne"
+              :options="optionsOne"
+              @focus="focus"
+              @change="handleChange"
+              @select="handSelect"
+              class="flex-item"
+            ></a-select>
+            <!-- <a-button @click="handleAdd">Add</a-button> -->
+            <a-button @click="handleUpdate">Update</a-button>
+            <a-button @click="handleDelete">Delete</a-button>
+            <a-button @click="handleClear">Clear</a-button>
+          </a-space>
+          <!-- <a-button-group>
+            <button>Add</button>
+            <button>Update</button>
+            <button>Delete</button>
+          </a-button-group> -->
           <a-form ref="formRef" :model="form" :rules="rules" layout="vertical">
             <a-row :gutter="16">
               <a-col :span="12">
-                <a-form-item label="Name" name="name">
+                <a-form-item
+                  label="Name"
+                  name="name"
+                  :rules="[
+                    { required: true, message: 'Please input your fullname!' },
+                    {
+                      pattern: /^[A-Za-zÀ-ỹ\s]*[A-Za-zÀ-ỹ][A-Za-zÀ-ỹ\s]*$/,
+                      message:
+                        'Please enter a valid name with only letters and spaces',
+                      trigger: ['blur', 'change'],
+                    },
+                  ]"
+                >
                   <a-input
                     v-model:value="form.name"
                     v-model="message"
@@ -53,7 +84,21 @@
                 </a-form-item>
               </a-col>
               <a-col :span="12">
-                <a-form-item label="Phone number" name="phone">
+                <a-form-item
+                  label="Phone number"
+                  name="phone"
+                  :rules="[
+                    {
+                      required: true,
+                      message: 'Please input your phone number!',
+                    },
+                    {
+                      pattern: /^(0[2-9][0-9]{8}|[2-9][0-9]{8})$/,
+                      message: 'Please enter a valid phone number',
+                      trigger: ['blur', 'change'],
+                    },
+                  ]"
+                >
                   <a-input
                     v-model:value="form.phone"
                     placeholder="Please enter your phone number"
@@ -141,7 +186,8 @@
           <template #extra>
             <a-space>
               <a-button @click="onClose">Cancel</a-button>
-              <a-button type="primary" @click="handleSubmit">Submit</a-button>
+              <a-button @click="selectDelivery">Select</a-button>
+              <a-button type="primary" @click="handleSubmit">Add</a-button>
             </a-space>
           </template>
         </a-drawer>
@@ -190,13 +236,15 @@
             <a-select-option value="HangZhou">Nhanh</a-select-option>
             <a-select-option value="NingBo">Hỏa tốc</a-select-option>
           </a-select>
-          <span class="hidden-res">&ensp;&ensp;Nhận hàng vào ngày 24/11 đến 26/11</span>
+          <span class="hidden-res"
+            >&ensp;&ensp;Nhận hàng vào ngày 24/11 đến 26/11</span
+          >
           <div>Được đồng kiểm</div>
           <div>Tổng số tiền: ${{ counterStore.billOrder }}</div>
         </div>
       </div>
     </div>
-    <hr class="hidden-res"/>
+    <hr class="hidden-res" />
     <hr />
     <!-- <div class="display-grid text-align-right font-color-title">
            <h6 class="ajust bawp">Tổng tiền hàng</h6>
@@ -244,207 +292,22 @@
   <router-view />
 </template>
 
-<!--
- <script setup>
- // import { ref } from "vue";
- import { onMounted, reactive, ref } from "vue";
- import { useCounterStore } from "@/stores";
- // import axios from "axios";
- // import { a-form } from 'ant-design-vue';
- const counterStore = useCounterStore();
- // const arrayCart = ref([]);
- // const cartChoose = ref([]);
- // const orderCart = ref([]);
- const value2 = ref("HangZhou");
- const ship = ref(15);
- const formDataArray = ref([]);
- const formRef = ref(null);
- const form = reactive({
-  name: "",
-  city: "",
-  phone: "",
-  district: "",
-  ward: "",
-  specificAddress: "",
-  description: "",
- });
- const rules = {
-  name: [
-    {
-      required: true,
-      message: "Please enter user name",
-    },
-  ],
-  // city: [
-  //   {
-  //     required: true,
-  //     message: "Please enter your City",
-  //   },
-  // ],
-  phone: [
-    {
-      required: true,
-      message: "Please enter your phone number",
-    },
-  ],
-  // district: [
-  //   {
-  //     required: true,
-  //     message: "Please choose your district",
-  //   },
-  // ],
-  // ward: [
-  //   {
-  //     required: true,
-  //     message: "Please choose your ward",
-  //   },
-  // ],
-  specificAddress: [
-    {
-      required: true,
-      message: "Please choose your specific address",
-    },
-  ],
-  description: [
-    {
-      required: true,
-      message: "Please enter url description",
-    },
-  ],
- };
- const open = ref(false);
- const showDrawer = () => {
-  open.value = true;
-  formRef.value = form;
- };
- const onClose = () => {
-  open.value = false;
- };
- onMounted( ()=>{  counterStore.productTicked();
-  // console.log(orderCart.value);
-  // console.log(document.getElementById("getName").value);
- });
- const getFullName = () => {
-  let getFull = document.getElementById("phoneNumber").value; //getFullName
-  alert(getFull);
- };
- const handleSubmit = () => {
-  formRef.value.validate().then(valid => {
-        if (valid) {
-          // Biểu mẫu hợp lệ, thêm thông tin vào mảng
-          formDataArray.value.push({
-            name: form.value.name,
-            phone: form.value.phone,
-            city: this.selectedCity.value,
-            district: this.selectedDistrict.value,
-            ward: this.selectedWard.value,
-            specificAddress: form.value.specificAddress,
-            description: form.value.description,
-          });
-          // Tùy chỉnh xử lý lưu dữ liệu, ví dụ: có thể gọi API để lưu vào cơ sở dữ liệu
-          // this.saveDataToDatabase();
-          console.log(formDataArray.value);
-          // Đóng Drawer sau khi xử lý
-          this.onClose();
-        } else {
-          // Biểu mẫu không hợp lệ, hiển thị thông báo hoặc thực hiện các hành động khác
-          console.log("Form is not valid");
-        }
-      });
- };
- </script>
- <script>
- // import { ASelect, AOption } from 'ant-design-vue';
- import axios from "axios";
- // import { useCompactItemContext } from "ant-design-vue/es/space/Compact";
- export default {
-  components: {},
-  data() {
-    return {
-      host: "https://provinces.open-api.vn/api/",
-      cities: [],
-      districts: [],
-      wards: [],
-      selectedCity: "",
-      selectedDistrict: "",
-      selectedWard: "",
-      result: "",
-    };
-  },
-  mounted() {
-    this.callAPI(`${this.host}?depth=1`);
-  },
-  methods: {
-    callAPI(api) {
-      axios.get(api).then((response) => {
-        this.cities = response.data;
-      });
-    },
-    loadDistricts() {
-      console.log("Selected City:", this.selectedCity);
-      this.callApiDistrict(`${this.host}p/${this.selectedCity}?depth=2`);
-      this.printResult();
-    },
-    loadWards() {
-      console.log("Selected District:", this.selectedDistrict);
-      this.callApiWard(`${this.host}d/${this.selectedDistrict}?depth=2`);
-      this.printResult();
-    },
-    callApiDistrict(api) {
-      axios.get(api).then((response) => {
-        this.districts = response.data.districts;
-      });
-    },
-    callApiWard(api) {
-      axios.get(api).then((response) => {
-        this.wards = response.data.wards;
-      });
-    },
-    printResult() {
-      if (
-        this.selectedCity !== "" &&
-        this.selectedDistrict !== "" &&
-        this.selectedWard !== ""
-      ) {
-        this.result = `${this.getCityName()} | ${this.getDistrictName()} | ${this.getWardName()}`;
-      }
-    },
-    getCityName() {
-      return (
-        this.cities.find((city) => city.code === this.selectedCity)?.name || ""
-      );
-    },
-    getDistrictName() {
-      return (
-        this.districts.find(
-          (district) => district.code === this.selectedDistrict
-        )?.name || ""
-      );
-    },
-    getWardName() {
-      return (
-        this.wards.find((ward) => ward.code === this.selectedWard)?.name || ""
-      );
-    },
-  },
- };
- </script>
- -->
-
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, watch } from "vue";
 import { useCounterStore } from "@/stores";
 import axios from "axios";
-import { message } from "ant-design-vue";                   
+import { message } from "ant-design-vue";
 const host = "https://provinces.open-api.vn/api/";
 const cities = ref([]);
 const districts = ref([]);
 const wards = ref([]);
 const result = ref("");
 const status = ref("Thay đổi");
-// const hidden = ref(true);
-// const totalOrder = ship + counterStore.billOrder;
-// const arr = ref([]);
+const name = ref();
+const phone = ref();
+const arraySelect = ref();
+const hiddenInfo = ref(true);
+
 onMounted(async () => {
   callAPI(`${host}?depth=1`);
   counterStore.productTicked();
@@ -453,6 +316,7 @@ onMounted(async () => {
   counterStore.totalBillOrder();
   const cusId = JSON.parse(localStorage.getItem("idCustomer"));
   await counterStore.fetchInfoDelivery(cusId);
+  console.log(counterStore.getListInfo);
   try {
     await counterStore.fetchOrderById(cusId);
   } catch (error) {
@@ -475,6 +339,259 @@ const callAPI = (api) => {
     cities.value = response.data;
   });
 };
+const optionsOne = computed(() => {
+  return counterStore.getListInfo.map((info) => ({
+    value: info.id, // Giả sử id là giá trị duy nhất cho mỗi option
+    label: `${info.name}, ${info.phone}, ${info.district}, ${info.city}, ${info.ward}`, // Sử dụng một trường nào đó từ info để làm label
+  }));
+});
+const focus = () => {
+  console.log("focus");
+};
+const handleDelete = () => {
+  if (
+    form.name === "" ||
+    form.phone === "" ||
+    form.city === "" ||
+    form.district === "" ||
+    form.ward === "" ||
+    form.specificAddress === ""
+  ) {
+    message.error("Vui lòng chọn 1 địa chỉ mà bạn muốn xoá!");
+  } else {
+    const indexToUpdate = counterStore.getListInfo.findIndex(
+      (item) => item.id === counterStore.valueSelect
+    );
+    counterStore.getListInfo.splice(indexToUpdate, 1);
+    const cusId = JSON.parse(localStorage.getItem("idCustomer"));
+    if (indexToUpdate !== -1) {
+      axios
+        .patch(`http://localhost:3000/infoDelivery/${cusId}`, {
+          id: cusId,
+          info: counterStore.getListInfo,
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      console.log(`Item with id ${counterStore.valueSelect} not found`);
+    }
+    form.name = "";
+    form.phone = "";
+    form.city = "";
+    form.district = "";
+    form.ward = "";
+    form.specificAddress = "";
+    form.description = "";
+    onClose();
+  }
+};
+
+const handSelect = (value) => {
+  const selectedInfo = counterStore.getListInfo.find(
+    (info) => info.id === value
+  );
+  form.name = selectedInfo.name;
+  form.phone = selectedInfo.phone;
+  form.city = selectedInfo.city;
+  form.district = selectedInfo.district;
+  form.ward = selectedInfo.ward;
+  form.specificAddress = selectedInfo.specificAddress;
+  form.description = selectedInfo.description;
+
+  valueOne.value = selectedInfo.id;
+};
+
+const handleChange = (value) => {
+  console.log(`selected ${value}`);
+  counterStore.valueSelect = value;
+  const selectedInfo = counterStore.getListInfo.find(
+    (info) => info.id === value
+  );
+
+  // Cập nhật giá trị cho các trường input
+  form.name = selectedInfo.name;
+  form.phone = selectedInfo.phone;
+  form.city = selectedInfo.city;
+  form.district = selectedInfo.district;
+  form.ward = selectedInfo.ward;
+  form.specificAddress = selectedInfo.specificAddress;
+  form.description = selectedInfo.description;
+
+  // Cập nhật lại giá trị của valueOne để hiển thị trên <a-select>
+  valueOne.value = selectedInfo.id;
+};
+
+const handleClear = () => {
+  form.name = "";
+  form.phone = "";
+  form.city = "";
+  form.district = "";
+  form.ward = "";
+  form.specificAddress = "";
+  form.description = "";
+  // handleSubmit();
+};
+
+// const handleAdd = () => {
+//   if (
+//     form.name === "" ||
+//     form.phone === "" ||
+//     form.city === "" ||
+//     form.district === "" ||
+//     form.ward === "" ||
+//     form.specificAddress === ""
+//   ) {
+//     message.error("Vui lòng nhập đầy đủ thông tin!");
+//   } else {
+//     var today = new Date();
+//     var date =
+//       today.getDate() +
+//       "-" +
+//       (today.getMonth() + 1) +
+//       "-" +
+//       today.getFullYear();
+//     var time =
+//       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+//     const customerId = JSON.parse(localStorage.getItem("idCustomer"));
+//     let count = counterStore.getListInfo.length;
+//     formRef.value.validate().then((valid) => {
+//       if (valid) {
+//         const arrForm = {
+//           id: count++,
+//           name: form.name,
+//           phone: form.phone,
+//           city: getCityName(),
+//           district: getDistrictName(),
+//           ward: getWardName(),
+//           specificAddress: form.specificAddress,
+//           description: form.description,
+//           dateCreate: date + " " + time,
+//         };
+//         counterStore.getListInfo.push(arrForm);
+//         const arrFinal = {
+//           id: customerId,
+//           info: counterStore.getListInfo,
+//         };
+//         console.log(arrFinal);
+//         console.log(counterStore.getListInfo);
+//         if (counterStore.getListInfo.length !== 0) {
+//           // counterStore.removeInfoDelivery(customerId);
+//           axios
+//             .patch(`http://localhost:3000/infoDelivery/${customerId}`, {
+//               id: customerId,
+//               info: counterStore.getListInfo,
+//             })
+//             .then((response) => {
+//               console.log(response.data);
+//             })
+//             .catch((error) => {
+//               console.error(error);
+//             });
+//           message.success("Đã thêm địa chỉ thành công!");
+//           console.log("Đây là if");
+
+//         } else {
+//           // counterStore.addInfoDelivery(arrFinal);
+//           message.success("Đã thêm địa chỉ thành công!");
+//           console.log("Đây là else");
+//           counterStore.addInfoDeliveryOrderNone(arrFinal);
+//         }
+//         // onClose();
+//       } else {
+//         console.log("Form is not valid");
+//       }
+//     });
+//   }
+// };
+const checkInfoExist = () => {
+  console.log(counterStore.getListInfo);
+  let statusExist = false;
+  for (let i = 0; i < counterStore.getListInfo.length; i++) {
+    if (
+      counterStore.getListInfo[i].name === form.name &&
+      counterStore.getListInfo[i].phone === form.phone &&
+      counterStore.getListInfo[i].specificAddress === form.specificAddress &&
+      counterStore.getListInfo[i].district === form.district &&
+      counterStore.getListInfo[i].city === form.city &&
+      counterStore.getListInfo[i].ward === form.ward
+    ) {
+      statusExist = true;
+    } else {
+      statusExist = false;
+    }
+  }
+  return statusExist;
+};
+
+const handleUpdate = () => {
+  if (
+    form.name === "" ||
+    form.phone === "" ||
+    form.city === "" ||
+    form.district === "" ||
+    form.ward === "" ||
+    form.specificAddress === ""
+  ) {
+    message.error("Vui lòng chọn 1 địa chỉ mà bạn muốn sửa đổi!");
+  } else {
+    if (checkInfoExist === true) {
+      message.error("Địa chỉ này đã tồn tại!");
+    } else {
+      console.log(counterStore.getListInfo);
+      const indexToUpdate = counterStore.getListInfo.findIndex(
+        (item) => item.id === counterStore.valueSelect
+      );
+      var today = new Date();
+      var date =
+        today.getDate() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
+      var time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      // const indexToUpdate = counterStore.getListInfo[findIndex]
+      if (indexToUpdate !== -1) {
+        // Create the updated object
+        counterStore.getListInfo[indexToUpdate] = {
+          id: counterStore.valueSelect,
+          name: form.name,
+          phone: form.phone,
+          city: form.city,
+          district: form.district,
+          ward: form.ward,
+          specificAddress: form.specificAddress,
+          description: form.description,
+          dateCreate: date + " " + time,
+        };
+        const cusId = JSON.parse(localStorage.getItem("idCustomer"));
+        // Use Axios to send a PATCH request to update the data
+        axios
+          .patch(`http://localhost:3000/infoDelivery/${cusId}`, {
+            id: cusId,
+            info: counterStore.getListInfo,
+          })
+          .then((response) => { 
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+          message.success("Updated!")
+          onClose();
+      } else {
+        console.log(`Item with id ${counterStore.valueSelect} not found`);
+      }
+    }
+  }
+};
+// const hidden = ref(true);
+// const totalOrder = ship + counterStore.billOrder;
+// const arr = ref([]);
 
 const counterStore = useCounterStore();
 const value2 = ref("HangZhou");
@@ -526,50 +643,202 @@ const onClose = () => {
   if (formRef.value) {
     open.value = false;
   }
+  // form.name = "";
+  // form.phone = "";
+  // form.city = "";
+  // form.district = "";
+  // form.ward = "";
+  // form.specificAddress = "";
+  // form.description = "";
 };
 
 const handleSubmit = () => {
   //  formDataArray.value = JSON.parse(localStorage.getItem("infoDelivery")) || [];
-  const customerId = JSON.parse(localStorage.getItem("idCustomer"));
-  formRef.value.validate().then((valid) => {
-    if (valid) {
-      const arrForm = {
-        id: customerId,
-        name: form.name,
-        phone: form.phone,
-        city: getCityName(),
-        district: getDistrictName(),
-        ward: getWardName(),
-        specificAddress: form.specificAddress,
-        description: form.description,
-      };
-      //  console.log(formDataArray.value);
-      //  localStorage.setItem("infoDelivery", JSON.stringify(formDataArray.value));
-      //  counterStore.infoDelivery();
-      if (counterStore.getListInfo.length !== 0) {
-        counterStore.removeInfoDelivery(customerId);
-        counterStore.getListInfo = arrForm;
-        counterStore.addInfoDelivery(arrForm);
-      } else {
-        counterStore.addInfoDelivery(arrForm);
-        counterStore.getListInfo = arrForm;
-      }
-      onClose();
+  if (
+    form.name === "" ||
+    form.phone === "" ||
+    form.city === "" ||
+    form.district === "" ||
+    form.ward === "" ||
+    form.specificAddress === ""
+  ) {
+    message.error("Vui lòng nhập đầy đủ thông tin!");
+  } else {
+    if (checkInfoExist === true) {
+      console.log(counterStore.getListInfo);
+      message.error("Địa chỉ này đã tồn tại!");
     } else {
-      console.log("Form is not valid");
+      let count = counterStore.getListInfo.length + 1;
+      const customerId = JSON.parse(localStorage.getItem("idCustomer"));
+      var today = new Date();
+      var date =
+        today.getDate() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
+      var time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      formRef.value.validate().then((valid) => {
+        if (valid) {
+          const arrForm = {
+            id: count++,
+            name: form.name,
+            phone: form.phone,
+            city: getCityName(),
+            district: getDistrictName(),
+            ward: getWardName(),
+            specificAddress: form.specificAddress,
+            description: form.description,
+            dateCreate: date + " " + time,
+          };
+          counterStore.getListInfo.push(arrForm);
+          const arrFinal = {
+            id: customerId,
+            info: counterStore.getListInfo,
+          };
+          console.log(arrFinal);
+          console.log("---------------------");
+          console.log(counterStore.getListInfo);
+          if (counterStore.getListInfo.length !== 1) {
+            // counterStore.removeInfoDelivery(customerId);
+            //  counterStore.addInfoDelivery(arrFinal);
+            console.log("Đã có");
+            // counterStore.addInfoDelivery(arrFinal);
+            axios
+              .patch(`http://localhost:3000/infoDelivery/${customerId}`, {
+                id: customerId,
+                info: counterStore.getListInfo,
+              })
+              .then((response) => {
+                console.log(response.data);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+            // counterStore.addInfoDeliveryOrderNone(arrFinal);
+          } else {
+            // counterStore.addInfoDelivery(arrFinal);
+            counterStore.addInfoDeliveryOrderNone(arrFinal);
+          }
+          onClose();
+        } else {
+          console.log("Form is not valid");
+        }
+      });
     }
-  });
+  }
 };
+
+const selectDelivery = () => {
+  if (
+    form.name === "" ||
+    form.phone === "" ||
+    form.city === "" ||
+    form.district === "" ||
+    form.ward === "" ||
+    form.specificAddress === ""
+  ) {
+    message.error("Vui lòng chọn 1 địa chỉ!");
+  } else {
+    hiddenInfo.value = false;
+    const index = counterStore.getListInfo.findIndex(
+      (item) => item.id === counterStore.valueSelect
+    );
+    name.value = counterStore.getListInfo[index].name;
+    phone.value = counterStore.getListInfo[index].phone;
+    const arr = [];
+    arr.push(counterStore.getListInfo[index].specificAddress);
+    arr.push(counterStore.getListInfo[index].ward);
+    arr.push(counterStore.getListInfo[index].district);
+    arr.push(counterStore.getListInfo[index].city);
+    arraySelect.value = arr.join(", ");
+  }
+};
+
 const getInfoDeliver = computed(() => {
-  const arrayTemp = counterStore.getListInfo;
-  const arrtemp = [];
-  arrtemp.push(arrayTemp.specificAddress);
-  arrtemp.push(arrayTemp.ward);
-  arrtemp.push(arrayTemp.district);
-  arrtemp.push(arrayTemp.city);
-  const finalArr =  arrtemp.join(", ");
-  return { info: counterStore.getListInfo, arrInfoDeliver: finalArr };
+  const today = new Date();
+  // Format ngày giờ hiện tại
+  const currentDate = today.toISOString().slice(0, 19).replace("T", " ");
+
+  // Tính khoảng cách thời gian giữa ngày giờ hiện tại và dateCreate của từng đối tượng
+  // const timeDifferences = counterStore.getListInfo.map((obj) => {
+  //   const objDate = new Date(obj.dateCreate);
+  //   const difference = Math.abs(today - objDate);
+  //   return difference;
+  // });
+
+  const timeDifferences = counterStore.getListInfo.map((obj) => {
+    const objDate = new Date(obj.dateCreate.replace(/-/g, "/"));
+    const difference = Math.abs(new Date(currentDate) - objDate) / 1000; // Chuyển đơn vị sang giây
+    return difference;
+  });
+
+  // Tìm index của đối tượng có ngày giờ gần nhất
+  const indexOfNearest = timeDifferences.indexOf(Math.min(...timeDifferences));
+  console.log("============================");
+  console.log(indexOfNearest);
+
+  // Lấy đối tượng có ngày giờ gần nhất
+  const arrayTemp = counterStore.getListInfo[indexOfNearest] || [];
+
+  console.log("Ngày giờ hiện tại:", currentDate);
+  console.log("Đối tượng có ngày giờ gần nhất:", arrayTemp);
+
+  // const arrayTemp = counterStore.getListInfo || [];
+  let arrtemp = [];
+  let finalArr;
+  const arrName = arrayTemp.name || "";
+  const arrPhone = arrayTemp.phone || "";
+  if (
+    arrayTemp.specificAddress !== undefined &&
+    arrayTemp.ward !== undefined &&
+    arrayTemp.district !== undefined &&
+    arrayTemp.city !== undefined
+  ) {
+    arrtemp.push(arrayTemp.specificAddress);
+    arrtemp.push(arrayTemp.ward);
+    arrtemp.push(arrayTemp.district);
+    arrtemp.push(arrayTemp.city);
+    finalArr = arrtemp.join(", ");
+    console.log("Hello----------------------------------");
+  } else {
+    arrtemp = "";
+    finalArr = "";
+  }
+  // const finalArr = arrtemp.join(", ");
+  console.log(arrtemp);
+  // arrtemp.join(", ");
+  // const finalArr = arrtemp || "";
+
+  let arrSelect = [];
+  if (arrName !== "" && arrPhone !== "") {
+    arrSelect.push(arrName);
+    arrSelect.push(arrPhone);
+    arrSelect.push(arrtemp);
+    arrSelect.join(", ");
+  } else {
+    arrSelect = "";
+  }
+
+  const sele = arrSelect;
+  return {
+    info: counterStore.getListInfo,
+    arrInfoDeliver: finalArr,
+    name: arrName,
+    phone: arrPhone,
+    arraySelect: sele,
+  };
 });
+
+const valueOne = ref("");
+
+watch(
+  () => getInfoDeliver.value.arraySelect,
+  (newArraySelect) => {
+    valueOne.value = newArraySelect;
+  }
+);
 
 const addOrder = () => {
   var today = new Date();
@@ -619,7 +888,6 @@ const addOrder = () => {
   const temp = { id: idC, cart: updateCa };
   console.log(temp);
   counterStore.addCartForAcc(temp);
-
 };
 
 const formRef = ref(null);
@@ -819,6 +1087,16 @@ const getWardName = () => {
   .displayForRes {
     display: block;
   }
+}
+.flex-container {
+  display: flex;
+}
 
+.flex-item {
+  flex: 1;
+  width: 100%;
+}
+.ant-select-dropdown {
+  min-width: 100%;
 }
 </style>

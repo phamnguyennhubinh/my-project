@@ -137,6 +137,7 @@ import { nextTick } from "vue";
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from "@/stores";
+import { onMounted } from "vue";
 // import { v4 as uuidv4 } from 'uuid';
 
 // import {computed} from "vue";
@@ -147,6 +148,10 @@ const arrayFormRegister = ref([]);
 const router = useRouter();
 const formRef = ref(null);
 const arrayNew = ref([]);
+onMounted(async () => {
+  await counterStore.fetchListAccounts();
+  localStorage.setItem("listAcc",JSON.stringify(counterStore.getListAcc));
+})
 // const randomId = ref(generateRandomId());
 const formState = reactive({
   fullname: "",
@@ -259,6 +264,7 @@ const registerAcc = async () => {
           // arrayNew.value.push({id: newAccountId, cart: []});
           // counterStore.addCartForAcc(arrayNew.value);
           // counterStore.addCartForAcc()
+          counterStore.fetchListAccounts();
         } else {
           console.log("Form is not valid");
         }

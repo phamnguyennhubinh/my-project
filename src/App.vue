@@ -15,7 +15,7 @@ const counterStore = useCounterStore();
 // const array = JSON.parse(localStorage.getItem("cart"));
 counterStore.countC = computed(() => counterStore.listCarts.length);
 onMounted(async ()=>{
-  counterStore.listCarts = JSON.parse(localStorage.getItem("updateCart")) || [];
+  counterStore.listCarts = JSON.parse(localStorage.getItem("cart")) || [];
   // const idTemp = JSON.parse(localStorage.getItem("idCustomer")) || null;
   // if(idTemp !== null)
   // {

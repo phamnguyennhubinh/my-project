@@ -146,6 +146,19 @@ export default {
 </script>
 
 <style lang="scss" scopped>
+// .grid {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
+// .grid .row {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+// .grid .row .col-md-2 {
+//   flex: 0 0 auto;
+//   width: calc(33.3333% - var(--bs-gutter-x));
+// }
 .position-relative {
   position: relative;
 }
@@ -241,6 +254,33 @@ export default {
 @media screen and (min-width: 375px) and (max-width: 811px) {
   .picture-box {
     width: 50%;
+  }
+}
+@media screen and (max-width: 800px) {
+  // .grid .row .col-md-2 {
+  //   width: calc(50% - var(--bs-gutter-x));
+  // }
+  .grid .row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  // .grid .row .col-md-2 {
+  //   width: 50%;
+  // }
+
+  // .grid .row .col-md-2:first-child {
+  //   order: -1; /* Move the first column to the beginning */
+  // }
+
+  .grid .row .col-md-2 {
+    // flex-direction: row;
+    width: 50%;
+  }
+
+  .grid .row .col-md-2:first-child {
+    // flex-direction: column;
+    flex-basis: 100%; /* Ensure the first column takes up 100% width */
   }
 }
 </style>

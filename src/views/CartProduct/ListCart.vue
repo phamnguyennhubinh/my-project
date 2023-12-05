@@ -18,7 +18,8 @@
             v-model="checkboxCart"
           />
         </span>
-
+ 
+ 
         <span class="left-absolute">Sản phẩm</span>
       </div>
       <div class="col-md-2 col-sm-2">Đơn giá</div>
@@ -44,7 +45,7 @@
           @delete="deleteCart"
           @addOrder="addOrder"
           v-model:checkboxCart="checkboxCart"
-        />
+       />
       </div>
     </div>
     <div class="container">
@@ -88,24 +89,26 @@
     </div>
   </section>
   <router-view />
-</template>
-
-<script setup>
-import { useCounterStore } from "@/stores/index";
-import CartItem from "@/components/CartItem.vue";
-import { ref } from "vue";
-import { onMounted, computed, watch, onUnmounted } from "vue";
-const counterStore = useCounterStore();
-const checkboxCart = ref(false);
-const checkboxOrder = ref(false);
-const howMuchTrue = ref(0);
-const count = ref(0);
-const hasFalse = ref();
-const hidden = ref(true);
-const update = ref([]);
-
-// Hàm watcher để theo dõi thay đổi của checkboxCart
-watch(
+ </template>
+ 
+ 
+ <script setup>
+ import { useCounterStore } from "@/stores/index";
+ import CartItem from "@/components/CartItem.vue";
+ import { ref } from "vue";
+ import { onMounted, computed, watch, onUnmounted } from "vue";
+ const counterStore = useCounterStore();
+ const checkboxCart = ref(false);
+ const checkboxOrder = ref(false);
+ const howMuchTrue = ref(0);
+ const count = ref(0);
+ const hasFalse = ref();
+ const hidden = ref(true);
+ const update = ref([]);
+ 
+ 
+ // Hàm watcher để theo dõi thay đổi của checkboxCart
+ watch(
   () => checkboxCart.value,
   (newValue) => {
     // Thực hiện các hành động khi giá trị của checkboxCart thay đổi
@@ -130,12 +133,13 @@ watch(
         hidden.value = true;
         console.log(counterStore.listCarts);
       }
-
+ 
+ 
       // hidden.value = true;
     }
   }
-);
-watch(
+ );
+ watch(
   () => counterStore.listCarts,
   (newValue, oldValue) => {
     // Đây là nơi xử lý khi có sự thay đổi trong counterStore.listCarts
@@ -145,9 +149,10 @@ watch(
     // Gọi hàm hoặc thực hiện các hành động khác cần thiết khi có sự thay đổi
     // Ví dụ: computedValue.refresh(); // Cập nhật giá trị computed
   }
-);
-
-onMounted(async () => {
+ );
+ 
+ 
+ onMounted(async () => {
   // Lấy danh sách cart từ localStorage
   const idTemp = JSON.parse(localStorage.getItem("idCustomer"));
   await counterStore.fetchListCustomerCart(idTemp);
@@ -165,9 +170,9 @@ onMounted(async () => {
   counterStore.totalBill();
   localStorage.setItem("statusCheck", JSON.stringify(2));
   window.addEventListener('scroll', handleScroll);
-});
-const isSticky = ref(false);
-const handleScroll = () => {
+ });
+ const isSticky = ref(false);
+ const handleScroll = () => {
   console.log('Scrolling...');
   const totalBillSection = document.getElementById('totalBill');
   if (totalBillSection) {
@@ -175,10 +180,12 @@ const handleScroll = () => {
     console.log('rect.top:', rect.top);
     isSticky.value = rect.top <= 0;
   }
-};
-
-
-const updateStatus = (newStatus, productId) => {
+ };
+ 
+ 
+ 
+ 
+ const updateStatus = (newStatus, productId) => {
   localStorage.setItem("statusCheck", JSON.stringify(2));
   console.log(newStatus);
   const storedCarts = counterStore.getListCart.cart;
@@ -187,7 +194,8 @@ const updateStatus = (newStatus, productId) => {
   } else {
     hidden.value = true;
   }
-
+ 
+ 
   // cập nhật biến status: true or false vào mỗi object
   if (storedCarts) {
     const findIndex = counterStore.listCarts.findIndex(
@@ -220,9 +228,10 @@ const updateStatus = (newStatus, productId) => {
     hidden.value = false;
   }
   console.log(counterStore.listCarts);
-};
-
-const selectAll = () => {
+ };
+ 
+ 
+ const selectAll = () => {
   console.log(checkboxCart.value);
   if (checkboxCart.value === true) {
     checkboxOrder.value = true;
@@ -231,9 +240,10 @@ const selectAll = () => {
     checkboxOrder.value = false;
     counterStore.checkedbox = false;
   }
-};
-
-const computedValue = computed(() => {
+ };
+ 
+ 
+ const computedValue = computed(() => {
   let totalBill = 0;
   let count = 0;
   for (let i = 0; i < counterStore.listCarts.length; i++) {
@@ -244,9 +254,10 @@ const computedValue = computed(() => {
     }
   }
   return { billEach: totalBill, countPro: count };
-});
-
-const deleteCart = async (productId) => {
+ });
+ 
+ 
+ const deleteCart = async (productId) => {
   for (var i = 0; i < counterStore.listCarts.length; i++) {
     if (counterStore.listCarts[i].id === productId) {
       counterStore.listCarts.splice(i, 1);
@@ -260,11 +271,13 @@ const deleteCart = async (productId) => {
     console.log(temp);
     await counterStore.addCartForAcc(temp);
   }
-};
-
-const totalCart = computed(() => counterStore.totalBill());
-
-const handleCheckAllChange = () => {
+ };
+ 
+ 
+ const totalCart = computed(() => counterStore.totalBill());
+ 
+ 
+ const handleCheckAllChange = () => {
   selectAll();
   var checkBox = document.getElementById("myCheck");
   if (checkBox.checked === true) {
@@ -272,12 +285,17 @@ const handleCheckAllChange = () => {
   } else {
     counterStore.check = false;
   }
-};
-onUnmounted(() => {
+ };
+ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
-});
-</script>
-
-<style lang="scss" scopped>
-@import "./css/list-cart.css";
-</style>
+ });
+ </script>
+ 
+ 
+ <style scopped>
+ @import "./css/list-cart.css";
+ </style>
+ 
+ 
+ 
+ 
