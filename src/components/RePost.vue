@@ -34,3 +34,5 @@ export default defineComponent({
     border-bottom: 1px solid #ddd;
 }
 </style>
+
+<!-- này em thực hành hồi đầu học thôi ạ -->

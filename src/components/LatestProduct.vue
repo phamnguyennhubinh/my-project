@@ -41,23 +41,10 @@ const disableButton = ref(false);
 const page = ref(1);
 const newList = ref([]);
 const router = useRouter();
-// const route = useRouter();
-// const accId = route.params.idCustomer;
+
 const handleProductClick = (productId) => {
-  // const productId = route.params.id;
-  // if(accId)
-  // {
-  //   console.log("Không rỗng");
-  // }
-  // else{
-  //   console.log("rỗng");
-  // }
   console.log("Product ID clicked:", productId);
   router.push({ name: "ProductDetail", params: { id: productId} });
-  // localStorage.setItem("productId", productId);
-  // console.log(productId);
-  // counterStore.productId = productId;
-  // console.log(counterStore.productId);
 };
 const updateList = async () => {
   page.value++;

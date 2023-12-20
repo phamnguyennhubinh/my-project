@@ -50,9 +50,6 @@ export default {
   ,
   methods: {
     async fetchFeedback(id) {
-      // request.get(`setting/feedback/${id}`)
-      // .then(res => this.feedback = res)
-      // .catch(error => console.error('Error fetching feedback:', error.message));
       this.feedback = await this.counterStore.fetchFeedback(id)
     },
     beforePara(){

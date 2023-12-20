@@ -18,27 +18,12 @@ export default {
     }
   },
   methods: {
-	// detailProduct () {
-	// 	this.$router.push('/shop/detail');
-	// 	}
 	handleProductClick() {
 		this.$emit('productClick',this.$props.id);
 	}
   }
 }
 </script>
-
-<!-- <script setup>
-import { defineProps, defineEmits } from 'vue';
-
-const props = defineProps(['pic', 'name', 'price', 'id']);
-const emits = defineEmits();
-
-const handleProductClick = () => {
-  // Chuyển giá trị product.id vào sự kiện productClick
-  emits('productClick', props.id);
-};
-</script> -->
 
 <style>
 .heading-product

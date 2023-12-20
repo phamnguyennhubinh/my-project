@@ -1,51 +1,3 @@
-<!-- <template>
-    <div class="scrolling-component" ref="scrollComponent">
-        <re-post
-        v-for="(post,index) in posts"
-        :post="post"
-        :key="index"
-        />
-    </div>
-</template>
-
-<script>
-import getPosts from "@/utils/get-posts";
-import RePost from "./RePost.vue";
-import { onMounted, onUnmounted, ref } from 'vue';
-
-export default {
-    components: {
-        RePost
-    },
-    setup () {
-        const posts = ref(getPosts(10));
-        const scrollComponent = ref(null);
-        
-        
-        const handleScroll = () => {
-            let element = scrollComponent.value;
-            if(element.getBoundingClientRect().bottom < window.innerHeight) {
-                loadMorePosts();
-            }
-        }
-
-        const loadMorePosts = () => {
-            let newPosts = getPosts(10);
-            posts.value.push(...newPosts)
-        }
-        onMounted(() => {
-            window.addEventListener("scroll", handleScroll)
-        })
-        onUnmounted(() => {
-            window.removeEventListener("scroll", handleScroll)
-        })
-        return {
-            posts,
-            scrollComponent
-        }
-    }
-}
-</script> -->
 
 <template>
     <div id="app">
@@ -115,7 +67,7 @@ export default {
     },
   };
   </script>
-  
+  <!-- này em thực hành hồi đầu học thôi ạ -->
   
   
   

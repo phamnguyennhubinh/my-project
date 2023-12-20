@@ -43,15 +43,6 @@ export default defineComponent({
 });
 </script>
 
-<!-- <script setup>
-
-import { useCounterStore } from "@/stores/index";
-import { onMounted } from 'vue';
-const counterStore = useCounterStore();
-onMounted(() => {
-  counterStore.fetchApiSlide();
-})
-</script> -->
 
 <style lang="scss" scoped>
 @import '@/style/styles.scss';

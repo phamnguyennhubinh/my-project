@@ -29,11 +29,6 @@ const counterStore = useCounterStore();
 onMounted(() => {
   counterStore.fetchApi();
   console.log(counterStore.children);
-  // Lấy phần tử div có class là "title-saving"
-  // var titleSavingDiv = document.querySelector(".title-saving");
-
-  // // Gán nội dung HTML từ counterStore vào phần tử div
-  // titleSavingDiv.innerHTML = counterStore.children.title;
 });
 </script>
 

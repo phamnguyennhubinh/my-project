@@ -247,13 +247,7 @@
   },
  };
  </script>
- 
- 
- <!-- <script setup>
- import {computed} from "vue";
- const counterStore = useCounterStore();
- counterStore.countC = computed(() => JSON.parse(localStorage.getItem("cart")).length);
- </script> -->
+
  
  
  <style lang="scss" scoped>
