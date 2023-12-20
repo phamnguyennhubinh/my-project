@@ -156,7 +156,7 @@
   // Lấy danh sách cart từ localStorage
   const idTemp = JSON.parse(localStorage.getItem("idCustomer"));
   await counterStore.fetchListCustomerCart(idTemp);
-  const storedCarts = counterStore.getListCart?.cart || [];
+  const storedCarts = counterStore.getListCart || [];
   // Thêm biến status: true vào mỗi object
   if (storedCarts) {
     counterStore.listCarts = storedCarts.map((cart) => ({
@@ -169,18 +169,18 @@
   console.log(counterStore.listCarts);
   counterStore.totalBill();
   localStorage.setItem("statusCheck", JSON.stringify(2));
-  window.addEventListener('scroll', handleScroll);
+  // window.addEventListener('scroll', handleScroll);
  });
- const isSticky = ref(false);
- const handleScroll = () => {
-  console.log('Scrolling...');
-  const totalBillSection = document.getElementById('totalBill');
-  if (totalBillSection) {
-    const rect = totalBillSection.getBoundingClientRect();
-    console.log('rect.top:', rect.top);
-    isSticky.value = rect.top <= 0;
-  }
- };
+//  const isSticky = ref(false);
+//  const handleScroll = () => {
+//   console.log('Scrolling...');
+//   const totalBillSection = document.getElementById('totalBill');
+//   if (totalBillSection) {
+//     const rect = totalBillSection.getBoundingClientRect();
+//     console.log('rect.top:', rect.top);
+//     isSticky.value = rect.top <= 0;
+//   }
+//  };
  
  
  
@@ -287,7 +287,7 @@
   }
  };
  onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
+  // window.removeEventListener('scroll', handleScroll);
  });
  </script>
  

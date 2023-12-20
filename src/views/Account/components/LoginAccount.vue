@@ -15,8 +15,11 @@
         name="username"
         :rules="[{ required: true, message: 'Please input your username!' }]"
       >
-        <a-input v-model:value="formState.username" class="border-none" 
-        ref="userNameInput"/>
+        <a-input
+          v-model:value="formState.username"
+          class="border-none"
+          ref="userNameInput"
+        />
       </a-form-item>
 
       <a-form-item
@@ -59,10 +62,10 @@ import { useRouter } from "vue-router";
 import { useCounterStore } from "@/stores";
 // import { useRouter } from "vue-router";
 const userNameInput = ref(null);
-const  counterStore = useCounterStore();
+const counterStore = useCounterStore();
 const passwordInput = ref(null);
 const idAcc = ref(null);
-const arrAccount = ref([]);
+// const arrAccount = ref([]);
 // const router = useRouter();
 const router = useRouter();
 // const arrCartForAcc = ref([]);
@@ -73,8 +76,8 @@ const formState = reactive({
 });
 const onFinish = (values) => {
   console.log("Success:", values);
-  loginAccount();
-  localStorage.setItem("whologin",JSON.stringify(idAcc.value));
+  checkLoginAccountCustomer();
+  localStorage.setItem("whologin", JSON.stringify(idAcc.value));
   console.log(idAcc.value);
   // localStorage.setItem("Logout",JSON.stringify("Log out"));
   // counterStore.setLoggedIn("Log out");
@@ -84,49 +87,77 @@ const onFinishFailed = (errorInfo) => {
 };
 onMounted(async () => {
   await counterStore.fetchListAccounts();
-})
-const loginAccount = async () => {
-  // arrAccount.value = JSON.parse(localStorage.getItem("listAcc")) || [];
-  arrAccount.value = counterStore.getListAcc;
-  // console.log(arrAccount.value);
-    const getIndexByUsername = arrAccount.value.findIndex(
-    (item) => item.phone === formState.username
-  );
-  if(getIndexByUsername !== -1)
-  {
-    if(arrAccount.value[getIndexByUsername].password === formState.password)
-    {
-      message.success("Đăng nhập thành công!");
-      router.push({ name: "LayoutPage"});
-      idAcc.value = arrAccount.value[getIndexByUsername].id;
-      await counterStore.fetchListCustomerCart(idAcc.value);
-      localStorage.setItem("idCustomer",JSON.stringify(idAcc.value));
+});
+
+const checkLoginAccountCustomer = async () => {
+  await counterStore.checkLoginAccount(formState.username,formState.password);
+  console.log("===================================", counterStore.checkLogin)
+  console.log(counterStore.checkLogin.result) 
+  const status = counterStore.checkLogin.statusCode;
+  if (status === 200) {
+    const customerId = counterStore.checkLogin.result[0].customerID;
+    message.success("Đăng nhập thành công!");
+      router.push({ name: "LayoutPage" });
+      // idAcc.value = arrAccount.value[counterStore.checkLogin.result[2].customerID].id;
+      await counterStore.fetchListCustomerCart(customerId);
+      localStorage.setItem("idCustomer", JSON.stringify(customerId));
       const arr1 = counterStore.getListCart || [];
-      // console.log();
-      console.log(arr1);
-      console.log(arr1.cart);
-      const targetCart = arr1.cart || [];
-      console.log(targetCart);
+      const targetCart = arr1 || [];
       counterStore.listCarts = targetCart;
-      localStorage.setItem("Logout",JSON.stringify("Log out"));
-  counterStore.setLoggedIn("Log out");
-    }
-    else 
-    {
-      message.error("Sai mật khẩu!")
-      formState.password = '';
-      passwordInput.value.focus();
-      // counterStore.setLoggedIn("Log out");
-    }
+      console.log("Cart===================",counterStore.listCarts);
+      localStorage.setItem("Logout", JSON.stringify("Log out"));
+      counterStore.setLoggedIn("Log out");
   }
-  else
-  {
-    formState.password = '';
-    formState.username = '';
+  else if(status === 401){
+    // message.error("");
+    formState.password = "";
+    formState.username = "";
     userNameInput.value.focus();
-    message.error("Tài khoản chưa được đăng ký!")
+    message.error("Tài khoản chưa được đăng ký!");
+  } else if (status === 403) {
+    message.error("Sai mật khẩu!");
+    formState.password = "";
+      passwordInput.value.focus();
   }
 };
+
+// const loginAccount = async () => {
+//   // arrAccount.value = JSON.parse(localStorage.getItem("listAcc")) || [];
+//   arrAccount.value = counterStore.getListAcc;
+//   // console.log(arrAccount.value);
+//   const getIndexByUsername = arrAccount.value.findIndex(
+//     (item) => item.phone === formState.username
+//   );
+//   if (getIndexByUsername !== -1) {
+//     if (arrAccount.value[getIndexByUsername].password === formState.password) {
+//       message.success("Đăng nhập thành công!");
+//       router.push({ name: "LayoutPage" });
+//       idAcc.value = arrAccount.value[getIndexByUsername].id;
+//       await counterStore.fetchListCustomerCart(idAcc.value);
+//       localStorage.setItem("idCustomer", JSON.stringify(idAcc.value));
+//       const arr1 = counterStore.getListCart || [];
+//       // console.log();
+//       console.log(arr1);
+//       console.log(arr1.cart);
+//       const targetCart = arr1.cart || [];
+//       console.log(targetCart);
+//       counterStore.listCarts = targetCart;
+//       localStorage.setItem("Logout", JSON.stringify("Log out"));
+//       counterStore.setLoggedIn("Log out");
+//     } else {
+//       message.error("Sai mật khẩu!");
+//       formState.password = "";
+//       passwordInput.value.focus();
+//       // counterStore.setLoggedIn("Log out");
+//     }
+//   } else {
+//     formState.password = "";
+//     formState.username = "";
+//     userNameInput.value.focus();
+//     message.error("Tài khoản chưa được đăng ký!");
+//   }
+// };
+
 </script>
 
 <style lang="scss" scoped>

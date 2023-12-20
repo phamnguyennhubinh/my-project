@@ -146,19 +146,6 @@ export default {
 </script>
 
 <style lang="scss" scopped>
-// .grid {
-//   display: flex;
-//   flex-wrap: wrap;
-// }
-
-// .grid .row {
-//   display: flex;
-//   flex-wrap: wrap;
-// }
-// .grid .row .col-md-2 {
-//   flex: 0 0 auto;
-//   width: calc(33.3333% - var(--bs-gutter-x));
-// }
 .position-relative {
   position: relative;
 }
@@ -265,16 +252,7 @@ export default {
     align-items: flex-start;
   }
 
-  // .grid .row .col-md-2 {
-  //   width: 50%;
-  // }
-
-  // .grid .row .col-md-2:first-child {
-  //   order: -1; /* Move the first column to the beginning */
-  // }
-
   .grid .row .col-md-2 {
-    // flex-direction: row;
     width: 50%;
   }
 

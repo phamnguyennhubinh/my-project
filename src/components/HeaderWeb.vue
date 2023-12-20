@@ -220,8 +220,8 @@
     },
     navigateToCart() {
       // Thực hiện chuyển route đến trang giỏ hàng
-      const getId = JSON.parse(localStorage.getItem("idCustomer")) || 2;
-      if(getId === 2)
+      const getId = JSON.parse(localStorage.getItem("idCustomer")) || 22222;
+      if(getId === 22222)
       {
         message.error("Vui lòng đăng nhập");
       }

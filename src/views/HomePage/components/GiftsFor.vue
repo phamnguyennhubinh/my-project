@@ -6,11 +6,11 @@
                 <img :src="counterStore.gift.image" class="picture-gift">
             </div>
             <div class="col-md-7">
-                <div class="title-saving">{{ counterStore.gift.title1 }}<br>{{ counterStore.gift.title2 }}</div>
+                <div class="title-saving" v-html="counterStore.gift.title"></div>
                 <div class="para-saving">{{ counterStore.gift.content }}</div>
 				<div class="small">
-					<button class="btn-gift-buy display-inline">{{ counterStore.gift.button1 }}</button>
-                <button class="btn-gift-see display-inline">{{ counterStore.gift.button2 }}</button>
+					<button class="btn-gift-buy display-inline">Buy Now</button>
+                <button class="btn-gift-see display-inline">See More</button>
 				</div>
                 
             </div>

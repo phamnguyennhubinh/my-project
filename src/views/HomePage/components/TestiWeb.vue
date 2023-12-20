@@ -30,16 +30,18 @@
 </template>
 
 <script>
-import * as request from "@/utils/request";
-
+// import * as request from "@/utils/request";
+import { useCounterStore } from "@/stores/index";
 export default {
   components: {
 
   },
   data(){
+    const counterStore = useCounterStore();
     return {
       id: 1,
       feedback: [],
+      counterStore
     }
   },
   mounted(){
@@ -47,10 +49,11 @@ export default {
   }
   ,
   methods: {
-    fetchFeedback(id) {
-      request.get(`feedbacks/${id}`)
-      .then(res => this.feedback = res)
-      .catch(error => console.error('Error fetching feedback:', error.message));
+    async fetchFeedback(id) {
+      // request.get(`setting/feedback/${id}`)
+      // .then(res => this.feedback = res)
+      // .catch(error => console.error('Error fetching feedback:', error.message));
+      this.feedback = await this.counterStore.fetchFeedback(id)
     },
     beforePara(){
       if(this.id > 1)

@@ -9,17 +9,12 @@
         </div>
         <div class="col-lg-6 col-md-12">
           <div>
-            <div class="title-saving">{{ counterStore.children.title1 }}</div>
-            <div class="title-saving">{{ counterStore.children.title2 }}</div>
+            <div class="title-saving" v-html="counterStore.children.title"></div>
             <div class="para-saving">
               {{ counterStore.children.content }}
             </div>
-            <button class="btn-saving-buy display-inline">
-              {{ counterStore.children.button1 }}
-            </button>
-            <button class="btn-saving-see display-inline">
-              {{ counterStore.children.button2 }}
-            </button>
+            <button class="btn-saving-buy display-inline">Buy Now</button>
+            <button class="btn-saving-see display-inline">See More</button>
           </div>
         </div>
       </div>
@@ -27,38 +22,18 @@
   </div>
 </template>
 
-<!-- <script>
-// import * as request from "@/utils/request";
-import * as savingServices from "@/apiService/savingServices";
-// import axios from "axios";
-export default {
-  name: "BestSavings",
-  props: ["id"],
-  data() {
-    return {
-      children: [],
-      result: [],
-    };
-  },
-  mounted() { 
-      // request.get("childrens/1")
-      // .then((data) => (this.children = data))
-      // .catch((err) => console.log(err.message));
-
-    const fetchApi = async () => {
-       this.children = await savingServices.saving();
-    };
-    fetchApi();
-  },
-};
-</script> -->
-
 <script setup>
 import { useCounterStore } from "@/stores/index";
 import { onMounted } from "vue";
 const counterStore = useCounterStore();
 onMounted(() => {
   counterStore.fetchApi();
+  console.log(counterStore.children);
+  // Lấy phần tử div có class là "title-saving"
+  // var titleSavingDiv = document.querySelector(".title-saving");
+
+  // // Gán nội dung HTML từ counterStore vào phần tử div
+  // titleSavingDiv.innerHTML = counterStore.children.title;
 });
 </script>
 
@@ -80,11 +55,11 @@ onMounted(() => {
   // object-fit: fill;
   // padding-bottom: 0;
   object-fit: contain;
-	width: 100%;
-	height: auto;
-	padding: 60px 0 0px 25px;
-	text-align: center;
-	vertical-align: middle;
+  width: 100%;
+  height: auto;
+  padding: 60px 0 0px 25px;
+  text-align: center;
+  vertical-align: middle;
 }
 .btn-saving-buy {
   background-color: $button-color;
@@ -132,8 +107,8 @@ onMounted(() => {
     flex-direction: column-reverse;
   }
 }
-@media  screen and (min-width: 375px) and (max-width: 811px) {
-  .title-saving{
+@media screen and (min-width: 375px) and (max-width: 811px) {
+  .title-saving {
     font-size: 30px;
   }
   .para-saving {
@@ -149,12 +124,12 @@ onMounted(() => {
     margin: 0;
     margin-top: 45px;
   }
-  .title-saving{
+  .title-saving {
     font-size: 28px;
   }
   .btn-saving-buy {
-  padding: 10px 30px;
-  font-size: 15px;
+    padding: 10px 30px;
+    font-size: 15px;
   }
   .btn-saving-see {
     padding: 10px 30px;

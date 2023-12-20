@@ -5,9 +5,9 @@
         <div class="row">
           <div class="col-md-8 col-sm-12">
               <div class="position-welcome">
-                <h1 class="title-welcome">{{ section.title1 }}<br>{{ section.title2 }}</h1>
+                <h1 class="title-welcome" v-html="section.title"></h1>
                 <p class="para-welcome">{{ section.content }}</p>
-                <button type="button" class="btn-welcome">{{ section.buttonName }}</button>
+                <button type="button" class="btn-welcome">CONTACT US</button>
               </div>
           </div>
           <div class="col-md-4 col-sm-12">
